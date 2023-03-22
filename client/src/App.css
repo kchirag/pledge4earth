@@ -1,0 +1,81 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  z-index: 100;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* App.css or any other CSS file you're using */
+body {
+  padding-top: 10vh; /* Adjust this value to match the header height */
+}
+
+.top-containers {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.bottom-container {
+  margin-top: 20px;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+}
+
+/* Add some styles for the individual containers */
+.LeaderContainer,ViewsContainer,
+.NewsContainer {
+  width: 30%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  pointer-events: none;
+}
+
+/* You can also adjust the styles for mobile or smaller screens */
+@media (max-width: 767px) {
+  .LeaderContainer,
+  .ViewsContainer,
+  .NewsContainer {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
