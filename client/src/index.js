@@ -7,8 +7,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // index.js or any other suitable file
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+//import 'slick-carousel/slick/slick.css';
+//import 'slick-carousel/slick/slick-theme.css';
+//import * as serviceWorker from './serviceWorker';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -60,7 +60,7 @@ body {
 }
 
 /* Add some styles for the individual containers */
-.LeaderContainer,ViewsContainer,
+.LeaderContainer,.ViewsContainer,
 .NewsContainer {
   width: 30%;
   background-color: #f0f0f0;
@@ -78,4 +78,9 @@ body {
     width: 100%;
     margin-bottom: 20px;
   }
+}
+.map-container {
+  width: 100%;
+  height: 300px;
+  position: 'relative';
 }

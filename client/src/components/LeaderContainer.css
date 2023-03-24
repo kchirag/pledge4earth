@@ -1,4 +1,8 @@
 /* LeaderContainer.css */
+.LeaderContainer {
+  pointer-events: auto;
+}
+
 .leader-slider {
   display: flex;
   align-items: center;
@@ -7,7 +11,8 @@
 }
 
 .leader-slide {
-  position: relative;
+    position: relative;
+
 }
 
 .leader-image {
