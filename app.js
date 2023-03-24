@@ -11,10 +11,16 @@ const nearbyUsersRouter = require('./routes/nearbyUsers');
 
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
-
+const fs = require('fs');
+const https = require('https');
 // Initialize Express app
 const app = express();
 
+
+// Read the certificate files
+const privateKey = fs.readFileSync(process.env.PRIVATE_KEY, 'utf8');
+const certificate = fs.readFileSync(process.env.CERTIFICATE, 'utf8');
+const ca = fs.readFileSync(process.env.CERTIFICATECA, 'utf8');
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -24,9 +30,7 @@ app.use('/api/userViews', userViewsRouter);
 app.use('/api/views', viewsRouter);
 app.use('/api/nearby-users', nearbyUsersRouter);
 
-
 // Connect to MongoDB
-//const uri = 'mongodb://localhost:27017/pledge4earth';
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
@@ -34,16 +38,32 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-// Register your routes
-// app.use('/api/your-endpoint', yourRoutes);
-
 // Define the port your server will listen on
 const port = process.env.PORT || 5000;
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
-});
+if (process.env.SSLENABLED = 'true'){
+// Setup the HTTPS credentials
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca,
+  };
+  const httpsServer = https.createServer(credentials, app);
+  httpsServer.listen(port, () => {
+    console.log('HTTPS server running on port 3000');
+  });
+}
+else{
+
+  // Start the server
+  app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
+  });
+}
+// Register your routes
+// app.use('/api/your-endpoint', yourRoutes);
+
+
 
 const path = require('path');
 
