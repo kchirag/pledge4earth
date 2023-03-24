@@ -54,11 +54,11 @@ body {
 
 .bottom-container {
   margin-top: 20px;
-  text-align: left;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  text-align: left;
 }
 
 /* Add some styles for the individual containers */
@@ -82,10 +82,14 @@ body {
   }
 }
 
+.ClarifyContainer, .OrganizationSignup{
+  text-align: left;  
+}
+
 /* You can also adjust the styles for mobile or smaller screens */
 @media (max-width: 767px) {
-  .bottom-container {
-    flex-direction: column;
+  .ClarifyContainer, .OrganizationSignup{
+    width: 100%;
   }
 }
 
