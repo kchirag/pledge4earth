@@ -50,7 +50,7 @@ if (process.env.SSLENABLED = 'true'){
   };
   const httpsServer = https.createServer(credentials, app);
   httpsServer.listen(port, () => {
-    console.log('HTTPS server running on port 3000');
+    console.log(`HTTPS server running on port ${port}`);
   });
 }
 else{

@@ -41,5 +41,17 @@
       "last 1 safari version"
     ]
   },
+"babel": {
+  "env": {
+    "production": {
+      "ignore": ["mapbox-gl"]
+    },
+    "development": {
+      "ignore": ["mapbox-gl"]
+    }
+  }
+},
+
+
   "proxy": "http://localhost:5000"
 }
