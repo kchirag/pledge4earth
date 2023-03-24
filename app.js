@@ -45,7 +45,7 @@ app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
 
-onst path = require('path');
+const path = require('path');
 
 // ...
 
