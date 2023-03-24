@@ -1,0 +1,11 @@
+{
+  "env": {
+    "production": {
+      "ignore": ["mapbox-gl"]
+    },
+    "development": {
+      "ignore": ["mapbox-gl"]
+    }
+  }
+}
+
