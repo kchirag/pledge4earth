@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -25,7 +27,7 @@ app.use('/api/nearby-users', nearbyUsersRouter);
 
 // Connect to MongoDB
 //const uri = 'mongodb://localhost:27017/pledge4earth';
-const uri = 'mongodb+srv://kchirag:Belapur-123@pledge4earth.8he3kvu.mongodb.net/?retryWrites=true&w=majority';
+const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
 connection.once('open', () => {
