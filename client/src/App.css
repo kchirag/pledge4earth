@@ -56,6 +56,8 @@ body {
   margin-top: 20px;
   text-align: left;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -82,10 +84,8 @@ body {
 
 /* You can also adjust the styles for mobile or smaller screens */
 @media (max-width: 767px) {
-  .ClarifyViewContainer,
-  .OrganizationSignup {
-    width: 100%;
-    margin-bottom: 20px;
+  .bottom-container {
+    flex-direction: column;
   }
 }
 
