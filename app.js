@@ -1,4 +1,3 @@
-require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
@@ -16,6 +15,8 @@ const https = require('https');
 // Initialize Express app
 const app = express();
 
+const path = require('path'); 
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // Read the certificate files
 const privateKey = fs.readFileSync(process.env.PRIVATE_KEY, 'utf8');
@@ -64,8 +65,6 @@ else{
 // app.use('/api/your-endpoint', yourRoutes);
 
 
-
-const path = require('path');
 
 // ...
 
