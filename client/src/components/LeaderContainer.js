@@ -1,6 +1,7 @@
 // LeaderContainer.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
+
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -12,7 +13,7 @@ function LeaderContainer() {
 useEffect(() => {
   const fetchLeaders = async () => {
     try {
-      const response = await axios.get('/api/leaders'); // Replace '/api/leaders' with your API endpoint
+      const response = await axiosInstance.get('/api/leaders'); // Replace '/api/leaders' with your API endpoint
       setLeaders(response.data);
     } catch (error) {
       console.error('Error fetching leaders:', error);

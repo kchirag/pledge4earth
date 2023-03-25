@@ -1,10 +1,9 @@
     // ClarifyViewContainer.js
-    import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
     import React, { useState, useEffect } from 'react';
-    import LocationModal from './locationModal';
-    import ErrorBoundary from './ErrorBoundary';
-
+    import LocationModal from './LocationModal';
+    
 
     function ClarifyViewContainer({ onNewUserView }) {
       const [selectedView, setSelectedView] = useState('');
@@ -24,11 +23,10 @@
         'Climate is not changing; it\'s just a weather pattern.',
       ];
 
-      const handleModal = () => {
-        setShowModal(!showModal);
-      };
+      
       const handleConfirmLocation = (newCoordinates) => {
         // ... handle the confirmed location here ...
+        console.log(location);
         console.log(newCoordinates);
           setLocation({
                 latitude: newCoordinates.latitude,
@@ -52,7 +50,7 @@
         },
       };
       try {
-        const response = await axios.post('/api/userViews', userViewData);
+        const response = await axiosInstance.post('/api/userViews', userViewData);
         console.log('User view saved:', response.data);
       } catch (error) {
         console.error('Error saving user view:', error);
