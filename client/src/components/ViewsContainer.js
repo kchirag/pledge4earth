@@ -9,7 +9,7 @@ import MapUpdater from './MapUpdater'; // Import the MapUpdater component
 
 
 
-function ViewsContainer({ refreshKey }) {
+function ViewsContainer({ userLocation }, { refreshKey }) {
   //console.log(process.env.REACT_APP_MAPBOX_TOKEN);
 
 
@@ -24,22 +24,7 @@ function ViewsContainer({ refreshKey }) {
     html: '<div style="color: red; font-size: 24px;">•</div>',
     className: '',
   });
-  const getUserLocation = () => {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  };
-  
+ 
   const fetchNearbyUsersFromAPI = async (latitude, longitude, distance) => {
     const response = await axiosInstance.get(`/api/nearby-users?latitude=${latitude}&longitude=${longitude}&distance=${distance}`);
     const data = await response.data;
@@ -50,7 +35,7 @@ function ViewsContainer({ refreshKey }) {
   useEffect(() => {
   const fetchUsers = async () => {
       try {
-        const userLocation = await getUserLocation();
+
         const data = await fetchNearbyUsersFromAPI(userLocation.latitude, userLocation.longitude, 50);
         setNearbyUsersData(data);
 
@@ -73,7 +58,7 @@ function ViewsContainer({ refreshKey }) {
     };
 
     fetchUsers();
-  }, [refreshKey]);
+  }, [userLocation, refreshKey]);
   
   const handleViewportChange = (newViewport) => {
     setViewport(newViewport);

@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './LeaderContainer.css';
 
-function LeaderContainer() {
+function LeaderContainer({userLocation}) {
   const [leaders, setLeaders] = useState([]);
 
   const fetchNearbyLeadersFromAPI = async (latitude, longitude, distance) => {
@@ -16,36 +16,24 @@ function LeaderContainer() {
     return data;
   };
 
-useEffect(() => {
-  const fetchLeaders = async () => {
-    try {
-      const userLocation = await getUserLocation();
-      const data = await fetchNearbyLeadersFromAPI(userLocation.latitude, userLocation.longitude, 5000);
-      console.log(data.users);
-      setLeaders(data.users);
-    } catch (error) {
-      console.error('Error fetching leaders:', error);
-    }
-  };
+  useEffect(() => {
+    const fetchLeaders = async () => {
+      try {
+        //console.log('Trying to fetch user location...'); // Add this line
+        //const userLocation = await getUserLocation();
+        //console.log('User location fetched. Fetching leaders...'); // Add this line
+        const data = await fetchNearbyLeadersFromAPI(userLocation.latitude, userLocation.longitude, 10000);
+        console.log(data.users);
+        setLeaders(data.users);
+      } catch (error) {
+        console.error('Error fetching leaders:', error);
+      }
+    };
 
-  fetchLeaders();
-}, []);
+    fetchLeaders();
+  }, [userLocation]);
 
-  const getUserLocation = () => {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  };
+
 
   const settings = {
     dots: true,
