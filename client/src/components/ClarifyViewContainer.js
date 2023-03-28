@@ -199,7 +199,7 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
               </div>
             ))}
             </div>
-            <button type="button" onMouseDown={() => setShowModal(true)}>Confirm Location</button>
+            <button type="button" onMouseDown={() => setShowModal(true)}>Confirm Pledge</button>
                   {location && (
                     <LocationModal
                       show={showModal}
@@ -209,7 +209,7 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
                     />
                   )}
 
-            <button type="submit">Submit</button>
+            
           </form>
         </div>
         )}

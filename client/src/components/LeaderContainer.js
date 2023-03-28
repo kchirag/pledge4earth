@@ -10,11 +10,19 @@ import './LeaderContainer.css';
 function LeaderContainer() {
   const [leaders, setLeaders] = useState([]);
 
+  const fetchNearbyLeadersFromAPI = async (latitude, longitude, distance) => {
+    const response = await axiosInstance.get(`/api/nearby-leaders?latitude=${latitude}&longitude=${longitude}&distance=${distance}`);
+    const data = await response.data;
+    return data;
+  };
+
 useEffect(() => {
   const fetchLeaders = async () => {
     try {
-      const response = await axiosInstance.get('/api/leaders'); // Replace '/api/leaders' with your API endpoint
-      setLeaders(response.data);
+      const userLocation = await getUserLocation();
+      const data = await fetchNearbyLeadersFromAPI(userLocation.latitude, userLocation.longitude, 5000);
+      console.log(data.users);
+      setLeaders(data.users);
     } catch (error) {
       console.error('Error fetching leaders:', error);
     }
@@ -22,6 +30,22 @@ useEffect(() => {
 
   fetchLeaders();
 }, []);
+
+  const getUserLocation = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  };
 
   const settings = {
     dots: true,
@@ -42,6 +66,8 @@ useEffect(() => {
             <div className="leader-text">
               <h3>{leader.name}</h3>
               <p>{leader.statement}</p>
+              <p>{leader.distance.toFixed(1)} miles away</p>
+              <a href={leader.website} target="_blank" rel="noopener noreferrer">more info</a>
             </div>
           </div>
         ))}

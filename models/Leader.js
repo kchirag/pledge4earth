@@ -22,5 +22,8 @@ const LeaderSchema = new mongoose.Schema({
   },
 });
 
+LeaderSchema.index({ location: '2dsphere' });
+
+
 const Leader = mongoose.model('Leader', LeaderSchema);
 module.exports = Leader;

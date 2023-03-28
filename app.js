@@ -7,6 +7,7 @@ const leaderRoutes = require('./routes/leaderRoutes');
 const userViewsRouter = require('./routes/userViews');
 const viewsRouter = require('./routes/views');
 const nearbyUsersRouter = require('./routes/nearbyUsers');
+const nearbyLeadersRouter = require('./routes/nearbyLeaders')
 
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
@@ -30,6 +31,7 @@ app.use('/api/leaders', leaderRoutes);
 app.use('/api/userViews', userViewsRouter);
 app.use('/api/views', viewsRouter);
 app.use('/api/nearby-users', nearbyUsersRouter);
+app.use('/api/nearby-leaders', nearbyLeadersRouter);
 
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;

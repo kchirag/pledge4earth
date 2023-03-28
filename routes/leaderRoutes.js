@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const Leader = require('../models/Leader');
 
+
 router.get('/', async (req, res) => {
   try {
     const leaders = await Leader.find();
@@ -20,5 +21,6 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 module.exports = router;
