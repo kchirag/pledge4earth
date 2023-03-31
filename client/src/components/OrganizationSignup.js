@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './OrganizationSignup.css';
 
 function OrganizationSignup() {
   const [formData, setFormData] = useState({
@@ -8,10 +9,16 @@ function OrganizationSignup() {
     url: '',
     description: '',
   });
+  //var showsetup = false;
+  const [showsetup, setshowsetup] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const clicksignup = (e) => {
+    setshowsetup(true);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +27,8 @@ function OrganizationSignup() {
 
   return (
     <div className="OrganizationSignup">
-      <h2>Organization Sign Up</h2>
+      <h2>Environmental Organizations</h2>
+      {showsetup ? (
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="orgName">Organization Name:</label>
@@ -83,6 +91,17 @@ function OrganizationSignup() {
 
         <button type="submit">Sign Up</button>
       </form>
+      ):(
+        <div className="invitation-container">
+          <div className="invitation-text">
+            We're on a mission to include environmental organizations in every location to help amplify, endorse, and inspire local voices. 
+            Are you familiar with an eco-friendly organization in your area? Extend an invitation! And if you're at the helm of a 
+            non-profit environmental organization, sign up right here.
+          </div>
+          <button onClick={clicksignup}>Sign Up</button>
+        </div>
+      )}
+      
     </div>
   );
 }
