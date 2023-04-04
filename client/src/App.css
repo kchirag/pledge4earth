@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 30vmin;
   pointer-events: none;
 }
 
@@ -42,7 +42,7 @@
 }
 /* App.css or any other CSS file you're using */
 body {
-  padding-top: 10vh; /* Adjust this value to match the header height */
+  padding-top: 13vh; /* Adjust this value to match the header height */
 }
 
 .top-containers {
