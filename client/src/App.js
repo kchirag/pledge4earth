@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="App">
               <header className="App-header">
-                <h1>Pledge4Earth</h1>
+                <h1>Lead4Earth</h1>
               </header>
       
       <Router>

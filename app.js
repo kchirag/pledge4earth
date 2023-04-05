@@ -19,7 +19,7 @@ const http = require('http');
 const app = express();
 const httpApp = express();
 const redirectHttps = (req, res) => {
-  res.redirect(301, `https://${req.headers.host}${req.url}`);
+  res.redirect(301, `https://lead4earth.org${req.url}`);
 };
 
 // Use the middleware function for the HTTP server
