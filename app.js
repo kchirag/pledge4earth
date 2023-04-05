@@ -66,8 +66,6 @@ if (process.env.SSLENABLED = 'true'){
     ca: ca,
   };
   const httpsServer = https.createServer(credentials, app);
-  httpsServer.use(redirectHttps);
-  httpsServer.use(redirectHttps);
   httpsServer.listen(port, () => {
     console.log(`HTTPS server running on port ${port}`);
   });
