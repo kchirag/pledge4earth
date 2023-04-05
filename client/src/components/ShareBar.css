@@ -1,0 +1,16 @@
+.share-bar {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 1rem;
+  background-color: #f2f2f2;
+}
+
+.share-bar a {
+  text-decoration: none;
+  color: #333;
+}
+
+.share-bar a:hover {
+  color: #666;
+}
