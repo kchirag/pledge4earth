@@ -21,6 +21,9 @@ const httpApp = express();
 const redirectHttps = (req, res) => {
   res.redirect(301, `https://lead4earth.org${req.url}`);
 };
+//const redirectHttps = (req, res) => {
+//  res.redirect(301, `https://lead4earth.org${req.url}`);
+//};
 
 // Use the middleware function for the HTTP server
 
@@ -63,6 +66,8 @@ if (process.env.SSLENABLED = 'true'){
     ca: ca,
   };
   const httpsServer = https.createServer(credentials, app);
+  httpsServer.use(redirectHttps);
+  httpsServer.use(redirectHttps);
   httpsServer.listen(port, () => {
     console.log(`HTTPS server running on port ${port}`);
   });

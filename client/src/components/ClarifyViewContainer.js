@@ -4,6 +4,7 @@ import axiosInstance from '../axiosInstance';
 
 import React, { useState, useEffect } from 'react';
 import LocationModal from './LocationModal';
+import ShareBar from './ShareBar'
 
 import './ClarifyViewContainer.css'; // Import the CSS styles
     
@@ -18,7 +19,8 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
       //const [markerPosition, setMarkerPosition] = useState({ latitude: 37.7749, longitude: -122.4194 });
       const [showModal, setShowModal] = useState(false);
 
-
+      const storedName = localStorage.getItem('userName');
+      if (!showShareOptions && storedName) setShowShareOptions(true);
       const handleShare = () => {
         if (navigator.share) {
           navigator.share({
@@ -67,14 +69,12 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
       
       const handleConfirmLocation = async (newCoordinates, email, highlight, website, socialhandle, picurl, description) => {
         // ... handle the confirmed location here ...
-        console.log(email);
-        console.log(highlight);
-        console.log(socialhandle);
-        console.log(newCoordinates);
           setLocation({
                 latitude: newCoordinates.latitude,
                 longitude: newCoordinates.longitude,
               });
+
+          localStorage.setItem('userName', name);
 
           if (highlight){
             const LeaderData = {
@@ -125,7 +125,7 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
       };
       const handleSubmit = async (event) => {
         event.preventDefault();
-          
+        
         const userViewData = {
             name,
             view: selectedView,
@@ -216,8 +216,11 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
         {showShareOptions && (
           <div className="share-container">
             <h2>Thank you for participating!</h2>
+            <p>Dear {storedName},</p>
+            <p>You can help us grow by sharing by asking your friends to clarify their opinion</p>
+            <p>also feel free to refer us an organization that would help them highlight the issues they care for</p>
             <p>Share this survey with others:</p>
-            <button onClick={handleShare}>Share on social media</button>
+            <ShareBar />
             <button onClick={handleShareToLeader}>Share with a leader</button>
           </div>
         )}
