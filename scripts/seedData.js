@@ -1,7 +1,7 @@
 // scripts/seedData.js
 const mongoose = require('mongoose');
-const Organization = require('../models/Organization');
-const Initiative = require('../models/Initiative');
+const Organization = require('../models/Organizations');
+const Initiative = require('../models/Initiatives');
 
 
 const organizations = [
