@@ -1,7 +1,7 @@
-// models/Initiatives.js
+// models/Initiative.js
 const mongoose = require('mongoose');
 
-const InitiativesSchema = new mongoose.Schema({
+const InitiativeSchema = new mongoose.Schema({
   image: String,
   description: String,
   link : String,
@@ -16,8 +16,8 @@ const InitiativesSchema = new mongoose.Schema({
   },
 });
 
-InitiativesSchema.index({ location: '2dsphere' });
+InitiativeSchema.index({ location: '2dsphere' });
 
 
-const Initiatives = mongoose.model('Leader', InitiativesSchema);
-module.exports = Initiatives;
+const Initiative = mongoose.model('Initiative', InitiativesSchema);
+module.exports = Initiative;

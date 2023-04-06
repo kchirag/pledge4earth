@@ -21,5 +21,5 @@ const OrganizationSchema = new mongoose.Schema({
 OrganizationSchema.index({ location: '2dsphere' });
 
 
-const Organization = mongoose.model('Leader', OrganizationSchema);
+const Organization = mongoose.model('Organization', OrganizationSchema);
 module.exports = Organization;
