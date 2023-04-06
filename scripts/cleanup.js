@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const UserView = require('../models/UserView'); // Update this path to match your project structure
 
-const uri = 'mongodb+srv://kchirag:Belapur-123@pledge4earth.8he3kvu.mongodb.net/?retryWrites=true&w=majority';
-
+const uri = process.env.MONGODB_URI;
 // Connect to the database (replace the connection string if necessary)
 mongoose.connect(uri, {
   useNewUrlParser: true,

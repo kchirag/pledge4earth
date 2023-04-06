@@ -14,8 +14,8 @@
 }
 .OrganizationSignup {
   display: flex;
-  margin-left: 20px;
-  width: 40%;
+  margin-left: 10px;
+  width: 50%;
   flex-direction: column;
   align-items: center;
 }
