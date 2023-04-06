@@ -18,11 +18,18 @@ function LocationModal({ show, onHide, onConfirm, location }) {
   const [socialhandle,setsocialhandle] = useState('');
   const [picurl,setpicurl] = useState('');
   const [description,setdescription] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(true);
 
   const [markerPosition, setMarkerPosition] = useState({
     latitude: location.latitude || 0,
     longitude: location.longitude || 0,
   });
+
+  const handleChange = (e) => {
+    setemail(e.target.value);
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    setIsValidEmail(emailRegex.test(e.target.value));
+  };    
   const [dragging, setDragging] = useState(false);
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -102,7 +109,7 @@ function LocationModal({ show, onHide, onConfirm, location }) {
               </div>
             )}
             <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" onChange={(e) => setemail(e.target.value)} />
+            <input type="email" id="email" name="email" onChange={handleChange} />
         </div>
         </div>
       </Modal.Body>
@@ -113,7 +120,11 @@ function LocationModal({ show, onHide, onConfirm, location }) {
         <Button
           variant="primary"
           onClick={() => {
-            console.log()
+
+            if (!isValidEmail) {
+              alert('Please enter a valid email address');
+              return;
+            }
             onConfirm(markerPosition,  email, highlight, website, socialhandle, picurl, description);
             onHide();
           }}

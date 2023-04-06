@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import LocationModal from './LocationModal';
 import ShareBar from './ShareBar'
 
+
 import './ClarifyViewContainer.css'; // Import the CSS styles
     
 
@@ -20,6 +21,33 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
       const [showModal, setShowModal] = useState(false);
 
       const storedName = localStorage.getItem('userName');
+      function formatEmailContent() {
+    const content = `
+      Dear [Leader's Name],
+
+      I hope this message finds you well. As a devoted member of our community, I felt compelled to express my thoughts, along with those of many others, who stand shoulder to shoulder in unity.
+
+      Our collective hearts beat as one, with a shared purpose and vision. We know that our opinions will carry greater weight when you, our esteemed leader, recognize the depth of our shared emotions and the power of our togetherness. We are not just individuals voicing our concerns, but a united front whose passion and dedication can help guide us towards a brighter future.
+
+      With hope in our hearts and an unshakable belief in your leadership, we implore you to acknowledge the love and commitment that binds us together. When you understand that we are not alone in our convictions, you will see that our collective opinion is a force to be reckoned with.
+
+      In this moment, we kindly ask you to embrace our heartfelt plea and join us in the pursuit of our shared goals. Together, we can make a difference, and together, we can build a brighter tomorrow.
+
+      Thank you for your time and consideration, and we eagerly await your response.
+
+      Warmest regards,
+
+      {storedName}`;
+
+      return encodeURIComponent(content);
+    }
+    const emailSubject = 'United We Stand: A Heartfelt Plea to Our Esteemed Leader';
+    function generateMailtoLink(subject, body) {
+      return `mailto:?subject=${encodeURIComponent(subject)}&body=${body}`;
+    }
+    const emailContent = formatEmailContent();
+    const mailtoLink = generateMailtoLink(emailSubject, emailContent)
+
       if (!showShareOptions && storedName) setShowShareOptions(true);
       const handleShare = () => {
         if (navigator.share) {
@@ -31,10 +59,6 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
         } else {
           alert('Sharing is not yet implemented.');
         }
-      };
-      const handleShareToLeader = () => {
-        // Implement sharing to a leader here
-        alert('Share with a leader (not implemented)');
       };
 
       const views = [
@@ -115,10 +139,29 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
               console.error('Error saving user view:', error);
             }
           }
+          sendConfirmationEmail(email)
           onNewUserView();
           setShowShareOptions(true);
       };
-      
+      async function sendConfirmationEmail(email) {
+        const subject = 'Email Confirmation';
+        const text = `Dear ${name},
+
+        Thank you for expressing your views:
+
+        https://lead4earth.org/confirm/${email}
+
+        Best regards,
+        Lead4Earth Team`;
+        try {
+          const response = await axiosInstance.post('/sendEmail', { email, subject, text });
+          console.log(response.data.message);
+          return true;
+        } catch (error) {
+          console.error('Error sending email:', error);
+          return false;
+        }
+      }
       const handleChange = (event) => {
         event.preventDefault();
         setSelectedView(event.target.value);
@@ -221,7 +264,7 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
             <p>also feel free to refer us an organization that would help them highlight the issues they care for</p>
             <p>Share this survey with others:</p>
             <ShareBar />
-            <button onClick={handleShareToLeader}>Share with a leader</button>
+             <a href={mailtoLink}>Invite a Leader</a>
           </div>
         )}
         </>

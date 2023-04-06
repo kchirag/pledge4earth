@@ -8,6 +8,7 @@ const userViewsRouter = require('./routes/userViews');
 const viewsRouter = require('./routes/views');
 const nearbyUsersRouter = require('./routes/nearbyUsers');
 const nearbyLeadersRouter = require('./routes/nearbyLeaders')
+const emailRoute = require('./routes/email');
 
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
@@ -46,6 +47,7 @@ app.use('/api/userViews', userViewsRouter);
 app.use('/api/views', viewsRouter);
 app.use('/api/nearby-users', nearbyUsersRouter);
 app.use('/api/nearby-leaders', nearbyLeadersRouter);
+app.use('/sendEmail', emailRoute);
 
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;
@@ -54,6 +56,8 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
+
+
 
 // Define the port your server will listen on
 const port = process.env.PORT || 5000;
