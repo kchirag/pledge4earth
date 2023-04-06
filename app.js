@@ -47,7 +47,7 @@ app.use('/api/userViews', userViewsRouter);
 app.use('/api/views', viewsRouter);
 app.use('/api/nearby-users', nearbyUsersRouter);
 app.use('/api/nearby-leaders', nearbyLeadersRouter);
-app.use('/sendEmail', emailRoute);
+app.use('/api/sendEmail', emailRoute);
 
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;

@@ -139,22 +139,25 @@ import './ClarifyViewContainer.css'; // Import the CSS styles
               console.error('Error saving user view:', error);
             }
           }
+          console.log(email);
           sendConfirmationEmail(email)
           onNewUserView();
           setShowShareOptions(true);
       };
-      async function sendConfirmationEmail(email) {
+      async function sendConfirmationEmail(to) {
         const subject = 'Email Confirmation';
         const text = `Dear ${name},
 
         Thank you for expressing your views:
 
-        https://lead4earth.org/confirm/${email}
+        https://lead4earth.org/confirm/${to}
 
         Best regards,
         Lead4Earth Team`;
+        console.log(to);
+        console.log(name);
         try {
-          const response = await axiosInstance.post('/sendEmail', { email, subject, text });
+          const response = await axiosInstance.post('/api/sendEmail', { to, subject, text });
           console.log(response.data.message);
           return true;
         } catch (error) {
