@@ -3,15 +3,7 @@ const mongoose = require('mongoose');
 const Organization = require('../models/Organization');
 const Initiative = require('../models/Initiative');
 
-const organizations = [
-  {
-    name: 'Sustainable Conservation',
-    description: "The sustainable observation's watershed project aims to restore and expand integrated water supply to drought-affected areas in California and other parts of the state.",
-    website: 'https://suscon.org/about-us/',
-  
-  },
-  // Add more organizations
-];
+
 const organizations = [
   {
     name: 'Sustainable Conservation',
@@ -116,13 +108,13 @@ mongoose
     console.log('Organizations seeded successfully.');
 
     // Seed initiatives (assigning an organization to each initiative)
-    for (let i = 0; i < initiatives.length; i++) {
+    /*for (let i = 0; i < initiatives.length; i++) {
       initiatives[i].organizationId =
         createdOrganizations[i % createdOrganizations.length]._id;
     }
     await Initiative.insertMany(initiatives);
     console.log('Initiatives seeded successfully.');
-
+	*/
     // Close the database connection
     mongoose.connection.close();
   } catch (err) {
