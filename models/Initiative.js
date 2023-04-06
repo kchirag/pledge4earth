@@ -19,5 +19,5 @@ const InitiativeSchema = new mongoose.Schema({
 InitiativeSchema.index({ location: '2dsphere' });
 
 
-const Initiative = mongoose.model('Initiative', InitiativesSchema);
+const Initiative = mongoose.model('Initiative', InitiativeSchema);
 module.exports = Initiative;
