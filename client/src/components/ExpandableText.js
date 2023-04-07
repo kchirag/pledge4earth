@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../index.css'
+import '../App.css'
 
 const ExpandableText = ({ maxLength, children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -13,7 +13,7 @@ const ExpandableText = ({ maxLength, children }) => {
     <>
       {isExpanded ? children : truncatedText}
       <button onClick={toggleExpanded} className="read-more-button">
-        {isExpanded ? 'Read Less' : 'Read More'}
+        {isExpanded ? 'less' : 'more'}
       </button>
     </>
   );

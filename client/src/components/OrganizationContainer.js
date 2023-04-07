@@ -35,28 +35,39 @@ const OrganizationContainer = ({ userLocation }) => {
     <div className="orgs-container">
       <h2>Organizations helping us lead</h2>
       {/* Static data to be changed later */}
-      
-      <ul>
-          {nearbyOrganizationsData.users.map((org, index) => (
-        <li key={index}>
-          <div style={{ display: 'flex', alignItems: 'left' }}>
-            <div>
-            <img
-              src={org.image}
-              type="image/svg+xml"
-              alt={`${org.name} logo`}
-              style={{ height: '30px', marginRight: '10px' }}
-            />
-            
-            {org.name}
-            </div>
 
-          </div>
-          <div style={{ overflowY: 'auto' }}>
-            <ExpandableText maxLength={40}>{org.description}</ExpandableText>
-          </div>          
-        </li>
-      ))}
+      <ul>
+        {nearbyOrganizationsData.users.map((org, index) => (
+          <li
+            key={index}
+            style={{
+              minHeight: '50px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img
+                src={org.image}
+                type="image/svg+xml"
+                alt={`${org.name} logo`}
+                style={{ height: '15px', marginRight: '10px' }}
+              />
+              <div>{org.name}</div>
+            </div>
+            <div
+              style={{
+                maxHeight: '50px',
+                maxWidth: '500px',
+                overflowY: 'auto',
+                fontSize: '0.8em',
+                paddingLeft: '5px',
+              }}
+            >
+              <ExpandableText maxLength={60}>{org.description}</ExpandableText>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

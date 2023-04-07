@@ -78,8 +78,7 @@ return (
           </Marker>
         ))}
       </MapContainer>
-      <h3>Nearby Users:</h3>
-      <p>{nearbyUsersData.count} voices here are looking up for their leader to acknowledge</p>
+      <p>{nearbyUsersData.count} voices here are looking up for their <br/>leaders to acknowledge their views</p>
       
     </div>
   </div>
