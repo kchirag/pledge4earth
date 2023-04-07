@@ -79,7 +79,7 @@ return (
         ))}
       </MapContainer>
       <h3>Nearby Users:</h3>
-      <p>{nearbyUsersData.count} users within 50 miles</p>
+      <p>{nearbyUsersData.count} voices here are looking up for their leader to acknowledge</p>
       
     </div>
   </div>

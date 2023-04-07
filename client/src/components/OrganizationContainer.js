@@ -39,15 +39,22 @@ const OrganizationContainer = ({ userLocation }) => {
       <ul>
           {nearbyOrganizationsData.users.map((org, index) => (
         <li key={index}>
-          <img
-            src={org.image}
-            type="image/svg+xml"
-            alt={`${org.name} logo`}
-            style={{ height: '30px', marginRight: '10px' }}
-          />
+          <div style={{ display: 'flex', alignItems: 'left' }}>
+            <div>
+            <img
+              src={org.image}
+              type="image/svg+xml"
+              alt={`${org.name} logo`}
+              style={{ height: '30px', marginRight: '10px' }}
+            />
+            
+            {org.name}
+            </div>
 
-          {org.name} <br/>
-          <ExpandableText maxLength={50}>{org.description}</ExpandableText>
+          </div>
+          <div style={{ overflowY: 'auto' }}>
+            <ExpandableText maxLength={40}>{org.description}</ExpandableText>
+          </div>          
         </li>
       ))}
       </ul>

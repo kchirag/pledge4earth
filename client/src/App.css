@@ -98,3 +98,17 @@ body {
   height: 300px;
   position: 'relative';
 }
+
+.read-more-button {
+  background-color: #4CAFFF;
+  border-color: #4CAFFF;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+}
