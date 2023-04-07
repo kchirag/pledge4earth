@@ -42,14 +42,7 @@ function ViewsContainer({ userLocation }, { refreshKey }) {
         if (data.count > 0) {
           // Set the viewport center to the first view's lat/long
           console.log(data);
-          
-          //   map.flyTo([data.users[0].location.coordinates[1], viewData[0].longitude], 13);
-          // setViewport((prevViewport) => ({
-          //   ...prevViewport,
-          //   latitude: data.users[0].location.coordinates[1],
-          //   longitude: data.users[0].location.coordinates[0],
-          //   zoom:20,
-          // }));
+        
         }
         
       } catch (error) {
@@ -74,7 +67,7 @@ return (
         onViewportChange={handleViewportChange}
         
       >
-      <MapUpdater center={nearbyUsersData.users.length > 0 ? [nearbyUsersData.users[0].location.coordinates[1], nearbyUsersData.users[0].location.coordinates[0]] : [37.7,-120]} /> {/* Add the MapUpdater component */}
+      <MapUpdater center={nearbyUsersData.users.length > 0 ? [nearbyUsersData.users[0].location.coordinates[1], nearbyUsersData.users[0].location.coordinates[0]] : [userLocation.latitude, userLocation.longitude]} /> {/* Add the MapUpdater component */}
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
