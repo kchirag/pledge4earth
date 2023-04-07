@@ -11,6 +11,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import OrganizationSignup from './components/OrganizationSignup';
 import AboutContainer from './components/AboutContainer';
 import FaqsContainer from './components/FaqsContainer';
+import OrganizationContainer from './components/OrganizationContainer';
 
 // Your other components
 
@@ -79,7 +80,7 @@ function App() {
                 <div className="top-containers">
                   <LeaderContainer userLocation={userLocation} />
                   <ViewsContainer refreshKey={refreshKey} userLocation={userLocation} />
-                  <NewsContainer />
+                  <OrganizationContainer userLocation={userLocation} />
                 </div>
               )}
               <div className="bottom-container">

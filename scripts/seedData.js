@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Organization = require('../models/Organization');
 const Initiative = require('../models/Initiative');
 
+const path = require('path');
+require('dotenv').config({ path: './.env' });
+console.log(process.env);
+
 
 const organizations = [
   {
@@ -60,7 +64,7 @@ const organizations = [
   }, 
   {
 	name: 'WildAid',
-	image: 'https://savesfbay.org/wp-content/uploads/2022/03/STB_New_Logo-17.png',
+	image: 'https://wildaid.org/wp-content/themes/wildaidtheme/svgs/wildaid-logo-white.svg',
 	description: "WildAid works to reduce the demand for endangered animals in the market by raising public awareness and changing buyer behavior. They emphasize the consequences of the continual trade and consumption of animals like elephants, sharks, parrots, etc. to stop the demand.",
 	website: 'https://wildaid.org/about/',
 	email: '',

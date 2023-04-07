@@ -28,6 +28,7 @@ function OrganizationSignup() {
   return (
     <div className="OrganizationSignup">
       <h2>Environmental Organizations</h2>
+      <div className="content-container">
       {showsetup ? (
       <form onSubmit={handleSubmit}>
         <div>
@@ -101,7 +102,7 @@ function OrganizationSignup() {
           <button onClick={clicksignup}>Sign Up</button>
         </div>
       )}
-      
+      </div>
     </div>
   );
 }

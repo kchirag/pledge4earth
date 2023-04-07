@@ -4,7 +4,7 @@ import ExpandableText from './ExpandableText';
 
 
 const OrganizationContainer = ({ userLocation }) => {
-  const [nearbyOrganizationsData, setNearbyOrganizationsData] = useState({ count: 0, organizations: [] });
+  const [nearbyOrganizationsData, setNearbyOrganizationsData] = useState({ count: 0, users: [] });
   
   const fetchNearbyOrganizationsFromAPI = async (latitude, longitude, distance) => {
     const response = await axiosInstance.get(`/api/nearby-organizations?latitude=${latitude}&longitude=${longitude}&distance=${distance}`);
@@ -12,7 +12,7 @@ const OrganizationContainer = ({ userLocation }) => {
     return data;
   };
   useEffect(() => {
-    const fetchOrganizations = async () => {
+    const fetchNearbyOrganizations = async () => {
         try {
 
           const data = await fetchNearbyOrganizationsFromAPI(userLocation.latitude, userLocation.longitude, 10000);
@@ -26,10 +26,10 @@ const OrganizationContainer = ({ userLocation }) => {
         } catch (error) {
           console.error('Error fetching organizations:', error);
         }
-      };
+    };
 
-      fetchNearbyOrganizations();
-    }, [userLocation, refreshKey]);
+    fetchNearbyOrganizations();
+  }, [userLocation]);
 
   return (
     <div className="orgs-container">
@@ -37,12 +37,13 @@ const OrganizationContainer = ({ userLocation }) => {
       {/* Static data to be changed later */}
       
       <ul>
-          {nearbyOrganizationsData.map((org, index) => (
+          {nearbyOrganizationsData.users.map((org, index) => (
         <li key={index}>
           <img
-            src={rep.logo}
-            alt={`${rep.name} logo`}
-            style={{ width: '50px', height: '50px', marginRight: '10px' }}
+            src={org.image}
+            type="image/svg+xml"
+            alt={`${org.name} logo`}
+            style={{ height: '30px', marginRight: '10px' }}
           />
 
           {org.name} <br/>

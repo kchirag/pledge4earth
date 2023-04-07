@@ -14,6 +14,7 @@ function ShareBar() {
     "Our thoughts gain importance when our leader realizes we're backed by many.",
     'Our perspective becomes significant as our leader sees our collective strength.',
   ];
+
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
