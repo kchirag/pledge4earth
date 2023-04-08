@@ -8,9 +8,9 @@ const userViewsRouter = require('./routes/userViews');
 const viewsRouter = require('./routes/views');
 const nearbyUsersRouter = require('./routes/nearbyUsers');
 const nearbyLeadersRouter = require('./routes/nearbyLeaders')
-const emailRouter = require('./routes/email');
+const emailRouter = require('./routes/emailRouter');
 const nearbyOrganizationRouter = require('./routes/nearbyOrganizations');
-
+const confirmEmailRouter = require('./routes/confirmEmailRouter')
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
 const fs = require('fs');
@@ -50,6 +50,7 @@ app.use('/api/nearby-users', nearbyUsersRouter);
 app.use('/api/nearby-leaders', nearbyLeadersRouter);
 app.use('/api/sendEmail', emailRouter);
 app.use('/api/nearby-organizations', nearbyOrganizationRouter);
+app.get("/confirm-email/:token", confirmEmailRouter);
 
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;

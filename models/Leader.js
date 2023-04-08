@@ -16,6 +16,8 @@ const LeaderSchema = new mongoose.Schema({
   email : String,
   socialhandle: String,
   selectedView: String,
+  isValidated: {type:Boolean, default:false},
+  isEmailConfirmed: {type:Boolean, default:false},
   location: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true },
