@@ -63,13 +63,26 @@ function App() {
 
   return (
     <div className="App">
-              <header className="App-header">
-                <h1>Lead4Earth</h1>
-              </header>
-      
       <Router>
-      <Menu />
+        <header className="App-header">
+          <div style={{marginLeft: '1em'}}>
+          <img
+                  src="/lead4earth.png"
+                  alt="Lead4Earth"
+                  className="logo"
+                  
+                />
+          </div>
+          <div className="menu-container">
+            <Menu />
+          </div>
+          <div className="right-content-container">
+            {/* Add your content here */}
+            <p>Join</p>
+          </div>
+        </header>
         <Routes>
+    
           <Route path="/About" element={<AboutContainer />} />
           <Route path="/Faqs" element={<FaqsContainer />} />
           <Route path="/" element={
