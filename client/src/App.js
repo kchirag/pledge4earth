@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Menu from './components/Menu';
+import axios from 'axios';
 
 import './App.css';
 import LeaderContainer from './components/LeaderContainer';
@@ -32,25 +33,67 @@ function App() {
     const fetchUserLocation = async () => {
       try {
         const location = await getUserLocation();
+        console.log("from the browser");
+        console.log(location);
         setUserLocation(location);
       } catch (error) {
-        console.error('Error fetching user location:', error);
+        console.error('Error fetching user location from browser:', error);
+        try{
+          const location = await getLocationFromIP();
+          setUserLocation(location);
+        }
+        catch (error1){
+            console.error('Error fetching user location from IP:', error1);
+        } 
       } finally {
-        setLoading(false); // Set loading to false after fetching the location
+          setLoading(false); // Set loading to false after fetching the location
       }
     };
-
     fetchUserLocation();
   }, []);
+
+  //this is to get location details if user declines to share his location
+  const getLocationFromIP = async () => {
+    try {
+      const response = await axios.get('https://ip-api.com/json/');
+      const { data } = response;
+
+      if (data.status === 'fail') {
+        throw new Error('Failed to get location data');
+      }
+
+
+      return {
+        latitude: data.lat,
+        longitude: data.lon,
+        city: data.cityName,
+      };
+    } catch (error) {
+      console.error('Error getting location from IP:', error);
+      return {
+        latitude: 37.7,
+        longitude: -122,
+        city: "San Francisco",
+      };
+    }
+  };
+  
   const getUserLocation = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
+    return new Promise(async (resolve, reject) => {
+      setTimeout(async () => {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
-            resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
+          async (position) => {
+            try {
+              const cityName = await findNearestCity(position.coords.latitude, position.coords.longitude);
+              console.log(cityName);
+              resolve({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                city: cityName,
+              });
+            } catch (error) {
+              reject(error);
+            }
           },
           (error) => {
             reject(error);
@@ -60,25 +103,43 @@ function App() {
     });
   };
 
+  //this is to get city name on the top left of the browser bar. its worst come situation
+  const findNearestCity = async (latitude, longitude) => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`
+      );
+      const { data } = response;
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const cityName = data.address.city || data.address.town || data.address.village;
+      return cityName;
+    } catch (error) {
+      console.error('Error finding nearest city:', error);
+      return null;
+    }
+  };
 
   return (
     <div className="App">
       <Router>
         <header className="App-header">
           <div style={{marginLeft: '1em'}}>
-          <img
+          <span><img
                   src="/lead4earth.png"
                   alt="Lead4Earth"
                   className="logo"
-                  
-                />
+                />Lead for Earth</span>
           </div>
           <div className="menu-container">
             <Menu />
           </div>
           <div className="right-content-container">
             {/* Add your content here */}
-            <p>Join</p>
+            <p>{userLocation?.city || ''}</p>
           </div>
         </header>
         <Routes>

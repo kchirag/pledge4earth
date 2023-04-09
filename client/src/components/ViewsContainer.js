@@ -6,6 +6,7 @@ import { divIcon } from 'leaflet';
 
 import axiosInstance from '../axiosInstance';
 import MapUpdater from './MapUpdater'; // Import the MapUpdater component
+import HeatmapLayer from './HeatmapLayer';
 
 
 
@@ -14,6 +15,7 @@ function ViewsContainer({ userLocation }, { refreshKey }) {
 
 
   const [nearbyUsersData, setNearbyUsersData] = useState({ count: 0, users: [] });
+  const [points, setPoints] = useState({points:[]});
 
 
   const [viewport, setViewport] = useState({
@@ -28,7 +30,13 @@ function ViewsContainer({ userLocation }, { refreshKey }) {
   const fetchNearbyUsersFromAPI = async (latitude, longitude, distance) => {
     const response = await axiosInstance.get(`/api/nearby-users?latitude=${latitude}&longitude=${longitude}&distance=${distance}`);
     const data = await response.data;
-    return data;
+    const points = data.users.map(user => {
+      const [longitude, latitude] = user.location.coordinates;
+      const intensity = 1; // or any other property you want to use as intensity
+      return [latitude, longitude, intensity];
+    });
+
+    return {data,points};
   };
 
 
@@ -36,8 +44,9 @@ function ViewsContainer({ userLocation }, { refreshKey }) {
   const fetchUsers = async () => {
       try {
 
-        const data = await fetchNearbyUsersFromAPI(userLocation.latitude, userLocation.longitude, 50);
+        const {data,points} = await fetchNearbyUsersFromAPI(userLocation.latitude, userLocation.longitude, 50);
         setNearbyUsersData(data);
+        setPoints(points);
 
         if (data.count > 0) {
           // Set the viewport center to the first view's lat/long
@@ -77,6 +86,7 @@ return (
             <Popup>{view.name}</Popup>
           </Marker>
         ))}
+        <HeatmapLayer points={points} />
       </MapContainer>
       <p>{nearbyUsersData.count} voices here are looking up for their <br/>leaders to acknowledge their views</p>
       
