@@ -18,7 +18,7 @@ function LocationModal({ show, onHide, onConfirm, location }) {
   const [socialhandle,setsocialhandle] = useState('');
   const [picurl,setpicurl] = useState('');
   const [description,setdescription] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   const [markerPosition, setMarkerPosition] = useState({
     latitude: location.latitude || 0,
