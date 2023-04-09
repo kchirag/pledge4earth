@@ -17,7 +17,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
 
 
   const [name, setName] = useState('');
-  console.log(userLocation);
+  //console.log(userLocation);
   const [location, setLocation] = useState(userLocation);
   //const [markerPosition, setMarkerPosition] = useState({ latitude: 37.7749, longitude: -122.4194 });
   const [showModal, setShowModal] = useState(false);
@@ -151,7 +151,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   }
   const handleChange = (event) => {
 //    event.preventDefault();
-    console.log(location);
+    setLocation(userLocation);
     setSelectedView(event.target.value);
   };
   const handleSubmit = async (event) => {
