@@ -54,19 +54,21 @@ function App() {
 
   //this is to get location details if user declines to share his location
   const getLocationFromIP = async () => {
+    const IPINFO_API_KEY = '1f0afc3cde17f5'; 
     try {
-      const response = await axios.get('https://ip-api.com/json/');
+      const response = await axios.get(`https://ipinfo.io/?token=${IPINFO_API_KEY}`);
       const { data } = response;
 
       if (data.status === 'fail') {
         throw new Error('Failed to get location data');
       }
 
+      const [latitude, longitude] = data.loc.split(',').map(parseFloat);
 
       return {
-        latitude: data.lat,
-        longitude: data.lon,
-        city: data.cityName,
+        latitude,
+        longitude,
+        city: data.city,
       };
     } catch (error) {
       console.error('Error getting location from IP:', error);
@@ -79,6 +81,7 @@ function App() {
   };
   
   const getUserLocation = () => {
+
     return new Promise(async (resolve, reject) => {
       setTimeout(async () => {
         navigator.geolocation.getCurrentPosition(
@@ -92,6 +95,11 @@ function App() {
                 city: cityName,
               });
             } catch (error) {
+              if (error.code === error.PERMISSION_DENIED) {
+                    return getLocationFromIP();
+                  } else {
+                    console.log("An error occurred while trying to get the user's location:", error.message);
+                  }              
               reject(error);
             }
           },
@@ -159,7 +167,7 @@ function App() {
               )}
               <div className="bottom-container">
                 <ErrorBoundary>
-                  <ClarifyViewContainer onNewUserView={handleNewUserView} />
+                  <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
                   <OrganizationSignup />
                 </ErrorBoundary>
               </div>

@@ -2,7 +2,7 @@
 import axiosInstance from '../axiosInstance';
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import LocationModal from './LocationModal';
 import ShareBar from './ShareBar'
 import {CONFIRM_EMAIL_MESSAGE, CONFIRM_EMAIL_SUBJECT, LEADER_MESSAGE} from '../constant'
@@ -11,28 +11,29 @@ import {CONFIRM_EMAIL_MESSAGE, CONFIRM_EMAIL_SUBJECT, LEADER_MESSAGE} from '../c
 import './ClarifyViewContainer.css'; // Import the CSS styles
     
 
-function ClarifyViewContainer({ onNewUserView }) {
+function ClarifyViewContainer({ onNewUserView, userLocation }) {
   const [selectedView, setSelectedView] = useState('');
   const [showShareOptions, setShowShareOptions] = useState(false);
 
 
   const [name, setName] = useState('');
-  const [location, setLocation] = useState(null);
+  console.log(userLocation);
+  const [location, setLocation] = useState(userLocation);
   //const [markerPosition, setMarkerPosition] = useState({ latitude: 37.7749, longitude: -122.4194 });
   const [showModal, setShowModal] = useState(false);
 
   const storedName = localStorage.getItem('userName');
   function formatEmailContent() {
-  const content = LEADER_MESSAGE;
+    const content = LEADER_MESSAGE;
 
-  return encodeURIComponent(content);
-}
-const emailSubject = 'United We Stand: A Heartfelt Plea to Our Esteemed Leader';
-function generateMailtoLink(subject, body) {
-  return `mailto:?subject=${encodeURIComponent(subject)}&body=${body}`;
-}
-const emailContent = formatEmailContent();
-const mailtoLink = generateMailtoLink(emailSubject, emailContent)
+    return encodeURIComponent(content);
+  }
+  const emailSubject = 'United We Stand: A Heartfelt Plea to Our Esteemed Leader';
+  function generateMailtoLink(subject, body) {
+    return `mailto:?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
+  const emailContent = formatEmailContent();
+  const mailtoLink = generateMailtoLink(emailSubject, emailContent)
 
   if (!showShareOptions && storedName) setShowShareOptions(true);
   const handleShare = () => {
@@ -149,7 +150,8 @@ const mailtoLink = generateMailtoLink(emailSubject, emailContent)
     }
   }
   const handleChange = (event) => {
-    event.preventDefault();
+//    event.preventDefault();
+    console.log(location);
     setSelectedView(event.target.value);
   };
   const handleSubmit = async (event) => {
@@ -173,28 +175,6 @@ const mailtoLink = generateMailtoLink(emailSubject, emailContent)
     onNewUserView();
     setShowShareOptions(true);
   };
-
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-    }
-  };
-
-  useEffect(() => {
-    getUserLocation();
-  }, []);
 
 
   return (

@@ -135,3 +135,10 @@ body {
   height: 50px; /* Maintain the aspect ratio of the logo */
   width: auto;
 }
+button {
+  background-color: seagreen;
+  color: white; /* For better contrast */
+  border-radius: 10px !important; /* Adjust this value for the desired roundness */
+
+  /* Add any other styles you want for the buttons */
+}

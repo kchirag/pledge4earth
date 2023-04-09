@@ -8,6 +8,8 @@ function ShareBar() {
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
   const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+  const [customReason, setCustomReason] = useState("");
+
 
   const shareTextOptions = [
     'Our voice holds weight when our leader understands we stand united. As more and more people come together, driven by a love for our planet, leaders will be inspired to take action and prioritize eco-friendly policies',
@@ -19,6 +21,8 @@ function ShareBar() {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [selectedShareText, setSelectedShareText] = useState(shareTextOptions[0]);
+
+
   const storedName = localStorage.getItem('userName');
   //setUserName(storedName);
   const subject = "Think green, talk green, and let's make a scene!";
@@ -31,6 +35,12 @@ function ShareBar() {
   };
 
 
+  const handleCustomReasonSelection = () => {
+    setSelectedShareText(customReason);
+  };
+  const handleCustomReasonChange = (event) => {
+    setCustomReason(event.target.value);
+  };
 
   return (
     <div className="share-bar">
@@ -66,19 +76,30 @@ function ShareBar() {
                 required
               />
             </label>
-            <label>
-              Share Text:
-              <select
-                value={selectedShareText}
-                onChange={(e) => setSelectedShareText(e.target.value)}
-              >
-                {shareTextOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <ul className="reasons-list">
+              {shareTextOptions.map((option, index) => (
+                <li
+                      key={index}
+                      className={`reason-item${selectedShareText === option ? " selected" : ""}`}
+                      onClick={() => setSelectedShareText(option)}
+                    > {option}
+                    </li>
+                  ))}
+
+                <li>
+                  <input
+                    type="text"
+                    className="custom-reason-input"
+                    placeholder="Type your own reason..."
+                    value={customReason}
+                    onChange={handleCustomReasonChange}
+                  />
+                  <button className="custom-reason-button" onClick={handleCustomReasonSelection}>
+                    Select Custom Reason
+                  </button>
+                </li>
+              
+            </ul>
             <button type="submit">Send Email</button>
             <button onClick={() => setShowEmailModal(false)}>Cancel</button>
           </form>
