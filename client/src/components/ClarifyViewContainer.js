@@ -57,23 +57,23 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   const options = [
       {
         value: 1,
-        label: "on High Priority",
-        tooltip: "Human activities primarily cause climate change; immediate action needed."
+        label: "Highly urgent, legislative action needed",
+        tooltip: "There is conclusive evidence to demonstrate that the climate is changing and human-caused CO2 emissions are contributing to this issue. Immediate action should be taken at every level of government to decrease GHG emissions to X level by X year. (Electrification ordinances, carbon fee, etc)."
       },
       {
         value: 2,
-        label: "Soon but not High Priority",
-        tooltip: "Human activities contribute; steps to address it necessary."
+        label: "Necessary but not urgent",
+        tooltip: "Human activities are causing climate change, and we should take action to decrease emissions. However, it should be spread in future.."
       },
       {
         value: 3,
         label: "Unsure",
-        tooltip: "Unsure about human activities' role in climate change."
+        tooltip: "We can take measures to improve our environment (bike, recycle, compost, etc), but government and legislative intervention is not necessary"
       },
       {
         value: 4,
         label: "Disagree",
-        tooltip: "Climate change is real, but not mainly caused by humans."
+        tooltip: "Human activities do not worsen climate change, and no intervention is needed"
       },
     ];
 
@@ -154,6 +154,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     setLocation(userLocation);
     setSelectedView(event.target.value);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -184,7 +185,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
       <h2>Pledge as Individual</h2>
       <form onSubmit={handleSubmit}>
       <div>
-          <label htmlFor="name">Name or Nickname:</label>
+          <label htmlFor="name">Known as:</label>
           <input
             type="text"
             id="name"
@@ -193,7 +194,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div>Do you want your community leader to act on environmental issues?
+        <div><h6>Do you want your community leader to act on environmental issues?</h6>
         {options.map((view, index) => (
           <div  key={index}>
             <input
@@ -205,6 +206,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
               onChange={handleChange}
             />
             <label htmlFor= {`view${index}`} title={view.tooltip} >{view.label}</label>
+
           </div>
         ))}
         </div>
@@ -220,6 +222,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
 
         
       </form>
+      <ShareBar />
     </div>
     )}
     {showShareOptions && (

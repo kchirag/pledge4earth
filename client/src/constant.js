@@ -12,16 +12,10 @@ Lead4Earth Team`;
 
 export const CONFIRM_EMAIL_SUBJECT = 'Confirm Email for publishing your view';
 export const LOADING_MESSAGE = 'Loading...';
-export const LEADER_MESSAGE = `Dear [Leader's Name],
+export const LEADER_MESSAGE = `Dear [Name],
 
-I hope this message finds you well. As a devoted member of our community, I felt compelled to express my thoughts, along with those of many others, who stand shoulder to shoulder in unity.
+I just signed the Lead4Earth pledge, because I believe that immediate legislative action is necessary to curb the impacts of climate change. This pledge is a fantastic grassroots initiative to demonstrate the growing public willpower for real, measurable action on climate change by our elected leaders. It is simultaneously a resource and an accountability measure for legislators to understand the urgency and demand for modern, climate-conscious laws.
 
-Our collective hearts beat as one, with a shared purpose and vision. We know that our opinions will carry greater weight when you, our esteemed leader, recognize the depth of our shared emotions and the power of our togetherness. We are not just individuals voicing our concerns, but a united front whose passion and dedication can help guide us towards a brighter future.
+Will you sign the pledge, join the initiative as a "leader", and lead the way to a more sustainable future?
 
-With hope in our hearts and an unshakable belief in your leadership, we implore you to acknowledge the love and commitment that binds us together. When you understand that we are not alone in our convictions, you will see that our collective opinion is a force to be reckoned with.
-
-In this moment, we kindly ask you to embrace our heartfelt plea and join us in the pursuit of our shared goals. Together, we can make a difference, and together, we can build a brighter tomorrow.
-
-Thank you for your time and consideration, and we eagerly await your response.
-
-Warmest regards,`;
+Thank you so much for your advocacy - we look forward to hearing back.`;

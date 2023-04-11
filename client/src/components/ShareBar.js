@@ -3,7 +3,7 @@ import './ShareBar.css';
 
 function ShareBar() {
   const shareUrl = encodeURIComponent(window.location.href);
-  const shareText = encodeURIComponent('Check out this awesome website!');
+  const shareText = encodeURIComponent(`Our thoughts gain importance when our leader realizes we're backed by many.!`);
 
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
@@ -20,12 +20,15 @@ function ShareBar() {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [sendAnonymously, setSendAnonymously] = useState(false);
+  const [isLeaderOrgoAll, setIsLeaderOrgoAll ] = useState(2);
   const [selectedShareText, setSelectedShareText] = useState(shareTextOptions[0]);
+  const [subject, setSubject] = useState(`"Think green, talk green, and let's make a scene!"`);
 
 
   const storedName = localStorage.getItem('userName');
   //setUserName(storedName);
-  const subject = "Think green, talk green, and let's make a scene!";
+  //const subject = "Think green, talk green, and let's make a scene!";
   
   const handleEmailShare = (e) => {
     e.preventDefault();
@@ -37,29 +40,46 @@ function ShareBar() {
 
   const handleCustomReasonSelection = () => {
     setSelectedShareText(customReason);
+    setCustomReason(customReason);
   };
   const handleCustomReasonChange = (event) => {
+    console.log(event.target.value);
     setCustomReason(event.target.value);
+    //setSelectedShareText(event.target.value);
+    //handleCustomReasonChange(event.target.value);
+  };
+
+  const HandleReasonList = (event) => {
+    if(event.target.value === "Leader"){
+      setIsLeaderOrgoAll(0);
+    }
+    else if(event.target.value === "Organization"){
+     setIsLeaderOrgoAll(1); 
+    }
+    else{
+     setIsLeaderOrgoAll(2); 
+    }
+    console.log(event.target.value);
   };
 
   return (
     <div className="share-bar">
-      <a href={facebookShareUrl} target="_blank" rel="noopener noreferrer">
+      <a className="share-button" href={facebookShareUrl} target="_blank" rel="noopener noreferrer">
         Share on Facebook
       </a>
-      <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
+      <a className="share-button" href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
         Share on Twitter
       </a>
-      <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer">
+      <a className="share-button" href={linkedinShareUrl} target="_blank" rel="noopener noreferrer">
         Share on LinkedIn
       </a>
-      <button onClick={() => setShowEmailModal(true)}>Share via Email</button>
+      <button className="share-button" onClick={() => setShowEmailModal(true)}>Share via Email</button>
       {showEmailModal && (
         <div className="email-modal">
           <h2>Share via Email</h2>
           <form onSubmit={handleEmailShare}>
             <label>
-              Recepient Name:
+              Recepient's Name:
               <input
                 type="text"
                 value={userName}
@@ -76,6 +96,40 @@ function ShareBar() {
                 required
               />
             </label>
+            <div>
+                <div className="radio-group">
+                  <input
+                    type="radio"
+                    id="leaderRadio"
+                    name="leaderRadio"
+                    value="Leader"
+                    checked={ isLeaderOrgoAll === 0}
+                    onChange={(e) => HandleReasonList(e)}
+                  />
+                  <label htmlFor="leaderRadio">Leader</label>
+                </div>
+                <div className="radio-group">
+                  <input
+                    type="radio"
+                    id="organizationRadio"
+                    name="organizationRadio"
+                    value="Organization"
+                    checked={ isLeaderOrgoAll === 1 }
+                    onChange={(e) => HandleReasonList(e)}
+                  />
+                  <label htmlFor="organizationRadio">Organization</label>
+                </div>
+                <div className="radio-group">
+                  <input
+                    type="radio"
+                    id="allRadio"
+                    value="all"
+                    checked={ isLeaderOrgoAll===2}
+                    onChange={(e) => HandleReasonList(e)}
+                  />
+                  <label htmlFor="allRadio">All</label>
+                </div>
+            </div>
             <ul className="reasons-list">
               {shareTextOptions.map((option, index) => (
                 <li
@@ -94,12 +148,20 @@ function ShareBar() {
                     value={customReason}
                     onChange={handleCustomReasonChange}
                   />
-                  <button className="custom-reason-button" onClick={handleCustomReasonSelection}>
-                    Select Custom Reason
-                  </button>
+
                 </li>
               
             </ul>
+            <div>
+            <label>Subject</label>
+              <input
+                    type="text"
+                    className="custom-reason-input"
+                    placeholder="Invites your to share your views"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)} 
+                />
+            </div>
             <button type="submit">Send Email</button>
             <button onClick={() => setShowEmailModal(false)}>Cancel</button>
           </form>

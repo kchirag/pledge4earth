@@ -3,17 +3,11 @@ import React from 'react';
 const NewsContainer = () => {
   return (
     <div className="news-container">
-      <h2>Environmental News</h2>
+      
       {/* Static data to be changed later */}
       
-      <p>Voters Guide for Environment and Sustainability</p>
-      <ul>
-          <li>City Council Dist 2 — Sara Lashanlo ....5 miles away</li>
-          <li>City Council Dist 4 – Marisol Rubio ....7 miles away </li>
-          <li>Mayor(San Ramon) – Sabina Zafar ....1 mile away</li>
-          <li>County Representative Xyz ......20 Miles away </li>
-      </ul>
-      <p> Prepared by <b>Costa County Climate Leaders (4CL)</b></p>
+      <iframe width="600" height="400" src="https://www.youtube.com/embed/NUsbO3WJlsc" title="Lead4Earth Climate Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <h6>Narrated by Hari Kathrani</h6>
     </div>
   );
 };

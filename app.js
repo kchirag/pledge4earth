@@ -11,6 +11,9 @@ const nearbyLeadersRouter = require('./routes/nearbyLeaders')
 const emailRouter = require('./routes/emailRouter');
 const nearbyOrganizationRouter = require('./routes/nearbyOrganizations');
 const confirmEmailRouter = require('./routes/confirmEmailRouter')
+const uploadRoute = require('./routes/upload');
+
+
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
 const fs = require('fs');
@@ -42,6 +45,7 @@ const ca = fs.readFileSync(process.env.CERTIFICATECA, 'utf8');
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/leaders', leaderRoutes);
 app.use('/api/userViews', userViewsRouter);
@@ -51,6 +55,8 @@ app.use('/api/nearby-leaders', nearbyLeadersRouter);
 app.use('/api/sendEmail', emailRouter);
 app.use('/api/nearby-organizations', nearbyOrganizationRouter);
 app.get("/confirm-email/:token", confirmEmailRouter);
+app.use('/upload', uploadRoute);
+
 
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;
@@ -60,7 +66,7 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-
+//const storagekeyPath=process.env.STORAGEKEY;
 
 // Define the port your server will listen on
 const port = process.env.PORT || 5000;

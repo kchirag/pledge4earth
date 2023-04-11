@@ -168,7 +168,7 @@ function App() {
               <div className="bottom-container">
                 <ErrorBoundary>
                   <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
-                  <OrganizationSignup />
+                  <NewsContainer />
                 </ErrorBoundary>
               </div>
             </>
