@@ -57,7 +57,10 @@ app.use('/api/nearby-organizations', nearbyOrganizationRouter);
 app.get("/confirm-email/:token", confirmEmailRouter);
 app.use('/upload', uploadRoute);
 
-
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Internal Server Error');
+});
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });

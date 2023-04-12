@@ -4,7 +4,6 @@ const { Storage } = require('@google-cloud/storage'); // Updated import statemen
 const MulterGoogleStorage = require('multer-google-storage').default;
 
 
-console.log(process.env.STORAGEKEY);
 const storage = new Storage({
   keyFilename: "../amiable-octane-375722-a20e65eb5c57.json",
 });
@@ -14,30 +13,40 @@ const multerStorage = new MulterGoogleStorage({
   keyFilename: "../amiable-octane-375722-a20e65eb5c57.json",
   googleStorage: storage,
   bucket: 'lead4earth',
-  acl: 'publicRead',
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1]);
   },
 });
 
-console.log(process.env.STORAGEKEY);
+console.log("Upload Route Set");
 
 const upload = multer({ storage: multerStorage });
 
 const router = express.Router();
 
-router.post('/upload', upload.single('image'), (req, res) => {
-  if (req.file) {
-    res.json({
-      success: true,
-      image_url: req.file.path,
-    });
-  } else {
-    res.status(400).json({
-      success: false,
-      message: 'No file uploaded',
-    });
-  }
+router.post('/', (req, res) => {
+  upload.single('image')(req, res, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error occurred during file upload',
+      });
+    }
+
+    if (req.file) {
+      res.json({
+        success: true,
+        image_url: req.file.path,
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'No file uploaded',
+      });
+    }
+  });
 });
+
 
 module.exports = router;

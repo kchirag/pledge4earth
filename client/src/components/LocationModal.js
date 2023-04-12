@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +9,8 @@ import 'leaflet/dist/leaflet.css';
 import MapUpdater from './MapUpdater';
 
 import './LocationModal.css';
+import axiosInstance from '../axiosInstance';
+
 
 function LocationModal({ show, onHide, onConfirm, location }) {
 
@@ -25,6 +27,48 @@ function LocationModal({ show, onHide, onConfirm, location }) {
     longitude: location.longitude || 0,
   });
 
+  // Add the imageFile state
+  const [imageFile, setImageFile] = useState(null);
+  const [buttonText, setButtonText] = useState('Upload Image');
+  //const [previewKey, setPreviewKey] = useState(0);
+
+
+  const handleImageChange = (e) => {
+    setpicurl(null);
+    console.log(e.target.files[0]);
+    setImageFile(e.target.files[0]);
+    //handleImageUpload();
+
+  };
+  useEffect(() => {
+    console.log('Image file changed'); // This will log the updated count value
+    console.log(imageFile);
+    handleImageUpload();
+
+  }, [imageFile]);
+
+  const handleImageUpload = async () => {
+    const formData = new FormData();
+    console.log("imageFile");
+    console.log(imageFile);
+    formData.append('image', imageFile);
+    const response = await axiosInstance.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(response);
+    console.log(response.data.image_url);
+   
+    if (response.data.success) {
+       console.log("Before setting the picurl");
+      setpicurl(response.data.image_url);
+      setButtonText('Change Image');
+
+    } else {
+      // Handle error
+    }
+  };
   const handleChange = (e) => {
     setemail(e.target.value);
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -102,14 +146,29 @@ function LocationModal({ show, onHide, onConfirm, location }) {
             </div>
             {highlight && (
               <div className="highlight-details">
+                <label htmlFor="description">My Goal (max 100 words)</label><br/>
+                <textarea style={{ width:"100%"}} id="description" name="description" onChange={(e) => setdescription(e.target.value)} required ></textarea><br/>
                 <label htmlFor="website">Website:</label>
                 <input type="url" id="website" name="website" onChange={(e) => setwebsite(e.target.value)} /><br/>
                 <label htmlFor="social-media">Social media handle:</label>
                 <input type="text" id="social-media" name="social-media" onChange={(e) => setsocialhandle(e.target.value)} /><br/>
                 <label htmlFor="picture-url">Picture URL:</label>
-                <input type="url" id="picture-url" name="picture-url" onChange={(e) => setpicurl(e.target.value)} /><br/>
-                <label htmlFor="description">My Top Goal in 100 words</label><br/>
-                <textarea style={{ width:"100%"}} id="description" name="description" onChange={(e) => setdescription(e.target.value)} ></textarea><br/>
+                <input type="url" id="picture-url" name="picture-url" onChange={(e) => setpicurl(e.target.value)} value={picurl} required />
+                <label htmlFor="picture-upload" className="upload-icon">
+                  <svg>
+                    <use xlinkHref="#upload-icon" />
+                  </svg>
+                  <input
+                    type="file"
+                    id="picture-upload"
+                    name="picture-upload"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </label>
+                <br/>
+                {imageFile && <img src={picurl} alt="Preview" height="100" />}
+
               </div>
             )}
             {!highlight &&(
@@ -129,13 +188,24 @@ function LocationModal({ show, onHide, onConfirm, location }) {
         <Button
           variant="primary"
           onClick={() => {
-
+            var alertmsg = "";
             if (!isValidEmail) {
-              alert('Please enter a valid email address');
-              return;
+              alertmsg += 'Please enter a valid email address\n'; 
+              //return;
             }
+            if(highlight && !picurl){
+              alertmsg += 'Please enter a picture URL or upload a picture\n' 
+            }
+            if(highlight && !description){
+              alertmsg += 'Please enter your top goals so your community can hear from you\n' 
+            }
+            if (!(alertmsg === "")){
+              alert(alertmsg);
+              return;
+            } 
             onConfirm(markerPosition,  email, highlight, website, socialhandle, picurl, description);
             onHide();
+
           }}
         >
           Submit

@@ -17,8 +17,11 @@ const fetchNearbyLeaders = async (latitude, longitude, distance = 10000) => {
           maxDistance: distance * 1609.34, // Convert miles to meters
           spherical: true,
           distanceMultiplier: 1 / 1609.34, // Convert meters to miles
-          isEmailConfirmed:true,
         },
+
+      },
+      {
+        $match: { isEmailConfirmed: true },
       },
       {
         $sort: { distance: 1 },
