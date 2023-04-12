@@ -28,18 +28,17 @@ const confirmEmailRouter = async (req, res) => {
     // Update the user's record in the database
     // Replace `User` with your own database model or function
     const leader = await Leader.findOne({ email: emailConfirmation.emailid });
-      if (leader){
-        leader.isEmailConfirmed = true;
-        await leader.save()
-      }
-
-	}
-	else{
-	  const user = await UserView.findOne({ emailid: emailConfirmation.emailid });
-    if (user){
-      user.isEmailConfirmed = true;
-      await user.save();
-	}
+    if (leader){
+      leader.isEmailConfirmed = true;
+      await leader.save()
+    }
+    else{
+      const user = await UserView.findOne({ emailid: emailConfirmation.emailid });
+      if (user){
+        user.isEmailConfirmed = true;
+        await user.save();
+       }
+	   }
     // Send a response to the user
     res.send("Email confirmed successfully");
   } catch (err) {
