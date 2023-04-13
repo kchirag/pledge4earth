@@ -19,3 +19,15 @@ I just signed the Lead4Earth pledge, because I believe that immediate legislativ
 Will you sign the pledge, join the initiative as a "leader", and lead the way to a more sustainable future?
 
 Thank you so much for your advocacy - we look forward to hearing back.`;
+
+export const ORG_MESSAGE = `Dear [Name].
+Lead4Earth needs your help for validating our leaders claim on environment.
+At Lead4Earth there are many leaders in our area expressing their interest in working for environment.
+As per my understanding, you joining us in having people express their views on climate will encourage leading voices to talk about it.
+Additionally every time there is an election your organization would be posting environment friendly vote and will be shared with people looking for direction.
+
+As an environment friendly organization you would be able to also list your projects that locals need to know about as well as increase your reach in community.
+
+
+
+`

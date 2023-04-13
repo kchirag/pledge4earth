@@ -86,6 +86,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
           });
 
       localStorage.setItem('userName', name);
+      localStorage.setItem('userEmail', email);
 
       if (highlight){
         const LeaderData = {
@@ -136,8 +137,8 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   async function sendConfirmationEmail(to) {
     const subject = 'Email Confirmation';
     
-    console.log(to);
-    console.log(name);
+    //console.log(to);
+    //console.log(name);
     try {
       const text = CONFIRM_EMAIL_MESSAGE(name);
       //console.log(text);

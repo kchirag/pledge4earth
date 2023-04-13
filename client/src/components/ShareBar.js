@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ShareBar.css';
+import {LEADER_MESSAGE,ORG_MESSAGE} from '../constant'
 
 function ShareBar() {
   const shareUrl = encodeURIComponent(window.location.href);
@@ -11,28 +12,33 @@ function ShareBar() {
   const [customReason, setCustomReason] = useState("");
 
 
-  const shareTextOptions = [
+  const shareTextOptionsinp = [
     'Our voice holds weight when our leader understands we stand united. As more and more people come together, driven by a love for our planet, leaders will be inspired to take action and prioritize eco-friendly policies',
     "Our thoughts gain importance when our leader realizes we're backed by many.",
     'Our perspective becomes significant as our leader sees our collective strength.',
   ];
+  const [shareTextOptions, setShareTextOptions] = useState(shareTextOptionsinp);
 
   const [showEmailModal, setShowEmailModal] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [senderName, setSenderName] = useState(localStorage.getItem('userName'));
+  const [senderEmail, setSenderEmail] = useState(localStorage.getItem('userEmail'));
+  const [recepientName, setRecepientName] = useState('');
+  const [recepientEmail, setRecepientEmail] = useState('');
   const [sendAnonymously, setSendAnonymously] = useState(false);
   const [isLeaderOrgoAll, setIsLeaderOrgoAll ] = useState(2);
   const [selectedShareText, setSelectedShareText] = useState(shareTextOptions[0]);
   const [subject, setSubject] = useState(`"Think green, talk green, and let's make a scene!"`);
+  //const [isLeaderOrgoAll, setIsLeaderOrgoAll] = useState(0);
+  //const [shareTextOptions, setShareTextOptions] = useState(leaderTextOptions);
 
 
   const storedName = localStorage.getItem('userName');
-  //setUserName(storedName);
+  //setSenderName(storedName);
   //const subject = "Think green, talk green, and let's make a scene!";
   
   const handleEmailShare = (e) => {
     e.preventDefault();
-    const mailto = `mailto:${userEmail}?subject=${encodeURIComponent(`${storedName} says: ${subject}`)}&body=${encodeURIComponent(`${selectedShareText} ${shareUrl}`)}`;
+    const mailto = `mailto:${recepientEmail}?subject=${encodeURIComponent(`${storedName} says: ${subject}`)}&body=${encodeURIComponent(`${selectedShareText} ${shareUrl}`)}`;
     window.location.href = mailto;
     setShowEmailModal(false);
   };
@@ -49,8 +55,22 @@ function ShareBar() {
     //handleCustomReasonChange(event.target.value);
   };
 
-  const HandleReasonList = (event) => {
-    if(event.target.value === "Leader"){
+
+  const HandleReasonList = (e) => {
+    //console.log("TEst");
+    if (e.target.value === 'Leader') {
+      setIsLeaderOrgoAll(0);
+      const finalmessage = recepientName =='' ? LEADER_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
+      setShareTextOptions([finalmessage]);
+    } else if (e.target.value === 'Organization') {
+      setIsLeaderOrgoAll(1);
+      const finalmessage = recepientName =='' ? ORG_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
+      setShareTextOptions([finalmessage]);
+    } else {
+      setIsLeaderOrgoAll(2);
+      setShareTextOptions(shareTextOptionsinp);
+    }
+    /*if(event.target.value === "Leader"){
       setIsLeaderOrgoAll(0);
     }
     else if(event.target.value === "Organization"){
@@ -58,22 +78,13 @@ function ShareBar() {
     }
     else{
      setIsLeaderOrgoAll(2); 
-    }
-    console.log(event.target.value);
+    }*/
+    //console.log(event.target.value);
   };
 
   return (
     <div className="share-bar">
-      <a className="share-button" href={facebookShareUrl} target="_blank" rel="noopener noreferrer">
-        Share on Facebook
-      </a>
-      <a className="share-button" href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
-        Share on Twitter
-      </a>
-      <a className="share-button" href={linkedinShareUrl} target="_blank" rel="noopener noreferrer">
-        Share on LinkedIn
-      </a>
-      <button className="share-button" onClick={() => setShowEmailModal(true)}>Share via Email</button>
+     <button className="share-button" onClick={() => setShowEmailModal(true)}>Share via Email</button>
       {showEmailModal && (
         <div className="email-modal">
           <h2>Share via Email</h2>
@@ -82,8 +93,8 @@ function ShareBar() {
               Recepient's Name:
               <input
                 type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                value={recepientName}
+                onChange={(e) => setRecepientName(e.target.value)}
                 required
               />
             </label>
@@ -91,11 +102,40 @@ function ShareBar() {
               Recipient's Email:
               <input
                 type="email"
-                value={userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
+                value={recepientEmail}
+                onChange={(e) => setRecepientEmail(e.target.value)}
                 required
               />
             </label>
+            <div>
+              <label>
+                Your Name:
+                <input
+                  type="text"
+                  value={senderName}
+                  onChange={(e) => setSenderName(e.target.value)}
+                  required
+                />
+              </label>
+              <label>
+                Your Email:
+                <input
+                  type="text"
+                  value={senderEmail}
+                  onChange={(e) => setSenderEmail(e.target.value)}
+                  required
+                />
+                <span className="smallprint">(to notify you).</span>
+              </label>              
+              <label>
+                Share Anonymously:
+                <input
+                  type="checkbox"
+                  checked={sendAnonymously}
+                  onChange={(e) => {setSendAnonymously(e.target.checked); setSenderName('');}}
+                />
+              </label>
+            </div>
             <div>
                 <div className="radio-group">
                   <input
@@ -144,7 +184,7 @@ function ShareBar() {
                   <input
                     type="text"
                     className="custom-reason-input"
-                    placeholder="Type your own reason..."
+                    placeholder="Type your own message..."
                     value={customReason}
                     onChange={handleCustomReasonChange}
                   />
@@ -166,9 +206,21 @@ function ShareBar() {
             <button onClick={() => setShowEmailModal(false)}>Cancel</button>
           </form>
         </div>
+
       )}
       
-      {/* The rest of the share buttons */}
+      
+          <a className="share-button" href={facebookShareUrl} target="_blank" rel="noopener noreferrer">
+            Share on Facebook
+          </a>
+          <a className="share-button" href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
+            Share on Twitter
+          </a>
+          <a className="share-button" href={linkedinShareUrl} target="_blank" rel="noopener noreferrer">
+            Share on LinkedIn
+          </a>
+        
+
     </div>
   );
 }

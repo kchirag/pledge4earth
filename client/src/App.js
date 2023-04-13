@@ -156,9 +156,12 @@ function App() {
           <Route path="/Faqs" element={<FaqsContainer />} />
           <Route path="/" element={
             <>
+              <div><h5>Your opinion to your representatives matters only when we believe it, express it and stand united.</h5></div>
+
               {loading ? (
                 <p>Loading...</p>
               ) : (
+
                 <div className="top-containers">
                   <LeaderContainer userLocation={userLocation} />
                   <ViewsContainer refreshKey={refreshKey} userLocation={userLocation} />
