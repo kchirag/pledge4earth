@@ -234,7 +234,6 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
         <p>also feel free to refer us an organization that would help them highlight the issues they care for</p>
         <p>Share this survey with others:</p>
         <ShareBar />
-         <a href={mailtoLink}>Invite a Leader</a>
       </div>
     )}
     </>
