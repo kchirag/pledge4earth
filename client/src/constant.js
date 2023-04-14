@@ -31,3 +31,12 @@ As an environment friendly organization you would be able to also list your proj
 
 
 `
+export const csREASON_LIST = [
+	'Your leader is more inclined to speak and confirm his opinion if you will.',
+	'Together we are louder then individually',
+	'Sustainability is necessary at every level to have cumulative effects',
+	`Our leaders have to acknowledge the problem for them to act on it.`,
+	`Nature's response will be impartial with political, religious or culture beliefs.`,
+	`Leaders in every position is required to acknowledge their views rather it be political, education, town or community`,
+	`During initial COVID 19 period we have seen pollutions drop visibly and wildlife flourish.`,
+	`Your opinion holds weight with your representatives when we trust in it, communicate it, and unite as one.`];

@@ -13,7 +13,8 @@ import OrganizationSignup from './components/OrganizationSignup';
 import AboutContainer from './components/AboutContainer';
 import FaqsContainer from './components/FaqsContainer';
 import OrganizationContainer from './components/OrganizationContainer';
-
+//import TopReasonsContainer from './components/TopReasonsContainer';
+import ReasonSlider from './components/ReasonSlider'
 // Your other components
 
 //import Contact from './components/Contact';
@@ -156,8 +157,7 @@ function App() {
           <Route path="/Faqs" element={<FaqsContainer />} />
           <Route path="/" element={
             <>
-              <div><h5>Your opinion to your representatives matters only when we believe it, express it and stand united.</h5></div>
-
+              <ReasonSlider />
               {loading ? (
                 <p>Loading...</p>
               ) : (

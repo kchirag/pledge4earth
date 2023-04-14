@@ -4,19 +4,18 @@ import ReasonSlider from './ReasonSlider';
 function TopReasonsContainer() {
   const [topReasons, setTopReasons] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      const reasons = await fetchTopReasons();
-      setTopReasons(reasons);
-    }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const reasons = await fetchTopReasons();
+  //     setTopReasons(reasons);
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="top-reasons-container">
-      <h2>Top Reasons for Clarifying Stand on Climate</h2>
-      <ReasonSlider reasons={topReasons} />
+      <ReasonSlider reasons={} />
     </div>
   );
 }

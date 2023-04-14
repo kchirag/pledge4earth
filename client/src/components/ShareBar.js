@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './ShareBar.css';
 import {LEADER_MESSAGE,ORG_MESSAGE} from '../constant'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+
 
 function ShareBar() {
   const shareUrl = encodeURIComponent(window.location.href);
@@ -30,6 +33,11 @@ function ShareBar() {
   const [subject, setSubject] = useState(`"Think green, talk green, and let's make a scene!"`);
   //const [isLeaderOrgoAll, setIsLeaderOrgoAll] = useState(0);
   //const [shareTextOptions, setShareTextOptions] = useState(leaderTextOptions);
+  const [shareCount, setShareCount] = useState({ facebook: 0, twitter: 0, linkedin: 0 });
+
+  const handleClick = (platform) => {
+    setShareCount({ ...shareCount, [platform]: shareCount[platform] + 1 });
+  };
 
 
   const storedName = localStorage.getItem('userName');
@@ -210,16 +218,34 @@ function ShareBar() {
       )}
       
       
-          <a className="share-button" href={facebookShareUrl} target="_blank" rel="noopener noreferrer">
-            Share on Facebook
+          <a
+            className="share-button"
+            href={facebookShareUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => handleClick('facebook')}
+          >
+            <FontAwesomeIcon icon={faFacebookF} />
           </a>
-          <a className="share-button" href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
-            Share on Twitter
+          <a
+            className="share-button"
+            href={twitterShareUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => handleClick('twitter')}
+          >
+            <FontAwesomeIcon icon={faTwitter} />
           </a>
-          <a className="share-button" href={linkedinShareUrl} target="_blank" rel="noopener noreferrer">
-            Share on LinkedIn
+          <a
+            className="share-button"
+            href={linkedinShareUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => handleClick('linkedin')}
+          >
+            <FontAwesomeIcon icon={faLinkedinIn} />
           </a>
-        
+          
 
     </div>
   );
