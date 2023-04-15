@@ -57,7 +57,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   const options = [
       {
         value: 1,
-        label: "Highly urgent, legislative action needed",
+        label: "On High Priority",
         tooltip: "There is conclusive evidence to demonstrate that the climate is changing and human-caused CO2 emissions are contributing to this issue. Immediate action should be taken at every level of government to decrease GHG emissions to X level by X year. (Electrification ordinances, carbon fee, etc)."
       },
       {
@@ -177,6 +177,11 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     onNewUserView();
     setShowShareOptions(true);
   };
+  const handleNewView = () => {
+    console.log("Test if it came here")
+    localStorage.setItem('userName', "");
+    setShowShareOptions(false);   
+  }
 
 
   return (
@@ -230,9 +235,11 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
       <div className="share-container">
         <h2>Thank you for participating!</h2>
         <p>Dear {storedName},</p>
-        <p>You can help us grow by sharing by asking your friends to clarify their opinion</p>
-        <p>also feel free to refer us an organization that would help them highlight the issues they care for</p>
+        <p>How about help us grow by sharing it with your community</p>
+        <p>When the person you shared with responds we will notify you.</p>
+        <p>Lets make it a global movement, Feel free to give us your honest feedback</p>
         <p>Share this survey with others:</p>
+        <div className='link' onClick={() => handleNewView()} >Not {storedName}? </div>
         <ShareBar />
       </div>
     )}

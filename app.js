@@ -12,6 +12,10 @@ const emailRouter = require('./routes/emailRouter');
 const nearbyOrganizationRouter = require('./routes/nearbyOrganizations');
 const confirmEmailRouter = require('./routes/confirmEmailRouter')
 const uploadRoute = require('./routes/upload');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+//const FacebookStrategy = require('passport-facebook').Strategy;
+//const TwitterStrategy = require('passport-twitter').Strategy;
 
 
 // Import your routes

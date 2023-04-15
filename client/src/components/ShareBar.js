@@ -68,11 +68,11 @@ function ShareBar() {
     //console.log("TEst");
     if (e.target.value === 'Leader') {
       setIsLeaderOrgoAll(0);
-      const finalmessage = recepientName =='' ? LEADER_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
+      const finalmessage = recepientName ==='' ? LEADER_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
       setShareTextOptions([finalmessage]);
     } else if (e.target.value === 'Organization') {
       setIsLeaderOrgoAll(1);
-      const finalmessage = recepientName =='' ? ORG_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
+      const finalmessage = recepientName ==='' ? ORG_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
       setShareTextOptions([finalmessage]);
     } else {
       setIsLeaderOrgoAll(2);

@@ -158,6 +158,13 @@ function App() {
           <Route path="/" element={
             <>
               <ReasonSlider />
+              
+              <div className="bottom-container">
+                <ErrorBoundary>
+                  <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
+                  <NewsContainer />
+                </ErrorBoundary>
+              </div>
               {loading ? (
                 <p>Loading...</p>
               ) : (
@@ -168,12 +175,6 @@ function App() {
                   <OrganizationContainer userLocation={userLocation} />
                 </div>
               )}
-              <div className="bottom-container">
-                <ErrorBoundary>
-                  <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
-                  <NewsContainer />
-                </ErrorBoundary>
-              </div>
             </>
           } />
         </Routes>

@@ -10,6 +10,8 @@ import MapUpdater from './MapUpdater';
 
 import './LocationModal.css';
 import axiosInstance from '../axiosInstance';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 function LocationModal({ show, onHide, onConfirm, location }) {
@@ -29,7 +31,7 @@ function LocationModal({ show, onHide, onConfirm, location }) {
 
   // Add the imageFile state
   const [imageFile, setImageFile] = useState(null);
-  const [buttonText, setButtonText] = useState('Upload Image');
+  //const [buttonText, setButtonText] = useState('Upload Image');
   //const [previewKey, setPreviewKey] = useState(0);
 
 
@@ -40,35 +42,29 @@ function LocationModal({ show, onHide, onConfirm, location }) {
     //handleImageUpload();
 
   };
-  useEffect(() => {
-    console.log('Image file changed'); // This will log the updated count value
-    console.log(imageFile);
-    handleImageUpload();
-
-  }, [imageFile]);
 
   const handleImageUpload = async () => {
     const formData = new FormData();
-    console.log("imageFile");
-    console.log(imageFile);
     formData.append('image', imageFile);
     const response = await axiosInstance.post('/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(response);
-    console.log(response.data.image_url);
    
     if (response.data.success) {
-       console.log("Before setting the picurl");
       setpicurl(response.data.image_url);
-      setButtonText('Change Image');
 
     } else {
       // Handle error
     }
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    handleImageUpload();
+  }, [imageFile]);
+
   const handleChange = (e) => {
     setemail(e.target.value);
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -121,7 +117,7 @@ function LocationModal({ show, onHide, onConfirm, location }) {
             <input type="email" id="email" name="email" onChange={handleChange} />
           </div>
           <div className="influential-container">
-            Be an influential voice in your community?
+            Want to lead4earth?
             <div className="radio-group">
               <input
                 type="radio"
@@ -158,6 +154,7 @@ function LocationModal({ show, onHide, onConfirm, location }) {
                   <svg>
                     <use xlinkHref="#upload-icon" />
                   </svg>
+                  <FontAwesomeIcon icon={faUser} />
                   <input
                     type="file"
                     id="picture-upload"
