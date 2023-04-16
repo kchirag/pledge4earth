@@ -15,6 +15,7 @@ import FaqsContainer from './components/FaqsContainer';
 import OrganizationContainer from './components/OrganizationContainer';
 //import TopReasonsContainer from './components/TopReasonsContainer';
 import ReasonSlider from './components/ReasonSlider'
+import EmailConfirmationContainer from './components/EmailConfirmationContainer'
 // Your other components
 
 //import Contact from './components/Contact';
@@ -155,10 +156,11 @@ function App() {
     
           <Route path="/About" element={<AboutContainer />} />
           <Route path="/Faqs" element={<FaqsContainer />} />
+          <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
           <Route path="/" element={
             <>
               <ReasonSlider />
-              
+
               <div className="bottom-container">
                 <ErrorBoundary>
                   <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />

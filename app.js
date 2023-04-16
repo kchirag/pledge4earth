@@ -12,6 +12,7 @@ const emailRouter = require('./routes/emailRouter');
 const nearbyOrganizationRouter = require('./routes/nearbyOrganizations');
 const confirmEmailRouter = require('./routes/confirmEmailRouter')
 const uploadRoute = require('./routes/upload');
+const inviteRouter = require('./routes/InviteRouter')
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 //const FacebookStrategy = require('passport-facebook').Strategy;
@@ -60,7 +61,7 @@ app.use('/api/sendEmail', emailRouter);
 app.use('/api/nearby-organizations', nearbyOrganizationRouter);
 app.get("/confirm-email/:token", confirmEmailRouter);
 app.use('/upload', uploadRoute);
-
+app.use('/sendInvite', inviteRouter);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Internal Server Error');
@@ -117,3 +118,4 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
+

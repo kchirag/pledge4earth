@@ -200,7 +200,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div><h6>Do you want your community leader to act on environmental issues?</h6>
+        <div className="questions"><h6>Do you want your community leader to act on environmental issues?</h6>
         {options.map((view, index) => (
           <div  key={index}>
             <input

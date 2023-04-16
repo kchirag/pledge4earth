@@ -11,7 +11,7 @@ import MapUpdater from './MapUpdater';
 import './LocationModal.css';
 import axiosInstance from '../axiosInstance';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 
 function LocationModal({ show, onHide, onConfirm, location }) {
@@ -151,10 +151,8 @@ function LocationModal({ show, onHide, onConfirm, location }) {
                 <label htmlFor="picture-url">Picture URL:</label>
                 <input type="url" id="picture-url" name="picture-url" onChange={(e) => setpicurl(e.target.value)} value={picurl} required />
                 <label htmlFor="picture-upload" className="upload-icon">
-                  <svg>
-                    <use xlinkHref="#upload-icon" />
-                  </svg>
-                  <FontAwesomeIcon icon={faUser} />
+
+                  <FontAwesomeIcon icon={faCamera} />
                   <input
                     type="file"
                     id="picture-upload"
