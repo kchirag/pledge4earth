@@ -14,7 +14,7 @@ module.exports = {
       	CERTIFICATE:'/usr/local/ssl/lead4earth_org.crt',
       	CERTIFICATECA:'/usr/local/ssl/lead4earth_org.ca-bundle',
         STORAGEKEY:'../amiable-octane-375722-a20e65eb5c57.json',
-        SENDGRIDKEY:'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',
+        SENDGRIDKEY:'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',
 	      
       },
     },
