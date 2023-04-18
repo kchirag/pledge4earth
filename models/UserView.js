@@ -8,6 +8,7 @@ const userViewSchema = new mongoose.Schema({
   emailid: String,
   isEmailConfirmed: {type:Boolean, default:false},
   statement: String,
+  created : { type : Date, default: Date.now },
   location: {
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true },

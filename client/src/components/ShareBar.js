@@ -3,6 +3,7 @@ import './ShareBar.css';
 import {LEADER_MESSAGE,ORG_MESSAGE} from '../constant'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import axiosInstance from '../axiosInstance';
 
 
 function ShareBar() {
@@ -44,10 +45,22 @@ function ShareBar() {
   //setSenderName(storedName);
   //const subject = "Think green, talk green, and let's make a scene!";
   
-  const handleEmailShare = (e) => {
+  const handleEmailShare = async (e) => {
     e.preventDefault();
-    const mailto = `mailto:${recepientEmail}?subject=${encodeURIComponent(`${storedName} says: ${subject}`)}&body=${encodeURIComponent(`${selectedShareText} ${shareUrl}`)}`;
-    window.location.href = mailto;
+    //Set parameters
+    //const qrystring = "to=" + recepientEmail + "&recepient=" + recepientName + "&invitor=" + senderName + "&senderEmail=" + senderEmail + "&message=" + selectedShareText
+    const message = isLeaderOrgoAll === 0 ? '' : selectedShareText;
+
+    try {
+      //console.log(qrystring);
+      const response = await axiosInstance.get('/sendInvite', {params:{ recepientEmail, recepientName, senderName, senderEmail, isLeaderOrgoAll, message }});
+      console.log(response.data.message);
+      //return true;
+    } catch (error) {
+      console.error('Error sending email:', error);
+      //return false;
+    }
+
     setShowEmailModal(false);
   };
 
@@ -59,8 +72,6 @@ function ShareBar() {
   const handleCustomReasonChange = (event) => {
     console.log(event.target.value);
     setCustomReason(event.target.value);
-    //setSelectedShareText(event.target.value);
-    //handleCustomReasonChange(event.target.value);
   };
 
 

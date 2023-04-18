@@ -22,6 +22,8 @@ const LeaderSchema = new mongoose.Schema({
     type: { type: String, enum: ['Point'], required: true },
     coordinates: { type: [Number], required: true },
   },
+  created : { type : Date, default: Date.now },
+
 });
 
 LeaderSchema.index({ location: '2dsphere' });

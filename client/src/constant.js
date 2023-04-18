@@ -12,13 +12,19 @@ Lead4Earth Team`;
 
 export const CONFIRM_EMAIL_SUBJECT = 'Confirm Email for publishing your view';
 export const LOADING_MESSAGE = 'Loading...';
-export const LEADER_MESSAGE = `Dear [Name],
+export const LEADER_MESSAGE = `Dear <ReceipentName>,
 
-I just signed the Lead4Earth pledge, because I believe that immediate legislative action is necessary to curb the impacts of climate change. This pledge is a fantastic grassroots initiative to demonstrate the growing public willpower for real, measurable action on climate change by our elected leaders. It is simultaneously a resource and an accountability measure for legislators to understand the urgency and demand for modern, climate-conscious laws.
+<SenderName> had recommended you as leading voice and wants others to know about your role in environment and sustainability initiatives.
 
-Will you sign the pledge, join the initiative as a "leader", and lead the way to a more sustainable future?
+This pledge is a fantastic grassroots initiative to demonstrate the growing public willpower for real, measurable action on climate change by our elected leaders. It is simultaneously a resource and an accountability measure for legislators to understand the urgency and demand for modern, climate-conscious laws.
 
-Thank you so much for your advocacy - we look forward to hearing back.`;
+Will you sign share your thoughts by, joining the initiative as a "leader", and encourage other for more sustainable future?
+
+As you signup as a leading voice in the area, everyone in your area will be notified about you and your goals.
+
+Thank you so much for your advocacy - we look forward to hearing back.
+
+Sincerely,`;
 
 export const ORG_MESSAGE = `Dear [Name].
 Lead4Earth needs your help for validating our leaders claim on environment.
@@ -32,6 +38,7 @@ As an environment friendly organization you would be able to also list your proj
 
 `
 export const csREASON_LIST = [
+	'Environment and Sustainability should not be a political issue period.',
 	'Your leader is more inclined to speak and confirm his opinion if you will.',
 	'Together we are louder then individually',
 	'Sustainability is necessary at every level to have cumulative effects',
