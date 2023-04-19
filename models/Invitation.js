@@ -6,6 +6,7 @@ const InvitationSchema = new mongoose.Schema({
   sender: { type: String, required: true},
   recepient: { type: String, required: true},
   token:{type: String},
+  IsLeaderOrgoAll:{type:Number, default:3},
   created : { type : Date, default: Date.now },
   accepted : { type : Date, default: Date.now },
 });

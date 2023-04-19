@@ -34,8 +34,6 @@ Additionally every time there is an election your organization would be posting 
 
 As an environment friendly organization you would be able to also list your projects that locals need to know about as well as increase your reach in community.
 
-
-
 `
 export const csREASON_LIST = [
 	'Environment and Sustainability should not be a political issue period.',

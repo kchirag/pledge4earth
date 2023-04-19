@@ -49,12 +49,12 @@ function ShareBar() {
     e.preventDefault();
     //Set parameters
     //const qrystring = "to=" + recepientEmail + "&recepient=" + recepientName + "&invitor=" + senderName + "&senderEmail=" + senderEmail + "&message=" + selectedShareText
-    const message = isLeaderOrgoAll === 0 ? '' : selectedShareText;
+    const message = customReason.trim() === ''? selectedShareText : customReason;
 
     try {
       //console.log(qrystring);
       const response = await axiosInstance.get('/sendInvite', {params:{ recepientEmail, recepientName, senderName, senderEmail, isLeaderOrgoAll, message }});
-      console.log(response.data.message);
+      //console.log(response.data.message);
       //return true;
     } catch (error) {
       console.error('Error sending email:', error);
@@ -79,15 +79,15 @@ function ShareBar() {
     //console.log("TEst");
     if (e.target.value === 'Leader') {
       setIsLeaderOrgoAll(0);
-      const finalmessage = recepientName ==='' ? LEADER_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
-      setShareTextOptions([finalmessage]);
+      //const finalmessage = recepientName ==='' ? LEADER_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
+      //setShareTextOptions([finalmessage]);
     } else if (e.target.value === 'Organization') {
       setIsLeaderOrgoAll(1);
-      const finalmessage = recepientName ==='' ? ORG_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
-      setShareTextOptions([finalmessage]);
+      //const finalmessage = recepientName ==='' ? ORG_MESSAGE : LEADER_MESSAGE.replace("[Name]", recepientName)
+      //setShareTextOptions([finalmessage]);
     } else {
       setIsLeaderOrgoAll(2);
-      setShareTextOptions(shareTextOptionsinp);
+      //setShareTextOptions(shareTextOptionsinp);
     }
     /*if(event.target.value === "Leader"){
       setIsLeaderOrgoAll(0);
@@ -189,6 +189,7 @@ function ShareBar() {
                   <label htmlFor="allRadio">All</label>
                 </div>
             </div>
+            <div>Personal Note</div>
             <ul className="reasons-list">
               {shareTextOptions.map((option, index) => (
                 <li
@@ -211,16 +212,6 @@ function ShareBar() {
                 </li>
               
             </ul>
-            <div>
-            <label>Subject</label>
-              <input
-                    type="text"
-                    className="custom-reason-input"
-                    placeholder="Invites your to share your views"
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)} 
-                />
-            </div>
             <button type="submit">Send Email</button>
             <button onClick={() => setShowEmailModal(false)}>Cancel</button>
           </form>
