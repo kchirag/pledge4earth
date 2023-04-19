@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './widget/Widget';
 
 // index.js or any other suitable file
 //import 'slick-carousel/slick/slick.css';

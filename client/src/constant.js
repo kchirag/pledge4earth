@@ -10,7 +10,7 @@ confirmplaceholder
 Best regards,
 Lead4Earth Team`;
 
-export const CONFIRM_EMAIL_SUBJECT = 'Confirm Email for publishing your view';
+export const CONFIRM_EMAIL_SUBJECT = 'Confirm your email for publishing';
 export const LOADING_MESSAGE = 'Loading...';
 export const LEADER_MESSAGE = `Dear <ReceipentName>,
 

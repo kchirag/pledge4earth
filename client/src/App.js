@@ -138,11 +138,18 @@ function App() {
       <Router>
         <header className="App-header">
           <div style={{marginLeft: '1em'}}>
-          <span><img
+            <div class="infoheader">
+                <img
                   src="/lead4earth.png"
                   alt="Lead4Earth"
                   className="logo"
-                />Lead for Earth</span>
+                />
+              
+              <div class="site-info">
+                <span class="site-name">Lead for Earth</span>
+                <span class="tagline">Act, Engage and Vote</span>
+              </div>
+            </div>
           </div>
           <div className="menu-container">
             <Menu />

@@ -5,7 +5,7 @@ import axiosInstance from '../axiosInstance';
 import React, { useState } from 'react';
 import LocationModal from './LocationModal';
 import ShareBar from './ShareBar'
-import {CONFIRM_EMAIL_MESSAGE, CONFIRM_EMAIL_SUBJECT, LEADER_MESSAGE} from '../constant'
+import {CONFIRM_EMAIL_MESSAGE, CONFIRM_EMAIL_SUBJECT} from '../constant'
 
 
 import './ClarifyViewContainer.css'; // Import the CSS styles
@@ -23,37 +23,10 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   const [showModal, setShowModal] = useState(false);
 
   const storedName = localStorage.getItem('userName');
-  function formatEmailContent() {
-    const content = LEADER_MESSAGE;
 
-    return encodeURIComponent(content);
-  }
-  const emailSubject = 'United We Stand: A Heartfelt Plea to Our Esteemed Leader';
-  function generateMailtoLink(subject, body) {
-    return `mailto:?subject=${encodeURIComponent(subject)}&body=${body}`;
-  }
-  const emailContent = formatEmailContent();
-  const mailtoLink = generateMailtoLink(emailSubject, emailContent)
 
   if (!showShareOptions && storedName) setShowShareOptions(true);
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Climate Opinion',
-        text: 'Share your views, to let your leaders know you care!',
-        url: window.location.href,
-      }).catch((error) => console.error('Error sharing:', error));
-    } else {
-      alert('Sharing is not yet implemented.');
-    }
-  };
 
-  const views = [
-    'Strongly agree: \nHuman activities primarily cause climate change; immediate action needed.',
-    'Agree: \nHuman activities contribute; steps to address it necessary.',
-    'Neutral: \nUnsure about human activities role in climate change.',
-    'Disagree: <br>Climate change isn\'t significant or influenced by human actions',
-  ];
   const options = [
       {
         value: 1,
@@ -135,14 +108,12 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
       setShowShareOptions(true);
   }
   async function sendConfirmationEmail(to) {
-    const subject = 'Email Confirmation';
-    
-    //console.log(to);
+        //console.log(to);
     //console.log(name);
     try {
       const text = CONFIRM_EMAIL_MESSAGE(name);
       //console.log(text);
-      const response = await axiosInstance.post('/api/sendEmail', { to, subject, text });
+      const response = await axiosInstance.post('/api/sendEmail', { to, CONFIRM_EMAIL_SUBJECT, text });
       console.log(response.data.message);
       return true;
     } catch (error) {
@@ -188,18 +159,8 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     <>
     {!showShareOptions && (
     <div className="clarify-view-container">
-      <h2>Pledge as Individual</h2>
+      <h2>Share your opinion</h2>
       <form onSubmit={handleSubmit}>
-      <div>
-          <label htmlFor="name">Known as:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
         <div className="questions"><h6>Do you want your community leader to act on environmental issues?</h6>
         {options.map((view, index) => (
           <div  key={index}>
@@ -215,6 +176,16 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
 
           </div>
         ))}
+        </div>
+        <div>
+          <label htmlFor="name">Known as:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <button type="button" onMouseDown={() => setShowModal(true)}>Confirm Pledge</button>
               {location && (

@@ -29,7 +29,7 @@
 }
 /* App.css or any other CSS file you're using */
 body {
-  padding-top: 13vh; /* Adjust this value to match the header height */
+  padding-top: 5rem; /* Adjust this value to match the header height */
 }
 
 .top-containers {
@@ -104,7 +104,7 @@ body {
   align-items: center;
 
   background-color: #282c34;
-  min-height: .7vh;
+  min-height: .6vh;
   display: flex;
   align-items: center;
   font-size: calc(7px + 2vmin);
@@ -115,10 +115,6 @@ body {
   top: 0;
 
   /* Add any other styles for the header */
-}
-
-.logo-container {
-  /* Add any styles for the logo container */
 }
 
 .menu-container {
@@ -132,7 +128,7 @@ body {
   /* Add any styles for the right end content container */
 }
 .logo {
-  height: 50px; /* Maintain the aspect ratio of the logo */
+  height: 40px; /* Maintain the aspect ratio of the logo */
   width: auto;
 }
 button {
@@ -141,4 +137,31 @@ button {
   border-radius: 10px !important; /* Adjust this value for the desired roundness */
 
   /* Add any other styles you want for the buttons */
+}
+
+.infoheader {
+  display: flex;
+  align-items: flex-start;
+}
+
+.logo-wrapper {
+  margin-right: 10px;
+}
+
+.site-info {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.site-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.tagline {
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 2px;
 }
