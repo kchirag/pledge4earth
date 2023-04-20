@@ -131,6 +131,7 @@ body {
   height: 40px; /* Maintain the aspect ratio of the logo */
   width: auto;
 }
+
 button {
   background-color: seagreen;
   color: white; /* For better contrast */
@@ -138,6 +139,37 @@ button {
 
   /* Add any other styles you want for the buttons */
 }
+
+button {
+  background-color: seagreen;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+    align-self: center;
+
+}
+
+button:hover {
+  background-color: darkseagreen;
+}
+
+button:disabled {
+  background-color: lightseagreen;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background-color: lightseagreen;
+}
+
 
 .infoheader {
   display: flex;

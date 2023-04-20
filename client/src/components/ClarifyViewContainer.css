@@ -14,5 +14,21 @@
     font-size: small;
 }
 .questions {
-    padding:10px;
+    padding-right:10px;
+}
+
+.button-container {
+  /* Add any styles for the menu container */
+  align-items: center;
+  align-self: center;
+  width: 100%;
+}
+
+button{
+      margin-right: 10px;
+}
+
+.confirmtext{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

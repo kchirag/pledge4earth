@@ -17,13 +17,21 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
 
 
   const [name, setName] = useState('');
+  const [emailId, setEmailId] = useState('');
   //console.log(userLocation);
   const [location, setLocation] = useState(userLocation);
   //const [markerPosition, setMarkerPosition] = useState({ latitude: 37.7749, longitude: -122.4194 });
   const [showModal, setShowModal] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
 
   const storedName = localStorage.getItem('userName');
 
+  const handleChangeEmailId = (e) => {
+    console.log(e);
+    setEmailId(e.target.value);
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    setIsValidEmail(emailRegex.test(e.target.value));
+  }; 
 
   if (!showShareOptions && storedName) setShowShareOptions(true);
 
@@ -112,8 +120,9 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     //console.log(name);
     try {
       const text = CONFIRM_EMAIL_MESSAGE(name);
+
       //console.log(text);
-      const response = await axiosInstance.post('/api/sendEmail', { to, CONFIRM_EMAIL_SUBJECT, text });
+      const response = await axiosInstance.post('/api/sendEmail', { to, "subject":CONFIRM_EMAIL_SUBJECT, text });
       console.log(response.data.message);
       return true;
     } catch (error) {
@@ -149,19 +158,29 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     setShowShareOptions(true);
   };
   const handleNewView = () => {
-    console.log("Test if it came here")
     localStorage.setItem('userName', "");
     setShowShareOptions(false);   
   }
+
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+    console.log("Link clicked");
+
+    // Trigger the mousedown event on the button
+    const buttonElement = document.getElementById('confirmlead');
+    if (buttonElement) {
+      buttonElement.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    }
+  };
 
 
   return (
     <>
     {!showShareOptions && (
     <div className="clarify-view-container">
-      <h2>Share your opinion</h2>
+      <h6>Share your opinion</h6>
       <form onSubmit={handleSubmit}>
-        <div className="questions"><h6>Do you want your community leader to act on environmental issues?</h6>
+        <div className="questions"><h5>Want your community leader to act on environmental issues?</h5>
         {options.map((view, index) => (
           <div  key={index}>
             <input
@@ -177,7 +196,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
           </div>
         ))}
         </div>
-        <div>
+        <div class="confirmtext">
           <label htmlFor="name">Known as:</label>
           <input
             type="text"
@@ -186,8 +205,24 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+            <label htmlFor="userlocation">&nbsp;from {userLocation?.city}&nbsp;</label>
+            <a href="#" onClick={handleLinkClick} >change?</a>
+          
         </div>
-        <button type="button" onMouseDown={() => setShowModal(true)}>Confirm Pledge</button>
+        <div class="confirmtext">
+          <label htmlFor="emailId">EmailId:</label>
+          <input
+            type="text"
+            id="emailId"
+            name="emailId"
+            value={emailId}
+            onChange={(e) => handleChangeEmailId(e)}
+          />
+          
+        </div>
+        <div class="button-container">
+        <button type="button" disabled={selectedView === '' || name.trim() === '' || isValidEmail === false} onMouseDown={() => handleConfirmLocation(location, emailId, false, '', '', '', '' )}>Confirm</button>
+        <button type="button" id="confirmlead" disabled={selectedView === ''} onMouseDown={() => setShowModal(true)}>Confirm & Lead</button>
               {location && (
                 <LocationModal
                   show={showModal}
@@ -196,9 +231,10 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
                   location={location}
                 />
               )}
-
+        </div>
         
       </form>
+      <br/>
       <ShareBar />
     </div>
     )}
