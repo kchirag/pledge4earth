@@ -16,6 +16,9 @@ import OrganizationContainer from './components/OrganizationContainer';
 //import TopReasonsContainer from './components/TopReasonsContainer';
 import ReasonSlider from './components/ReasonSlider'
 import EmailConfirmationContainer from './components/EmailConfirmationContainer'
+import PrivacyPolicyContainer from './components/PrivacyPolicyContainer'
+import Footer from './components/Footer';
+
 // Your other components
 
 //import Contact from './components/Contact';
@@ -35,8 +38,6 @@ function App() {
     const fetchUserLocation = async () => {
       try {
         const location = await getUserLocation();
-        console.log("from the browser");
-        console.log(location);
         setUserLocation(location);
       } catch (error) {
         console.error('Error fetching user location from browser:', error);
@@ -136,6 +137,8 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <div>
+
         <header className="App-header">
           <div style={{marginLeft: '1em'}}>
             <div class="infoheader">
@@ -163,6 +166,7 @@ function App() {
     
           <Route path="/About" element={<AboutContainer />} />
           <Route path="/Faqs" element={<FaqsContainer />} />
+          <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
           <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
           <Route path="/" element={
             <>
@@ -187,6 +191,8 @@ function App() {
             </>
           } />
         </Routes>
+        <Footer />
+        </div>
       </Router>
     </div>
     )

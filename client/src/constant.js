@@ -45,3 +45,38 @@ export const csREASON_LIST = [
 	`Leaders in any role must acknowledge their views across spectrums of political, education, town, or community.`,
 	`During the initial COVID 19 period we saw pollution visibly drop and wildlife flourish.`,
 	`Your opinion holds weight with your representatives when we trust in it, communicate it, and unite as one.`];
+
+export const PRIVACY_POLICY = `<h4>Privacy Policy</h4>
+
+Lead4Earth is a brand under the 501(c)(3) non-profit organization, Lead For Earth Inc. At Lead4Earth, we take your privacy seriously and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and protect your data.
+<br/>
+<b>Transparency and Open Source</b>
+<br/>
+Lead4Earth believes in transparency and open collaboration. Our source code is open, allowing anyone to volunteer and contribute to our project. This helps us maintain a transparent environment, ensuring that our community understands how we handle data and privacy.
+<br/>
+<b>Data Collection and Use</b>
+<br/>
+We respect your data and take necessary measures to protect your privacy. We do not save any IP addresses, and we never share your information with anyone.
+<br/>
+We collect and use your email address for the following purposes:
+<br/>
+Email Confirmation: To prevent spam and ensure data integrity on our site, we require users to confirm their email addresses.
+<br/>
+Monthly Newsletter: We may send you a newsletter, with a maximum frequency of one per month, to keep you informed about Lead4Earth's updates and news.
+<br/>
+Notifications: We will notify you when someone you invited has accepted your invitation and posted their views on our platform.
+<br/>
+By providing your email address, you consent to its use for these purposes.
+<br/>
+<b>Data Security</b>
+<br/>
+Lead4Earth implements appropriate security measures to protect your personal information from unauthorized access, disclosure, or modification. We continually update our security practices to safeguard your data.
+<br/>
+<b>Changes to This Privacy Policy</b>
+<br/>
+We reserve the right to update or modify this Privacy Policy at any time. Any changes will be posted on this page, and we encourage you to review our Privacy Policy regularly to stay informed about our data practices.
+<br/>
+<b>Contact Us</b>
+<br/>
+If you have any questions or concerns about our Privacy Policy, please feel free to contact us at lead@lead4earth.org.`;
+<br/>

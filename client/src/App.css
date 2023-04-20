@@ -116,7 +116,19 @@ body {
 
   /* Add any other styles for the header */
 }
+footer {
+  justify-content: space-between;
+  align-items: center;
 
+  background-color: #282c34;
+  min-height: .2vh;
+  align-items: center;
+  font-size: 13px;
+  color: white;
+  width: 100%;
+  height: 20px;
+  /* Add any other styles for the header */
+}
 .menu-container {
   /* Add any styles for the menu container */
   text-align: center;
@@ -196,4 +208,29 @@ button:disabled:hover {
   font-size: 12px;
   font-weight: normal;
   margin-top: 2px;
+}
+/* Hide the submenu by default */
+.submenu {
+  display: none;
+}
+
+/* Show the submenu when the parent <li> is hovered */
+li:hover > .submenu {
+  display: block;
+}
+
+.textcontent-container{
+  text-align: left;
+  margin:10px 10px;
+}
+
+.logo-and-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.logo-and-text img {
+  max-width: 250px; /* Adjust this value based on the desired size of your logo */
+  height: auto;
 }
