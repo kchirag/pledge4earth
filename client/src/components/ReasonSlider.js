@@ -10,6 +10,7 @@ function ReasonSlider({ reasons }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay:true,
+    initialSlide: Math.floor(Math.random() * 9),
   };
 
 

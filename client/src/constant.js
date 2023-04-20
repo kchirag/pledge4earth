@@ -37,11 +37,11 @@ As an environment friendly organization you would be able to also list your proj
 `
 export const csREASON_LIST = [
 	'Environment and Sustainability should not be a political issue period.',
-	'Your leader is more inclined to speak and confirm his opinion if you will.',
+	'If you express your opinion, your leader is more inclined to speak and confirm his or her opinion.',
 	'Together we are louder then individually',
 	'Sustainability is necessary at every level to have cumulative effects',
 	`Our leaders have to acknowledge the problem for them to act on it.`,
-	`Nature's response will be impartial with political, religious or culture beliefs.`,
-	`Leaders in every position is required to acknowledge their views rather it be political, education, town or community`,
-	`During initial COVID 19 period we have seen pollutions drop visibly and wildlife flourish.`,
+	`Nature's response is impartial with respect to political, religious or culture beliefs.`,
+	`Leaders in any role must acknowledge their views across spectrums of political, education, town, or community.`,
+	`During the initial COVID 19 period we saw pollution visibly drop and wildlife flourish.`,
 	`Your opinion holds weight with your representatives when we trust in it, communicate it, and unite as one.`];
