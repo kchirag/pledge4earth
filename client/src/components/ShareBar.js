@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './ShareBar.css';
-import {LEADER_MESSAGE,ORG_MESSAGE} from '../constant'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import axiosInstance from '../axiosInstance';
@@ -31,7 +30,7 @@ function ShareBar() {
   const [sendAnonymously, setSendAnonymously] = useState(false);
   const [isLeaderOrgoAll, setIsLeaderOrgoAll ] = useState(2);
   const [selectedShareText, setSelectedShareText] = useState(shareTextOptions[0]);
-  const [subject, setSubject] = useState(`"Think green, talk green, and let's make a scene!"`);
+//  const [subject, setSubject] = useState(`"Think green, talk green, and let's make a scene!"`);
   //const [isLeaderOrgoAll, setIsLeaderOrgoAll] = useState(0);
   //const [shareTextOptions, setShareTextOptions] = useState(leaderTextOptions);
   const [shareCount, setShareCount] = useState({ facebook: 0, twitter: 0, linkedin: 0 });
@@ -53,7 +52,7 @@ function ShareBar() {
 
     try {
       //console.log(qrystring);
-      const response = await axiosInstance.get('/sendInvite', {params:{ recepientEmail, recepientName, senderName, senderEmail, isLeaderOrgoAll, message }});
+      await axiosInstance.get('/sendInvite', {params:{ recepientEmail, recepientName, senderName, senderEmail, isLeaderOrgoAll, message }});
       //console.log(response.data.message);
       //return true;
     } catch (error) {

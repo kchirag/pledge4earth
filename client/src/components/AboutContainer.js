@@ -5,7 +5,7 @@ const AboutContainer = () => {
   return (
     <div className="about-container">
       <h2>About Lead4Earth</h2>
-      <div className="logo-and-text"><img src="./logo512.png" /> <div><p>At Lead4Earth, we passionately believe that the environment is a shared responsibility that goes beyond politics. Our mission is to inspire leaders at every 
+      <div className="logo-and-text"><img src="./logo512.png" alt="Lead4Earth"/> <div><p>At Lead4Earth, we passionately believe that the environment is a shared responsibility that goes beyond politics. Our mission is to inspire leaders at every 
       level to openly share their perspectives on environmental issues with the communities they serve. We understand the profound impact our votes have at local, 
       municipal, city, state, and national levels, and we want to make a difference.</p>
       <p>With a heartfelt commitment to the environment, we not only aim to engage our leaders but also to encourage individuals to voice their own concerns and aspirations

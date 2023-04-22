@@ -71,18 +71,18 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
 
       if (highlight){
         const LeaderData = {
-        name,
-        image: picurl,
-        statement: description,
-        upvotes:  0,
-        website : website,
-        email : email,
-        socialhandle: socialhandle,
-        selectedView,
-        location: {
-            type: 'Point',
-            coordinates: [location.longitude, location.latitude],
-          },
+          name,
+          image: picurl,
+          statement: description,
+          upvotes:  0,
+          website : website,
+          email : email,
+          socialhandle: socialhandle,
+          selectedView,
+          location: {
+              type: 'Point',
+              coordinates: [location.longitude, location.latitude],
+            },
         };
         try {
           const response = await axiosInstance.post('/api/Leaders', LeaderData);
@@ -162,18 +162,6 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     setShowShareOptions(false);   
   }
 
-  const handleLinkClick = (e) => {
-    e.preventDefault();
-    console.log("Link clicked");
-
-    // Trigger the mousedown event on the button
-    const buttonElement = document.getElementById('confirmlead');
-    if (buttonElement) {
-      buttonElement.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-    }
-  };
-
-
   return (
     <>
     {!showShareOptions && (
@@ -206,7 +194,6 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
             onChange={(e) => setName(e.target.value)}
           />
             <label htmlFor="userlocation">&nbsp;from {userLocation?.city}&nbsp;</label>
-            <a href="#" onClick={handleLinkClick} >change?</a>
           
         </div>
         <div class="confirmtext">

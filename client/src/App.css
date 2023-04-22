@@ -234,3 +234,8 @@ li:hover > .submenu {
   max-width: 250px; /* Adjust this value based on the desired size of your logo */
   height: auto;
 }
+
+.custom-typeahead .rbt-input-main {
+  height: 30px; /* Adjust this value to your desired height */
+  font-size: 12px; /* Adjust this value to your desired font size */
+}

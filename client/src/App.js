@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Menu from './components/Menu';
 import axios from 'axios';
 
-import './App.css';
 import LeaderContainer from './components/LeaderContainer';
 import ViewsContainer from './components/ViewsContainer';
 import NewsContainer from './components/NewsContainer';
@@ -18,6 +17,12 @@ import ReasonSlider from './components/ReasonSlider'
 import EmailConfirmationContainer from './components/EmailConfirmationContainer'
 import PrivacyPolicyContainer from './components/PrivacyPolicyContainer'
 import Footer from './components/Footer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import './App.css';
+
 
 // Your other components
 
@@ -28,7 +33,27 @@ function App() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [citySuggestions, setCitySuggestions] = useState([]);
 
+
+  const fetchCitySuggestions = async (query) => {
+    const apiKey = process.env.REACT_APP_GEOCODE_API_KEY;
+    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${apiKey}&limit=5`;
+
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      const suggestions = data.results.map((result) => ({
+        name: result.formatted,
+        lat: result.geometry.lat,
+        lng: result.geometry.lng,
+      }));
+
+      setCitySuggestions(suggestions);
+    } catch (error) {
+      console.error('Error fetching city suggestions:', error);
+    }
+  };
 
   const handleNewUserView = () => {
     setRefreshKey((prevKey) => prevKey + 1);
@@ -57,7 +82,7 @@ function App() {
 
   //this is to get location details if user declines to share his location
   const getLocationFromIP = async () => {
-    const IPINFO_API_KEY = '1f0afc3cde17f5'; 
+    const IPINFO_API_KEY = process.env.REACT_APP_IPINFO_API_KEY; 
     try {
       const response = await axios.get(`https://ipinfo.io/?token=${IPINFO_API_KEY}`);
       const { data } = response;
@@ -158,8 +183,37 @@ function App() {
             <Menu />
           </div>
           <div className="right-content-container">
-            {/* Add your content here */}
-            <p>{userLocation?.city || ''}</p>
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                </span>
+              </div>
+              <Typeahead
+                className="custom-typeahead"
+                id="city-typeahead"
+                labelKey="name"
+                options={citySuggestions}
+                placeholder={userLocation?.city || ''}
+                onChange={(selected) => {
+                  if (selected.length > 0) {
+                    setUserLocation({
+                      latitude: selected[0].lat,
+                      longitude: selected[0].lng,
+                      city: selected[0].name,
+                    })
+                    //setLatLong({ lat: selected[0].lat, lng: selected[0].lng });
+
+                  }
+                }}
+                onInputChange={(text) => {
+                  if (text.length >= 3) {
+                    fetchCitySuggestions(text);
+                  }
+                }}
+
+              />
+            </div>
           </div>
         </header>
         <Routes>
@@ -171,7 +225,6 @@ function App() {
           <Route path="/" element={
             <>
               <ReasonSlider />
-
               <div className="bottom-container">
                 <ErrorBoundary>
                   <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
