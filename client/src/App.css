@@ -239,3 +239,26 @@ li:hover > .submenu {
   height: 30px; /* Adjust this value to your desired height */
   font-size: 12px; /* Adjust this value to your desired font size */
 }
+
+.city-typeahead-input {
+  max-width: 15ch;
+}
+
+@media screen and (max-width: 480px) {
+  .city-typeahead-input {
+    max-width: 100%;
+  }
+  .infoheader img  {
+    display: none;
+  }
+  .site-name {
+    font-size: 12px;
+  }
+
+  .tagline {
+    font-size: 10px;
+  }
+  .input-group-prepend {
+    display: none;
+  }
+}
