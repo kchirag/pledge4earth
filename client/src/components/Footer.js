@@ -9,6 +9,10 @@ const Footer = () => {
           <li>
             <Link to="/PrivacyPolicy">Privacy Policy</Link>
           </li>
+          <li>
+            <Link to="/VolunteerForm">Volunteers</Link>
+          </li>
+          
           {/* Add more links as needed */}
         </ul>
       </nav>

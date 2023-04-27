@@ -17,6 +17,7 @@ import ReasonSlider from './components/ReasonSlider'
 import EmailConfirmationContainer from './components/EmailConfirmationContainer'
 import PrivacyPolicyContainer from './components/PrivacyPolicyContainer'
 import Footer from './components/Footer';
+import VolunteerPage from './components/VolunteerPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -190,7 +191,7 @@ function App() {
                 </span>
               </div>
               <Typeahead
-                className="custom-typeahead"
+                className="custom-typeahead city-typeahead-input"
                 id="city-typeahead"
                 labelKey="name"
                 options={citySuggestions}
@@ -221,6 +222,7 @@ function App() {
           <Route path="/About" element={<AboutContainer />} />
           <Route path="/Faqs" element={<FaqsContainer />} />
           <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
+          <Route path="/VolunteerForm" element={<VolunteerPage />} />
           <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
           <Route path="/" element={
             <>

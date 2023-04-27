@@ -262,3 +262,8 @@ li:hover > .submenu {
     display: none;
   }
 }
+
+.about-container{
+  text-align: left;
+  padding: 3%;
+}
