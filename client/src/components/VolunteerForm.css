@@ -1,0 +1,44 @@
+//VolunteerForm.css
+form#volunteer-application-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin-left: 0;
+
+}
+
+
+form#volunteer-application-form div {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+form#volunteer-application-form label {
+  width: 150px;
+  margin-bottom: 0;
+}
+
+form#volunteer-application-form input[type="text"],
+form#volunteer-application-form input[type="email"],
+form#volunteer-application-form textarea {
+  width: 50%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+
+}
+
+form#volunteer-application-form button[type="submit"] {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+form#volunteer-application-form input.medium-width {
+  max-width: 20rem;
+}
+
+form#volunteer-application-form input.large-width {
+  width: 70%;
+}
