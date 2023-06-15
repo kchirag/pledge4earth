@@ -17,7 +17,11 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 //const FacebookStrategy = require('passport-facebook').Strategy;
 //const TwitterStrategy = require('passport-twitter').Strategy;
-
+//const fetchMeetupEvents = require('./functions/fetchMeetupEvents');
+//const fetchTicketmasterEvents = require('./functions/fetchTicketmasterEvents');
+//const fetchFacebookEvents = require('./functions/fetchFacebookEvents');
+//const apiRoutes = require('./routes/eventsRoutes');
+const eventsRoutes = require('./routes/newEventsRoute');
 
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
@@ -43,6 +47,30 @@ httpApp.use(redirectHttps);
 const path = require('path'); 
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
+
+async function fetchAllEvents(location, keywords) {
+  const accessToken = 'YOUR_MEETUP_ACCESS_TOKEN'; // Replace with your access token
+  const query = 'environment';
+
+  const meetupEvents = await fetchMeetupEvents(accessToken, query);
+  //const eventbriteEvents = await fetchEventbriteEvents(location, keywords);
+  //const meetupEvents = await fetchMeetupEvents(location, keywords);
+  //const ticketmasterEvents = await fetchTicketmasterEvents(location, keywords);
+  //const facebookEvents = await fetchFacebookEvents(location, keywords);
+
+  const allEvents = [
+    //...eventbriteEvents,
+    ...meetupEvents,
+    //...ticketmasterEvents,
+    //...facebookEvents,
+  ];
+
+  // Cache the combined events in your database
+  await cacheEventsInDatabase(allEvents);
+
+  return allEvents;
+}
+
 // Read the certificate files
 const privateKey = fs.readFileSync(process.env.PRIVATE_KEY, 'utf8');
 const certificate = fs.readFileSync(process.env.CERTIFICATE, 'utf8');
@@ -62,10 +90,15 @@ app.use('/api/nearby-organizations', nearbyOrganizationRouter);
 app.get("/confirm-email/:token", confirmEmailRouter);
 app.use('/upload', uploadRoute);
 app.use('/sendInvite', inviteRouter);
+//app.use('/api/events', apiRoutes);
+app.use('/api/events', eventsRoutes);
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Internal Server Error');
 });
+
+
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });

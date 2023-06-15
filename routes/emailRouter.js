@@ -4,19 +4,31 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const ConfirmEmail = require('../models/ConfirmEmail')
+require('dotenv').config(); // Load environment variables from .env file
 
 router.post('/', async (req, res) => {
   const { to, subject, text } = req.body;
 
-  // Set up your email account credentials
-  const transporter = nodemailer.createTransport({
-    host: 'mail.privateemail.com', // Replace with your email provider's SMTP server
-    port: 465,
-    secure: true,
+  // // Set up your email account credentials for generic
+  // const transporter = nodemailer.createTransport({
+  //   host: 'mail.privateemail.com', // Replace with your email provider's SMTP server
+  //   port: 465,
+  //   secure: true,
+  //   auth: {
+  //     user: 'lead@lead4earth.org', // Replace with your email address
+  //     pass: 'Pledge4Earth', // Replace with your email password
+  //   },
+  // });
+  // now switched to gmail
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
     auth: {
-      user: 'lead@lead4earth.org', // Replace with your email address
-      pass: 'Pledge4Earth', // Replace with your email password
-    },
+      type: 'OAuth2',
+      user: 'lead@lead4earth.org',
+      clientId: process.env.GMAIl_ClientID,
+      clientSecret: process.env.GMAIL_clientSecret,
+      refreshToken: process.env.GMAIL_REFRESHTOKEN
+    }
   });
 
   // Generate a unique token

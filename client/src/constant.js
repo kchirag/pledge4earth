@@ -80,6 +80,13 @@ We reserve the right to update or modify this Privacy Policy at any time. Any ch
 <br/>
 If you have any questions or concerns about our Privacy Policy, please feel free to contact us at lead@lead4earth.org.`;
 
+export const ABOUT_US = `
+Lead4Earth is mainly focussed in addressing the challenges
 
+
+
+
+
+`;
 
 
