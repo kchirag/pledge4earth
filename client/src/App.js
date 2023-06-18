@@ -169,7 +169,7 @@ function App() {
           <div style={{marginLeft: '1em'}}>
             <div class="infoheader">
                 <img
-                  src="/lead4earth.png"
+                  src="/logo192.png"
                   alt="Lead4Earth"
                   className="logo"
                 />

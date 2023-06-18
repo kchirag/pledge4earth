@@ -216,6 +216,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
                   onHide={() => setShowModal(false)}
                   onConfirm={handleConfirmLocation}
                   location={location}
+                  emailid={emailId}
                 />
               )}
         </div>

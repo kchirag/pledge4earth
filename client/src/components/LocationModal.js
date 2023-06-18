@@ -14,10 +14,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 
-function LocationModal({ show, onHide, onConfirm, location }) {
+function LocationModal({ show, onHide, onConfirm, location, emailid }) {
 
-  const [highlight, setHighlight] = useState(false);
-  const [email,setemail] = useState('');
+  const [highlight, setHighlight] = useState(true);
+  const [email,setemail] = useState(emailid);
   const [website,setwebsite] = useState('');
   const [socialhandle,setsocialhandle] = useState('');
   const [picurl,setpicurl] = useState('');
@@ -34,7 +34,8 @@ function LocationModal({ show, onHide, onConfirm, location }) {
   //const [buttonText, setButtonText] = useState('Upload Image');
   //const [previewKey, setPreviewKey] = useState(0);
 
-
+ 
+  console.log(emailid);
   const handleImageChange = (e) => {
     setpicurl(null);
     console.log(e.target.files[0]);
@@ -114,7 +115,7 @@ function LocationModal({ show, onHide, onConfirm, location }) {
           <p>Move the marker to your location to confirm your location</p>
           <div>
             <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" onChange={handleChange} />
+            <input type="email" id="email" name="email" value={email} onChange={handleChange} />
           </div>
           <div className="influential-container">
             Want to lead4earth?
