@@ -95,8 +95,8 @@ function App() {
       //const [latitude, longitude] = data.loc.split(',').map(parseFloat);
 
       return {
-        data.latitude,
-        data.longitude,
+        latitude: data.latitude,
+        longitude: data.longitude,
         city: data.city,
       };
     } catch (error) {
