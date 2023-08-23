@@ -44,7 +44,7 @@ function App() {
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      const suggestions = data.results.map((result) => ({
+      const suggestions = data.map((result) => ({
         name: result.city,
         lat: result.latitude,
         lng: result.longitude,
@@ -62,19 +62,19 @@ function App() {
 
   useEffect(() => {
     const fetchUserLocation = async () => {
-      try {
+      //try {
         //const location = await getUserLocation();
         //setUserLocation(location);
-      } catch (error) {
-        console.error('Error fetching user location from browser:', error);
-        try{
-          const location = await getLocationFromIP();
-          setUserLocation(location);
-        }
-        catch (error1){
-            console.error('Error fetching user location from IP:', error1);
-        } 
-      } finally {
+      //} catch (error) {
+      //  console.error('Error fetching user location from browser:', error);
+      try{
+        const location = await getLocationFromIP();
+        setUserLocation(location);
+      }
+      catch (error1){
+          console.error('Error fetching user location from IP:', error1);
+      } 
+      finally {
           setLoading(false); // Set loading to false after fetching the location
       }
     };
