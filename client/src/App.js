@@ -45,7 +45,7 @@ function App() {
       const response = await fetch(apiUrl);
       const data = await response.json();
       const suggestions = data.results.map((result) => ({
-        name: 'result.city',
+        name: result.city,
         lat: result.latitude,
         lng: result.longitude,
       }));
@@ -63,8 +63,8 @@ function App() {
   useEffect(() => {
     const fetchUserLocation = async () => {
       try {
-        const location = await getUserLocation();
-        setUserLocation(location);
+        //const location = await getUserLocation();
+        //setUserLocation(location);
       } catch (error) {
         console.error('Error fetching user location from browser:', error);
         try{
@@ -85,18 +85,18 @@ function App() {
   const getLocationFromIP = async () => {
     const IPINFO_API_KEY = process.env.REACT_APP_IPINFO_API_KEY; 
     try {
-      const response = await axios.get(`https://ipinfo.io/?token=${IPINFO_API_KEY}`);
+      const response = await axios.get(`https://ipapi.co/json/`);
       const { data } = response;
 
       if (data.status === 'fail') {
         throw new Error('Failed to get location data');
       }
 
-      const [latitude, longitude] = data.loc.split(',').map(parseFloat);
+      //const [latitude, longitude] = data.loc.split(',').map(parseFloat);
 
       return {
-        latitude,
-        longitude,
+        data.latitude,
+        data.longitude,
         city: data.city,
       };
     } catch (error) {
