@@ -39,17 +39,16 @@ function App() {
 
   const fetchCitySuggestions = async (query) => {
     const apiKey = process.env.REACT_APP_GEOCODE_API_KEY;
-    //const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${apiKey}&limit=5`;
-    const apiUrl = `https://ipapi.co/json/`
+    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${apiKey}&limit=5`;
+    //const apiUrl = `https://ipapi.co/json/`
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      const suggestions = data.map((result) => ({
-        name: result.city,
-        lat: result.latitude,
-        lng: result.longitude,
+      const suggestions = data.results.map((result) => ({
+        name: result.formatted,
+        lat: result.geometry.lat,
+        lng: result.geometry.lng,
       }));
-
       setCitySuggestions(suggestions);
     } catch (error) {
       console.error('Error fetching city suggestions:', error);
