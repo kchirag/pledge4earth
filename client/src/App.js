@@ -175,7 +175,7 @@ function App() {
               
               <div class="site-info">
                 <span class="site-name">Lead for Earth</span>
-                <span class="tagline">Act, Engage and Vote</span>
+                <span class="tagline">Act, Engage and Lead</span>
               </div>
             </div>
           </div>
