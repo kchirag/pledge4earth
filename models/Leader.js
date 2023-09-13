@@ -14,8 +14,8 @@ const LeaderSchema = new mongoose.Schema({
   },
   cityName:{
         type: String,
-        default: 'Information about this leader is not available.'  // need to write nearby city name.
-  }
+        default: '.'  // need to write nearby city name.
+  },
   upvotes: {
     type: Number,
     default: 0,
