@@ -18,7 +18,7 @@ import EmailConfirmationContainer from './components/EmailConfirmationContainer'
 import PrivacyPolicyContainer from './components/PrivacyPolicyContainer'
 import Footer from './components/Footer';
 import VolunteerPage from './components/VolunteerPage';
-import LeaderPage from './components/leaderPage';
+import LeaderPage from './components/LeaderPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
