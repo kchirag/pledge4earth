@@ -8,6 +8,14 @@ const LeaderSchema = new mongoose.Schema({
   },
   image: String,
   statement: String,
+  aboutText: {
+        type: String,
+        default: 'Information about this leader is not available.'  // default about text
+  },
+  cityName:{
+        type: String,
+        default: 'Information about this leader is not available.'  // need to write nearby city name.
+  }
   upvotes: {
     type: Number,
     default: 0,

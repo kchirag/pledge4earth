@@ -18,6 +18,7 @@ import EmailConfirmationContainer from './components/EmailConfirmationContainer'
 import PrivacyPolicyContainer from './components/PrivacyPolicyContainer'
 import Footer from './components/Footer';
 import VolunteerPage from './components/VolunteerPage';
+import LeaderPage from './components/leaderPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -175,7 +176,7 @@ function App() {
               
               <div class="site-info">
                 <span class="site-name">Lead for Earth</span>
-                <span class="tagline">Act, Engage and Lead</span>
+                <span class="tagline">Learn, Engage, Act and Direct</span>
               </div>
             </div>
           </div>
@@ -223,6 +224,8 @@ function App() {
           <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
           <Route path="/VolunteerForm" element={<VolunteerPage />} />
           <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
+          <Route path="/leader/:leaderId" component={LeaderPage} />
+
           <Route path="/" element={
             <>
               <ReasonSlider />
