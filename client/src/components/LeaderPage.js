@@ -1,6 +1,7 @@
 //LeaderPage.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axiosInstance from '../axiosInstance';
 
 // Leader's Profile Picture and Statement Component
 function LeaderProfile({ image, statement }) {
@@ -58,13 +59,30 @@ function LeaderPage() {
     const { leaderId } = useParams();
     const [leaderData, setLeaderData] = useState(null);
 
-    useEffect(() => {
-        // Assuming you have an API endpoint that fetches data by leaderId
-        fetch(`/api/leaders/${leaderId}`)
-            .then(response => response.json())
-            .then(data => setLeaderData(data))
-            .catch(error => console.error("Error fetching leader data:", error));
-    }, [leaderId]);  // This ensures the API call is made again if leaderId changes
+
+    const fetchNearbyLeadersFromAPI = async (leaderId) => {
+        const response = await axiosInstance.get(`/api/leaders/${leaderId}`);
+        const data = await response.data;
+        return data;
+    };
+
+
+  useEffect(() => {
+    const fetchLeaderbyId = async () => {
+      try {
+        //console.log('Trying to fetch user location...'); // Add this line
+        //const userLocation = await getUserLocation();
+        //console.log('User location fetched. Fetching leaders...'); // Add this line
+        const data = await fetchNearbyLeadersFromAPI(leaderId, 10000);
+        console.log(data);
+        setLeaderData(data);
+      } catch (error) {
+        console.error('Error fetching leader :', error);
+      }
+    };
+
+    fetchLeaderbyId();
+  }, [leaderId]);
 
     if (!leaderData) {
         return <div>Loading...</div>;  // Show a loading state while the data is being fetched
@@ -73,7 +91,7 @@ function LeaderPage() {
         <div className="leader-page">
             <LeaderProfile image={leaderData.image} statement={leaderData.statement} />
             <AboutLeader aboutText={leaderData.aboutText} />
-            <EnvironmentalAgendas agendas={leaderData.agendas} />
+            <EnvironmentalAgendas agendas={leaderData.agendas} /> 
             <SocialLinks links={leaderData.links} />
             <SocialFeeds /* feeds or user data here */ />
         </div>

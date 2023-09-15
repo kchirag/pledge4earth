@@ -16,6 +16,11 @@ const LeaderSchema = new mongoose.Schema({
         type: String,
         default: '.'  // need to write nearby city name.
   },
+  agendas: {
+        type: String,
+        default: '...'  // need to write nearby city name.
+
+  }
   upvotes: {
     type: Number,
     default: 0,

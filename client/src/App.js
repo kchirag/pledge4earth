@@ -224,7 +224,7 @@ function App() {
           <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
           <Route path="/VolunteerForm" element={<VolunteerPage />} />
           <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
-          <Route path="/leader/:leaderId" component={LeaderPage} />
+          <Route path="/leader/:leaderId" element={<LeaderPage />} />
 
           <Route path="/" element={
             <>
