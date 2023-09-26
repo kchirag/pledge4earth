@@ -19,9 +19,11 @@ import PrivacyPolicyContainer from './components/PrivacyPolicyContainer'
 import Footer from './components/Footer';
 import VolunteerPage from './components/VolunteerPage';
 import LeaderPage from './components/LeaderPage';
+import LeaderForm from './components/LeaderForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
+
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.css';
 
@@ -225,7 +227,8 @@ function App() {
           <Route path="/VolunteerForm" element={<VolunteerPage />} />
           <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
           <Route path="/leader/:leaderId" element={<LeaderPage />} />
-
+          <Route path="/leaderEdit/:leaderId" element={<LeaderForm />} />
+          
           <Route path="/" element={
             <>
               <ReasonSlider />

@@ -31,13 +31,57 @@ router.get('/:leaderId', async (req, res) => {
     if (!leader) {
       return res.status(404).json({ message: 'Leader not found' });
     }
-
+    leader[]
     res.json(leader);
   } catch (err) {
     console.error(err);
     // This will handle cases where the leaderId is not a valid MongoDB ObjectId as well.
     res.status(500).json({ message: 'Error fetching leader' });
   }
+});
+
+// This is a basic middleware for demonstration purposes. 
+// You should adjust this to your authentication strategy.
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.status(401).json({ message: 'Unauthorized' });
+    }
+}
+
+// update leader data
+router.put('/:leaderId', ensureAuthenticated, async (req, res) => {
+    const { leaderId } = req.params;
+    const updatedData = req.body;
+
+    try {
+        const leader = await Leader.findByIdAndUpdate(leaderId, updatedData, { new: true });
+
+        if (!leader) {
+            return res.status(404).json({ message: 'Leader not found' });
+        }
+
+        res.json(leader);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error updating leader' });
+    }
+});
+
+// Route to claim the profile
+router.put('/claim/:id', async (req, res) => {
+  const leader = await Leader.findById(req.params.id);
+  leader.isClaimed = true;
+  await leader.save();
+  res.send(leader);
+});
+
+// Route to update the profile
+router.put('/update/:id', async (req, res) => {
+  const { name, profileInformation } = req.body;
+  const leader = await Leader.findByIdAndUpdate(req.params.id, { name, profileInformation });
+  res.send(leader);
 });
 
 module.exports = router;

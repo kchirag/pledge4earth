@@ -7,7 +7,7 @@ import axiosInstance from '../axiosInstance';
 function LeaderProfile({ image, statement }) {
     return (
         <div className="leader-profile">
-            <img src={image} alt="Leader Profile" style={{ width: '2rem', height: '2rem' }} />
+            <img src={image} alt="Leader Profile" style={{ width: '10rem', height: '10rem' }} />
             <p>{statement}</p>
         </div>
     );
@@ -23,21 +23,19 @@ function AboutLeader({ aboutText }) {
 // Environmental Agendas Component
 function EnvironmentalAgendas({ agendas }) {
     return (
-        <ul className="agendas">
-            {agendas.map((agenda, index) => (
-                <li key={index}>{agenda}</li>
-            ))}
-        </ul>
-    );
+        
+            <div>{agendas}</div>
+        );        
 }
 
 // Social Media Links Component
 function SocialLinks({ links }) {
     return (
+
         <div className="social-links">
             {/* Here, we'll display an icon for each link. For simplicity, I'm just using plain text. */}
-            {links.linkedin && <a href={links.linkedin}>LinkedIn</a>}
-            {links.twitter && <a href={links.twitter}>Twitter</a>}
+            {links["linkedin"] && <a href={links["linkedin"]}>LinkedIn</a>}&nbsp;
+            {links["twitter"] && <a href={links["twitter"]}>Twitter</a>}&nbsp;
             {/* ... add other platforms similarly ... */}
         </div>
     );
