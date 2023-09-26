@@ -31,7 +31,7 @@ router.get('/:leaderId', async (req, res) => {
     if (!leader) {
       return res.status(404).json({ message: 'Leader not found' });
     }
-    leader[]
+    
     res.json(leader);
   } catch (err) {
     console.error(err);
