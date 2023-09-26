@@ -34,7 +34,7 @@ const LeaderSchema = new mongoose.Schema({
   ],
   statement: String,
   url_slug: String,
-  isClaimed: { type: Boolean, default: false }
+  isClaimed: { type: Boolean, default: false },
   aboutText: {
         type: String,
         default: 'Information about this leader is not available.'  // default about text
