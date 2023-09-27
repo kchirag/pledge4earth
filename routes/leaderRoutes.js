@@ -1,7 +1,6 @@
 // routes/leaderRoutes.js
 const router = require('express').Router();
 const Leader = require('../models/Leader');
-const ensureAuthenticated = require('../middleware/auth');
 
 
 router.get('/', async (req, res) => {
@@ -40,9 +39,24 @@ router.get('/:leaderId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching leader' });
   }
 });
+// Route to claim the profile
+router.put('/claim/:id', async (req, res) => {
+  const leader = await Leader.findById(req.params.id);
+  leader.isClaimed = true;
+  await leader.save();
+  res.send(leader);
+});
+
+// Route to update the profile
+router.put('/update/:id', async (req, res) => {
+  const { name, profileInformation } = req.body;
+  const leader = await Leader.findByIdAndUpdate(req.params.id, { name, profileInformation });
+  res.send(leader);
+});
 
 // This is a basic middleware for demonstration purposes. 
 // You should adjust this to your authentication strategy.
+const ensureAuthenticated = require('../middleware/auth');
 
 //console.log(ensureAuthenticated);
 // update leader data
@@ -64,19 +78,5 @@ router.put('/:leaderId', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// Route to claim the profile
-router.put('/claim/:id', async (req, res) => {
-  const leader = await Leader.findById(req.params.id);
-  leader.isClaimed = true;
-  await leader.save();
-  res.send(leader);
-});
-
-// Route to update the profile
-router.put('/update/:id', async (req, res) => {
-  const { name, profileInformation } = req.body;
-  const leader = await Leader.findByIdAndUpdate(req.params.id, { name, profileInformation });
-  res.send(leader);
-});
 
 module.exports = router;
