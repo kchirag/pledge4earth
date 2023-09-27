@@ -1,4 +1,6 @@
 // middleware/auth.js
+const jwt = require('jsonwebtoken');
+
 
 function ensureAuthenticated(req, res, next) {
     // Get the token from the Authorization header
