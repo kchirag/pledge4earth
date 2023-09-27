@@ -80,7 +80,6 @@ const ca = fs.readFileSync(process.env.CERTIFICATECA, 'utf8');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(ensureAuthenticated);
 app.use('/api/auth', authRoutes);
 app.use('/api/leaders', leaderRoutes);
 app.use('/api/userViews', userViewsRouter);
@@ -100,6 +99,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal Server Error');
 });
 
+app.use(ensureAuthenticated);
 
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;
