@@ -99,8 +99,8 @@ app.use((err, req, res, next) => {
   res.status(500).send('Internal Server Error');
 });
 
-app.use(ensureAuthenticated);
-
+//app.use(ensureAuthenticated);
+  
 // Connect to MongoDB
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
