@@ -1,6 +1,7 @@
 // routes/leaderRoutes.js
 const router = require('express').Router();
 const Leader = require('../models/Leader');
+const ensureAuthenticated = require('../middleware/auth');
 
 
 router.get('/', async (req, res) => {
@@ -42,14 +43,8 @@ router.get('/:leaderId', async (req, res) => {
 
 // This is a basic middleware for demonstration purposes. 
 // You should adjust this to your authentication strategy.
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    } else {
-        res.status(401).json({ message: 'Unauthorized' });
-    }
-}
 
+console.log(ensureAuthenticated);
 // update leader data
 router.put('/:leaderId', ensureAuthenticated, async (req, res) => {
     const { leaderId } = req.params;

@@ -1,8 +1,15 @@
 //components/LeaderForm.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axiosInstance from '../axiosInstance';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // import styles
 
 const LeaderForm = () => {
+  const { leaderId } = useParams();
+  const [editorHtml, setEditorHtml] = useState(''); // maintain state for the editor content
+
   const [formData, setFormData] = useState({
     name: '',
     links: {
@@ -25,10 +32,37 @@ const LeaderForm = () => {
     // ... other fields
     location: ''
   });
+  const fetchLeadersFromAPI = async (leaderId) => {
+        const response = await axiosInstance.get(`/api/leaders/${leaderId}`);
+        const data = await response.data;
+        return data;
+    };
+  useEffect(() => {
+    const fetchLeaderbyId = async () => {
+      try {
+        //console.log('Trying to fetch user location...'); // Add this line
+        //const userLocation = await getUserLocation();
+        //console.log('User location fetched. Fetching leaders...'); // Add this line
+        const data = await fetchLeadersFromAPI(leaderId, 10000);
+        console.log(data);
+        setFormData(data);
+      } catch (error) {
+        console.error('Error fetching leader :', error);
+      }
+    };
+
+    fetchLeaderbyId();
+  }, [leaderId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleAboutChange = (html) => {
+    //console.log(e);
+   // const { name, value } = e.target;
+   // setFormData({...formData, "aboutText": html});
   };
 
   const handleLinkChange = (e) => {
@@ -40,22 +74,25 @@ const LeaderForm = () => {
     e.preventDefault();
     const dataToSend = {
       ...formData,
-      images: formData.images.split(',').map(url => url.trim())
     };
-    fetch('/api/leaders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataToSend),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+
+    const token = localStorage.getItem('token');
+    console.log("Token:" + token);
+    if (token){
+      axiosInstance.put(`/api/leaders/${leaderId}`, dataToSend, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }else{
+
+    }
   };
 
   return (
@@ -92,7 +129,10 @@ const LeaderForm = () => {
         <input type="text" name="images" value={formData.images} onChange={handleInputChange} />
       </label>
       <br />
-
+      <label>About 
+        <ReactQuill value={formData.aboutText} onChange={handleAboutChange} />
+      </label>
+      <br />
       <label>
         Statement:
         <textarea name="statement" value={formData.statement} onChange={handleInputChange} />

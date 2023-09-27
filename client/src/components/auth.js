@@ -1,6 +1,6 @@
 // components/auth.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -24,8 +24,11 @@ const Auth = () => {
         },
       };
       const body = JSON.stringify({ username, password });
-      const response = await axios.post(url, body, config);
-      console.log(response.data);
+      const response = await axiosInstance.post(url, body, config);
+      // If login is successful, save the token in localStorage
+      if (response.data && isLogin) {
+        localStorage.setItem('token', response.data);
+      }
       // Handle successful registration or login here
     } catch (error) {
       console.error(error.response.data);

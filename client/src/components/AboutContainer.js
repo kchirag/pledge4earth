@@ -1,5 +1,6 @@
 //aboutContainer.js
 import React from 'react';
+import Auth from './auth'
 
 const AboutContainer = () => {
   return (
@@ -19,7 +20,9 @@ const AboutContainer = () => {
       <p>Our network is built on the principles of communication, collaboration, and shared values, much like an online dating platform. Our mission is to support political leaders who have the
 vision and commitment to implement meaningful climate action on a larger local scale, just as an online dating platform helps people find compatible partners. By working together, we can make a significant impact and create a world that is healthy, equitable, and sustainable. Join us in our alliance for a brighter future.      
       </p>
+      <Auth />
     </div>
+
   );
 };
 
