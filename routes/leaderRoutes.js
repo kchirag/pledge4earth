@@ -44,7 +44,7 @@ router.get('/:leaderId', async (req, res) => {
 // This is a basic middleware for demonstration purposes. 
 // You should adjust this to your authentication strategy.
 
-console.log(ensureAuthenticated);
+//console.log(ensureAuthenticated);
 // update leader data
 router.put('/:leaderId', ensureAuthenticated, async (req, res) => {
     const { leaderId } = req.params;
