@@ -55,7 +55,7 @@ function LeaderContainer({userLocation}) {
               <h3>{leader.name}</h3>
               <p>{leader.statement}</p>
               <p>{leader.distance.toFixed(1)} miles away</p>
-              <a href={leader.website} target="_blank" rel="noopener noreferrer">more info</a>
+              <a href={`/leader/leader.url_slug` } target="_blank" rel="noopener noreferrer">more info</a>
             </div>
           </div>
         ))}

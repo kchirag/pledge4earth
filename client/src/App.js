@@ -169,16 +169,16 @@ function App() {
 
         <header className="App-header">
           <div style={{marginLeft: '1em'}}>
-            <div class="infoheader">
+            <div className="infoheader">
                 <img
                   src="/logo192.png"
                   alt="Lead4Earth"
                   className="logo"
                 />
               
-              <div class="site-info">
-                <span class="site-name">Lead for Earth</span>
-                <span class="tagline">Learn, Engage, Act and Direct</span>
+              <div className="site-info">
+                <span className="site-name">Lead for Earth</span>
+                <span className="tagline">Learn, Engage, Act and Direct</span>
               </div>
             </div>
           </div>
@@ -226,8 +226,9 @@ function App() {
           <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
           <Route path="/VolunteerForm" element={<VolunteerPage />} />
           <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
-          <Route path="/leader/:leaderId" element={<LeaderPage />} />
-          <Route path="/leaderEdit/:leaderId" element={<LeaderForm />} />
+          <Route path="/leader/:slug" element={<LeaderPage />} />
+          <Route path="/leaderEdit/id/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
+          <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
           
           <Route path="/" element={
             <>

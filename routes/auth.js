@@ -55,26 +55,6 @@ router.post('/login', async (req, res) => {
 });
 
 
-function ensureAuthenticated(req, res, next) {
-    // Get the token from the Authorization header
-    const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
 
-    // Check if no token
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
-
-    try {
-        // Verify the token
-        const decoded = jwt.verify(token, 'pledge4earth');
-        // If token is valid, store the user payload in req.user
-        req.user = decoded.user;
-        next();
-    } catch (err) {
-        res.status(401).json({ message: 'Token is not valid' });
-    }
-}
-
-module.exports = ensureAuthenticated;
 
 module.exports = router;

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 
+
 // Leader's Profile Picture and Statement Component
 function LeaderProfile({ image, statement }) {
     return (
@@ -54,12 +55,13 @@ function SocialFeeds({ /* feed data or user handles here */ }) {
 
 // Main Page Component
 function LeaderPage() {
-    const { leaderId } = useParams();
+    const { slug } = useParams();
     const [leaderData, setLeaderData] = useState(null);
+    const [currentProfilePic, setCurrentProfilePic] = useState(null);
+    
 
-
-    const fetchNearbyLeadersFromAPI = async (leaderId) => {
-        const response = await axiosInstance.get(`/api/leaders/${leaderId}`);
+    const fetchNearbyLeadersFromAPI = async (slug) => {
+        const response = await axiosInstance.get(`/api/leaders/slug/${slug}`);
         const data = await response.data;
         return data;
     };
@@ -71,7 +73,7 @@ function LeaderPage() {
         //console.log('Trying to fetch user location...'); // Add this line
         //const userLocation = await getUserLocation();
         //console.log('User location fetched. Fetching leaders...'); // Add this line
-        const data = await fetchNearbyLeadersFromAPI(leaderId, 10000);
+        const data = await fetchNearbyLeadersFromAPI(slug, 10000);
         console.log(data);
         setLeaderData(data);
       } catch (error) {
@@ -80,14 +82,36 @@ function LeaderPage() {
     };
 
     fetchLeaderbyId();
-  }, [leaderId]);
+  }, [slug]);
 
     if (!leaderData) {
         return <div>Loading...</div>;  // Show a loading state while the data is being fetched
     }
     return (
+
         <div className="leader-page">
-            <LeaderProfile image={leaderData.image} statement={leaderData.statement} />
+            <div className="profile-container">
+              <div className="profile-pic-container">
+                <img src={leaderData.image} alt="Profile" className="profile-pic" />
+              </div>
+                <div className="thumbnails-slider">
+                    {leaderData.images && leaderData.images.length > 0 ? (
+                      leaderData.images.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`Thumbnail ${index}`}
+                          className="thumbnail"
+                          onClick={() => setCurrentProfilePic(image)}
+                        />
+                      ))
+                    ) : (
+                      <p>No images available</p>
+                    )}
+
+                </div>
+            </div>
+            <p>{leaderData.statement}</p>
             <AboutLeader aboutText={leaderData.aboutText} />
             <EnvironmentalAgendas agendas={leaderData.agendas} /> 
             <SocialLinks links={leaderData.links} />

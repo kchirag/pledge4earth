@@ -39,6 +39,26 @@ router.get('/:leaderId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching leader' });
   }
 });
+
+//get the leader data
+router.get('slug/:leaderId', async (req, res) => {
+  const { leaderId } = req.params;
+
+  try {
+    const leader = await Leader.findOne({ url_slug: leaderId });
+
+    if (!leader) {
+      return res.status(404).json({ message: 'Leader not found' });
+    }
+    
+    res.json(leader);
+  } catch (err) {
+    console.error(err);
+    // This will handle cases where the leaderId is not a valid MongoDB ObjectId as well.
+    res.status(500).json({ message: 'Error fetching leader' });
+  }
+});
+
 // Route to claim the profile
 router.put('/claim/:id', async (req, res) => {
   const leader = await Leader.findById(req.params.id);
