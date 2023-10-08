@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   }
 });
 //get the leader data
-router.get('id/:leaderId', async (req, res) => {
+router.get('/id/:leaderId', async (req, res) => {
   const { leaderId } = req.params;
 
   try {
@@ -33,7 +33,7 @@ router.get('id/:leaderId', async (req, res) => {
 });
 
 //get the leader data
-router.get('slug/:slug', async (req, res) => {
+router.get('/slug/:slug', async (req, res) => {
   const { slug } = req.params;
   console.log(slug);
   try {
