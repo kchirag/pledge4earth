@@ -3,14 +3,6 @@ const router = require('express').Router();
 const Leader = require('../models/Leader');
 
 
-router.get('/', async (req, res) => {
-  try {
-    const leaders = await Leader.find();
-    res.json(leaders);
-  } catch (err) {
-    res.status(500).json({ message: 'Error fetching leaders' });
-  }
-});
 router.post('/', async (req, res) => {
   const leader = new Leader(req.body);
 
@@ -73,6 +65,17 @@ router.put('/update/:id', async (req, res) => {
   const leader = await Leader.findByIdAndUpdate(req.params.id, { name, profileInformation });
   res.send(leader);
 });
+
+router.get('/', async (req, res) => {
+  try {
+    console.log("Get all leaders")
+    const leaders = await Leader.find();
+    res.json(leaders);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching leaders' });
+  }
+});
+
 
 // This is a basic middleware for demonstration purposes. 
 // You should adjust this to your authentication strategy.
