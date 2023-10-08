@@ -41,14 +41,14 @@ router.get('/:leaderId', async (req, res) => {
 });
 
 //get the leader data
-router.get('slug/:leaderId', async (req, res) => {
-  const { leaderId } = req.params;
-
+router.get('slug/:slug', async (req, res) => {
+  const { slug } = req.params;
+  console.log(slug);
   try {
-    const leader = await Leader.findOne({ url_slug: leaderId });
+    const leader = await Leader.findOne({ url_slug: slug });
 
     if (!leader) {
-      return res.status(404).json({ message: 'Leader not found' });
+      return res.status(404).json({ message: 'Leader for slug' + slug + ' not found'});
     }
     
     res.json(leader);
