@@ -86,7 +86,7 @@ const LeaderForm = (userLocation) => {
       var apiurl = `/api/leaders/slug/${leaderId}`;
 
       if (location.pathname.startsWith("/leaderEdit/id")) 
-        apiurl = `/api/leaders/${leaderId}`;
+        apiurl = `/api/leaders/id/${leaderId}`;
 
       const response = await axiosInstance.get(apiurl);
       const data = await response.data;

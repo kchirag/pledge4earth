@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
   }
 });
 //get the leader data
-router.get('/:leaderId', async (req, res) => {
+router.get('id/:leaderId', async (req, res) => {
   const { leaderId } = req.params;
 
   try {
