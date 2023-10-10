@@ -117,19 +117,21 @@ function LeaderPage() {
                     </div>
                     <p>{leaderData.statement}</p>
                     <div className="thumbnails-slider">
-                        {leaderData.images && leaderData.images.length > 0 ? (
-                            leaderData.images.map((image, index) => (
+                    {
+                        leaderData.images && Object.keys(leaderData.images).length > 0 ? (
+                            Object.entries(leaderData.images).map(([key, image]) => (
                                 <img
-                                    key={index}
+                                    key={key}
                                     src={image}
-                                    alt={`Thumbnail ${index}`}
+                                    alt={`Thumbnail ${key}`}
                                     className="thumbnail"
                                     onClick={() => setCurrentProfilePic(image)}
                                 />
                             ))
                         ) : (
                             <p>No images available</p>
-                        )}
+                        )
+                    }    
                     </div>
                 </div>
                 <div className="about-section">
