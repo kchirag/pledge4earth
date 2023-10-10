@@ -27,3 +27,23 @@
 .thumbnail:hover {
   opacity: 0.7;
 }
+
+.profile-and-about {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    gap: 20px;  /* Space between .profile-container and .about-section */
+}
+
+.profile-container {
+    /* You might want to restrict the width if it becomes too large */
+    max-width: 50%;
+}
+
+.about-section {
+    max-width: 45%;
+}
+.agendas ul {
+    list-style-type: disc;  /* Displays bullet points */
+    padding-left: 20px;     /* Adds some padding to the left */
+}

@@ -20,9 +20,11 @@ const LeaderSchema = new mongoose.Schema({
   },
   activeLink:String,
   image: String,
+  
   images: [
     {
-      type: String,
+      type: Map,
+      of: String,
       validate: {
         // Simple URL validation
         validator: function(v) {

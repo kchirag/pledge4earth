@@ -16,6 +16,7 @@ const LeaderForm = (userLocation) => {
 
 
   const [formData, setFormData] = useState({
+    _id: '',
     name: '',
     links: {
       linkedin: '',
@@ -144,7 +145,7 @@ const LeaderForm = (userLocation) => {
     const token = localStorage.getItem('token');
     console.log("Token:" + token);
     if (token){
-      axiosInstance.put(`/api/leaders/${leaderId}`, dataToSend, {
+      axiosInstance.put(`/api/leaders/${dataToSend._id}`, dataToSend, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -225,6 +226,7 @@ const LeaderForm = (userLocation) => {
             <option value="linkedin">LinkedIn</option>
             <option value="meta">Meta</option>
             <option value="tiktok">TikTok</option>
+            <option value="youtube">Youtube</option>
         </select>
       </label>
       <br />
