@@ -122,7 +122,7 @@ function LeaderPage() {
                             Object.entries(leaderData.images).map(([key, image]) => (
                                 <img
                                     key={key}
-                                    src={image}
+                                    src={Object.values(image).join("")}
                                     alt={`Thumbnail ${key}`}
                                     className="thumbnail"
                                     onClick={() => setCurrentProfilePic(image)}

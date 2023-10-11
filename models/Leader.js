@@ -23,9 +23,8 @@ const LeaderSchema = new mongoose.Schema({
   
   images: [
     {
-      type: Map,
-      of: String,
-      validate: {
+      type: String,
+    validate: {
         // Simple URL validation
         validator: function(v) {
           return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v);
