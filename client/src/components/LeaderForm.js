@@ -72,7 +72,7 @@ const LeaderForm = (userLocation) => {
         });
 
         if (response.data.success) {
-            setImageURLs(prevURLs => [...prevURLs, response.data.image_url]);
+            setImageURLs(prevURLs => Array.isArray(prevURLs) ? [...prevURLs, response.data.image_url] : [response.data.image_url]);
             setImageFile(null);
             setPreviewURL(null);
         } else {
@@ -137,13 +137,15 @@ const LeaderForm = (userLocation) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData({...formData, images : {...formData.images, ...imageURLs}});
+    //setFormData({...formData, images : {...formData.images, ...imageURLs}});
     const dataToSend = {
       ...formData,
+      images: imageURLs
     };
 
     const token = localStorage.getItem('token');
     console.log("Token:" + token);
+    console.log(formData.images);
     if (token){
       axiosInstance.put(`/api/leaders/${dataToSend._id}`, dataToSend, {
           headers: {
@@ -241,7 +243,7 @@ const LeaderForm = (userLocation) => {
             {previewURL && <img src={previewURL} alt="Image Preview" />}
             {imageFile && <button onClick={handleImageUpload}>Upload</button>}
             {/* Display the collected URLs */}
-            {imageURLs.map((url, index) => (
+            {imageURLs && imageURLs.map((url, index) => (
                 <div key={index}>{url}</div>
             ))}
       </div>
