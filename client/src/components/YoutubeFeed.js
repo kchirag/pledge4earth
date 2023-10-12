@@ -11,7 +11,7 @@ function YoutubeFeed({ channelid }){
     const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
 
     const response = await fetch(
-        `https://youtube.googleapis.com/youtube/v3/channels?part=snippet&forUsername=${channelid}&key=${apiKey}`
+        `https://yt.lemnoslife.com/channels?handle=@Lead4_Earth${channelid}`
       );
     const data = await response.json();
 
