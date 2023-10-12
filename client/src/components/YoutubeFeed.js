@@ -8,7 +8,7 @@ function YoutubeFeed({ channelid }){
 
   async function fetchRecentUploads(channelid) {
     const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
-    const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelid}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${apiKey}&q=${channelid}&maxResults=5`;
     console.log(url);
     const response = await fetch(url);
     const data = await response.json();
