@@ -28,7 +28,9 @@ function YoutubeFeed({ channelid }){
   return (
     <div>
 	 {videos && videos.length > 0 ? (
-        videos.map(video => (
+        videos
+        .filter(video => video.id.kind === "youtube#video") 
+        .map(video => (
           <iframe
             key={video.id.videoId}
             src={`https://www.youtube.com/embed/${video.id.videoId}`}

@@ -48,7 +48,7 @@ const LeaderForm = (userLocation) => {
   });
 
 
-  const location = useLocation();
+  
   
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -86,7 +86,7 @@ const LeaderForm = (userLocation) => {
   const fetchLeadersFromAPI = async (leaderId) => {
       var apiurl = `/api/leaders/slug/${leaderId}`;
 
-      if (location.pathname.startsWith("/leaderEdit/id")) 
+      if (window.location.pathname.startsWith("/leaderEdit/id")) 
         apiurl = `/api/leaders/id/${leaderId}`;
 
       const response = await axiosInstance.get(apiurl);
@@ -210,12 +210,12 @@ const LeaderForm = (userLocation) => {
       </label>
       <br />
       <label>
-        Blog:
-        <input type="url" name="blogURL" value={formData.links.blogURL} onChange={handleLinkChange} />
+        Web/Blog:
+        <input type="url" name="web" value={formData.links.web} onChange={handleLinkChange} />
       </label>
       <br />
       <label>
-        Other:
+        Others:
         <input type="url" name="others" value={formData.links.others} onChange={handleLinkChange} />
       </label>
       <br />

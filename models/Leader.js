@@ -15,7 +15,6 @@ const LeaderSchema = new mongoose.Schema({
     instagram: String,
     tiktok: String,
     youtube: String,
-    blogURL: String,
     others:String
   },
   activeLink:String,

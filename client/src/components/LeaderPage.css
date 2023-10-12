@@ -28,6 +28,15 @@
   opacity: 0.7;
 }
 
+/* For Icons */
+.icon-link {
+    margin-right: 10px;  /* adjust this value as needed */
+}
+
+.social-links a:last-child {
+    margin-right: 0; /* to ensure the last icon doesn't have extra space on its right */
+}
+
 .profile-and-about {
     display: flex; 
     justify-content: space-between; 
