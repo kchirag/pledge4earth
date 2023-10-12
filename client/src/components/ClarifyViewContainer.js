@@ -57,9 +57,19 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
         tooltip: "Human activities do not worsen climate change, and no intervention is needed"
       },
     ];
+  function createSlug(name, cityName) {
+    const sanitizeString = (str) => {
+        return str
+            .toLowerCase()
+            .replace(/[^a-z0-9 ]/g, '') // remove special characters and punctuation
+            .trim() // remove spaces from start and end
+            .replace(/\s+/g, '-'); // replace spaces with hyphens
+    };
 
+    return `${sanitizeString(name)}-${sanitizeString(cityName)}`;
+  }
   
-  const handleConfirmLocation = async (newCoordinates, email, highlight, website, socialhandle, picurl, description) => {
+  const handleConfirmLocation = async (newCoordinates, email, highlight, website, socialhandle, picurl, description, cityName) => {
     // ... handle the confirmed location here ...
       setLocation({
             latitude: newCoordinates.latitude,
@@ -83,6 +93,8 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
               type: 'Point',
               coordinates: [location.longitude, location.latitude],
             },
+          cityName:cityName,
+          url_slug: createSlug(name, cityName),
         };
         try {
           const response = await axiosInstance.post('/api/Leaders', LeaderData);
@@ -101,6 +113,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
             type: 'Point',
             coordinates: [location.longitude, location.latitude],
           },
+          cityName:cityName,
         };
         
         try {
@@ -146,6 +159,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
           type: 'Point',
           coordinates: [location.longitude, location.latitude],
         },
+        cityName:userLocation?.city,
       };
       
       try {
@@ -208,7 +222,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
           
         </div>
         <div class="button-container">
-        <button type="button" disabled={selectedView === '' || name.trim() === '' || isValidEmail === false} onMouseDown={() => handleConfirmLocation(location, emailId, false, '', '', '', '' )}>Confirm</button>
+        <button type="button" disabled={selectedView === '' || name.trim() === '' || isValidEmail === false} onMouseDown={() => handleConfirmLocation(location, emailId, false, '', '', '', '',userLocation?.city )}>Confirm</button>
         <button type="button" id="confirmlead" disabled={selectedView === ''} onMouseDown={() => setShowModal(true)}>Confirm & Lead</button>
               {location && (
                 <LocationModal

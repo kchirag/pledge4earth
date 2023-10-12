@@ -29,13 +29,16 @@ function SocialLinks({ links }) {
 
         <div className="social-links">
             {/* Here, we'll display an icon for each link. For simplicity, I'm just using plain text. */}
-            {links["linkedin"] && <a href={links["linkedin"]}>LinkedIn</a>}&nbsp;
+            {links["linkedin"]  && <a href={links["linkedin"]}>LinkedIn</a>}&nbsp;
             {links["twitter"] && <a href={links["twitter"]}>Twitter</a>}&nbsp;
             {/* ... add other platforms similarly ... */}
         </div>
     );
 }
-
+// Define default props for the SocialLinks component
+SocialLinks.defaultProps = {
+    links: {}
+};
 // Social Feeds Component
 // For this, you'll probably need to integrate with the respective platforms' APIs or use widgets provided by them.
 function SocialFeeds({ /* feed data or user handles here */ }) {
@@ -78,6 +81,7 @@ function LeaderPage() {
         //const userLocation = await getUserLocation();
         //console.log('User location fetched. Fetching leaders...'); // Add this line
         const data = await fetchNearbyLeadersFromAPI(slug, 10000);
+        data.links = {}
         setLeaderData(data);
         setCurrentProfilePic(data.image);
         console.log(data);

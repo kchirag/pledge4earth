@@ -101,6 +101,9 @@ const LeaderForm = (userLocation) => {
         //console.log('User location fetched. Fetching leaders...'); // Add this line
         const data = await fetchLeadersFromAPI(leaderId, 10000);
         console.log(data);
+        if (!data.links) {
+            data.links = {};
+        }
         const filledData = {
             ...formData, // Spread current defaults
             ...data, // Overwrite with fetched data

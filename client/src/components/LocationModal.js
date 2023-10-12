@@ -23,6 +23,7 @@ function LocationModal({ show, onHide, onConfirm, location, emailid }) {
   const [picurl,setpicurl] = useState('');
   const [description,setdescription] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);
+  const [cityName, setCityName] = useState('');
 
   const [markerPosition, setMarkerPosition] = useState({
     latitude: location.latitude || 0,
@@ -52,10 +53,8 @@ function LocationModal({ show, onHide, onConfirm, location, emailid }) {
         'Content-Type': 'multipart/form-data',
       },
     });
-   
     if (response.data.success) {
       setpicurl(response.data.image_url);
-
     } else {
       // Handle error
     }
@@ -65,6 +64,12 @@ function LocationModal({ show, onHide, onConfirm, location, emailid }) {
   useEffect(() => {
     handleImageUpload();
   }, [imageFile]);
+
+  async function reverseGeocode(lat, lon) {
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+    const data = await response.json();
+    return data.address.city || data.address.town || data.address.village || 'Unknown';
+  }
 
   const handleChange = (e) => {
     setemail(e.target.value);
@@ -104,15 +109,18 @@ function LocationModal({ show, onHide, onConfirm, location, emailid }) {
               position={[markerPosition.latitude, markerPosition.longitude]}
               draggable
               eventHandlers={{
-                dragend: (event) => {
+                dragend: async (event) => {
                   const newPosition = event.target.getLatLng();
                   setMarkerPosition({ latitude: newPosition.lat, longitude: newPosition.lng });
-                },
+                  const cityNameResult = await reverseGeocode(newPosition.lat, newPosition.lng);
+                  setCityName(cityNameResult);                },
               }}
               icon={L.divIcon({ className: 'custom-div-icon', html: '<div>📍</div>' })}
             />
           </MapContainer>
+          <div>Current Location: {cityName}</div>
           <p>Move the marker to your location to confirm your location</p>
+
           <div>
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" name="email" value={email} onChange={handleChange} />
@@ -199,7 +207,7 @@ function LocationModal({ show, onHide, onConfirm, location, emailid }) {
               alert(alertmsg);
               return;
             } 
-            onConfirm(markerPosition,  email, highlight, website, socialhandle, picurl, description);
+            onConfirm(markerPosition,  email, highlight, website, socialhandle, picurl, description, cityName);
             onHide();
 
           }}
