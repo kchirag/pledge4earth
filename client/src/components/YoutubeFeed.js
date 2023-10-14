@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react";
 
 
 
-function YoutubeFeed({ channelid }){
+function YoutubeFeed({ channelName,channelid }){
   const [videos, setVideos] = useState([]);
   //const [channelHandle, setChannelHandle] = useState("youtubecreators"); // Replace this with the handle of the channel you want to fetch videos from
   console.log(channelid);
 
-  async function fetchRecentUploads(channelid) {
+  async function fetchRecentUploads(channelName,channelid) {
     const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
-
-    const response = await fetch(
-        `https://yt.lemnoslife.com/channels?handle=@${channelid}`
-      );
-    const data = await response.json();
-
-    const channelId = data.items[0].id;
+    let data = {}
+    if (!channelid){
+      const response = await fetch(
+          `https://youtube.googleapis.com/youtube/v3/search?q={channelName}&key=${apiKey}`
+        );
+      data = await response.json();
+    }
+    const channelId = channelid  ? channelid: data.items[0].channelId;
     const response2 = await fetch(
         `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=5&key=${apiKey}`
       );
     const data2 = await response2.json();
 
     setVideos(data2.items);
-    console.log(data);
-    return data.items;
+    console.log(data2);
+    return data2.items;
   }
 
   useEffect(() => {

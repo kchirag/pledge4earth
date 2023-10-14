@@ -102,7 +102,7 @@ function SocialFeeds({ links, activeLink }) {
             {
               activeLink === 'twitter' ? <TwitterFeed twitterid={links.twitter} /> :
               activeLink === 'linkedin' ? <LinkedInFeed /> :
-              activeLink === 'youtube' ? <YoutubeFeed channelid={links.youtube}/> :
+              activeLink === 'youtube' ? <YoutubeFeed channelid={links.youtube} channelName={links.youtubeChannelID} /> :
               null
             }
 

@@ -28,7 +28,8 @@ const LeaderForm = (userLocation) => {
       tiktok: '',
       youtube: '',
       blogURL: '',
-      others:''
+      others:'',
+      youtubeChannelID:'',
       // ... other social media links
     },
     activeLink: '',
@@ -132,10 +133,35 @@ const LeaderForm = (userLocation) => {
    // const { name, value } = e.target;
     setFormData({...formData, aboutText: html});
   };
+  async function fetchRecentUploads(channelid) {
+    const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
 
-  const handleLinkChange = (e) => {
+    const response = await fetch(
+        `https://yt.lemnoslife.com/channels?handle=@${channelid}`
+      );
+    const data = await response.json();
+    return data.item[0].id
+  }
+  const handleLinkChange = async (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, links: { ...formData.links, [name]: value } });
+    let updatedLinks = { ...formData.links, [name]: value };
+
+    if (name=="youtube"){
+      console.log("in youtube change");
+      const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
+      const response = await fetch(
+            `https://youtube.googleapis.com/youtube/v3/search?q=${value}&key=${apiKey}`
+          );
+      const data = await response.json();
+      if (data.items[0] && data.items[0].id.kind == 'youtube#channel'){
+        const channelId =  data.items[0].id.channelId;
+        updatedLinks['youtubeChannelID'] = channelId;
+
+      }
+    }
+    setFormData({ ...formData, links: updatedLinks });
+    console.log(formData.links);
+
   };
 
   const handleSubmit = (e) => {
@@ -148,7 +174,7 @@ const LeaderForm = (userLocation) => {
 
     const token = localStorage.getItem('token');
     console.log("Token:" + token);
-    console.log(formData.images);
+    console.log(formData.links);
     if (token){
       axiosInstance.put(`/api/leaders/${dataToSend._id}`, dataToSend, {
           headers: {
