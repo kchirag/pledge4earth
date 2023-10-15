@@ -102,12 +102,11 @@ function SocialFeeds({ links, activeLink }) {
             {
               activeLink === 'twitter' ? <TwitterFeed twitterid={links.twitter} /> :
               activeLink === 'linkedin' ? <LinkedInFeed /> :
-              activeLink === 'youtube' ? <YoutubeFeed channelid={links.youtube} channelName={links.youtubeChannelID} /> :
+              activeLink === 'youtube' ? <YoutubeFeed channelName={links.youtube} channelid={links.youtubeChannelID} /> :
               null
             }
 
             {/* Display the feeds. This is a placeholder and you'd need API integrations for actual data. */}
-            <p>Social Feeds.</p>
         </div>
     );
 }
@@ -123,6 +122,7 @@ function LeaderPage() {
     const fetchNearbyLeadersFromAPI = async (slug) => {
         const response = await axiosInstance.get(`/api/leaders/slug/${slug}`);
         const data = await response.data;
+        console.log(data);
         return data;
     };
 
@@ -194,24 +194,24 @@ function LeaderPage() {
                         )
                     }    
                     </div>
+                    {leaderData.agendas && leaderData.agendas.length > 0 && (
+                        <div className="agendas">
+                            <h2>Agendas</h2>
+                            <ul>
+                                {leaderData.agendas.map((agenda, index) => (
+                                    <li key={index}>{agenda}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                    <SocialLinks links={leaderData.links} />
                 </div>
                 <div className="about-section">
                     <h2>About {leaderData.name}</h2>
                     <AboutLeader aboutText={leaderData.aboutText} />
                 </div>
+                <SocialFeeds links={leaderData.links} activeLink={leaderData.activeLink} />
             </div>
-            <div className="profile-container">
-                <div className="agendas">
-                    <h2>Agendas</h2>
-                    <ul>
-                        {leaderData.agendas && leaderData.agendas.map((agenda, index) => (
-                            <li key={index}>{agenda}</li>
-                        ))}
-                    </ul>
-                </div>
-            <SocialLinks links={leaderData.links} />
-            </div>
-            <SocialFeeds links={leaderData.links} activeLink={leaderData.activeLink} />
 
         </div>
     );

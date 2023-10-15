@@ -5,18 +5,20 @@ import React, { useState, useEffect } from "react";
 function YoutubeFeed({ channelName,channelid }){
   const [videos, setVideos] = useState([]);
   //const [channelHandle, setChannelHandle] = useState("youtubecreators"); // Replace this with the handle of the channel you want to fetch videos from
-  console.log(channelid);
+  console.log(channelid + "," + channelName);
 
   async function fetchRecentUploads(channelName,channelid) {
     const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
+    console.log(channelName + "," + channelid);
     let data = {}
     if (!channelid){
       const response = await fetch(
-          `https://youtube.googleapis.com/youtube/v3/search?q={channelName}&key=${apiKey}`
+          `https://youtube.googleapis.com/youtube/v3/search?q=${channelName}&key=${apiKey}`
         );
       data = await response.json();
     }
-    const channelId = channelid  ? channelid: data.items[0].channelId;
+    console.log(channelid);
+    const channelId = channelid  ? channelid: data.items[0].id.channelId;
     const response2 = await fetch(
         `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=5&key=${apiKey}`
       );
@@ -29,12 +31,12 @@ function YoutubeFeed({ channelName,channelid }){
 
   useEffect(() => {
     async function fetchAndSetVideos() {
-      const uploads = await fetchRecentUploads(channelid);
+      const uploads = await fetchRecentUploads(channelName, channelid);
       setVideos(uploads);
     }
 
     fetchAndSetVideos();
-  }, [channelid]);
+  }, []);
 
   return (
     <div>
