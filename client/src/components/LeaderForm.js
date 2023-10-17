@@ -6,7 +6,7 @@ import axiosInstance from '../axiosInstance';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
 import { useLocation } from 'react-router-dom';
-
+import './LeaderPage.css';
 const LeaderForm = (userLocation) => {
   const { leaderId } = useParams();
   const [imageFile, setImageFile] = useState(null);
@@ -37,13 +37,13 @@ const LeaderForm = (userLocation) => {
     images: [],
     statement: '',
     aboutText: 'Information about this leader is not available.',
-  cityName:'',
-  agendas: [],
-  
-  upvotes: 0,
-  website : '',
-  email : '',
-  url_slug:'',
+    cityName:'',
+    agendas: [],
+    
+    upvotes: 0,
+    website : '',
+    email : '',
+    url_slug:'',
     // ... other fields
     location: ''
   });
@@ -52,6 +52,7 @@ const LeaderForm = (userLocation) => {
   
   
   const handleImageChange = (e) => {
+    e.preventDefault();
     const file = e.target.files[0];
     if (file) {
         const localURL = URL.createObjectURL(file);
@@ -59,6 +60,12 @@ const LeaderForm = (userLocation) => {
         setImageFile(file);
     }
   };
+
+  const handleDeleteImage = (indexToDelete) => {
+    const updatedImageURLs = imageURLs.filter((_, index) => index !== indexToDelete);
+    setImageURLs(updatedImageURLs);
+  };
+
   const handleImageUpload = async () => {
     if (!imageFile) return;
 
@@ -83,6 +90,8 @@ const LeaderForm = (userLocation) => {
         // Handle error
     }
   };
+
+
 
   const fetchLeadersFromAPI = async (leaderId) => {
       var apiurl = `/api/leaders/slug/${leaderId}`;
@@ -111,8 +120,8 @@ const LeaderForm = (userLocation) => {
         };
         if (!filledData.cityName) filledData.cityName = userLocation?.city;
         if (!filledData.url_slug) filledData.url_slug = filledData.name.replace(" ", "-").toLowerCase() + "-" + filledData.cityName.replace(" ", "-").toLowerCase();
-        setImageURLs(data.images); 
-        //if (data.images.size > )
+        setImageURLs(data.images);
+        console.log(filledData); 
         setFormData(filledData);
       } catch (error) {
         console.error('Error fetching leader :', error);
@@ -128,20 +137,8 @@ const LeaderForm = (userLocation) => {
   };
 
   const handleAboutChange = (html) => {
-    //console.log(html);
-    //console.log(formData.aboutText);
-   // const { name, value } = e.target;
     setFormData({...formData, aboutText: html});
   };
-  async function fetchRecentUploads(channelid) {
-    const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
-
-    const response = await fetch(
-        `https://yt.lemnoslife.com/channels?handle=@${channelid}`
-      );
-    const data = await response.json();
-    return data.item[0].id
-  }
   const handleLinkChange = async (e) => {
     const { name, value } = e.target;
     let updatedLinks = { ...formData.links, [name]: value };
@@ -160,8 +157,6 @@ const LeaderForm = (userLocation) => {
       }
     }
     setFormData({ ...formData, links: updatedLinks });
-    console.log(formData.links);
-
   };
 
   const handleSubmit = (e) => {
@@ -272,8 +267,11 @@ const LeaderForm = (userLocation) => {
             {previewURL && <img src={previewURL} alt="Image Preview" />}
             {imageFile && <button onClick={handleImageUpload}>Upload</button>}
             {/* Display the collected URLs */}
-            {imageURLs && imageURLs.map((url, index) => (
-                <div key={index}>{url}</div>
+            {imageURLs.map((url, index) => (
+              <div key={index} className="image-wrapper">
+                <img src={url} alt={`Image ${index}`} />
+                <button onClick={() => handleDeleteImage(index)}>Delete</button>
+              </div>
             ))}
       </div>
       <br />

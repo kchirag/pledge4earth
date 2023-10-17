@@ -27,7 +27,16 @@
 .thumbnail:hover {
   opacity: 0.7;
 }
-
+.image-wrapper img {
+  max-width: 100px;
+  max-height: 200px;
+  /* Preserve the aspect ratio */
+  width: auto;
+  height: auto;
+  /* If you want to center images that are smaller than the limits */
+  display: block;
+  margin: 0 auto;
+}
 /* For Icons */
 .icon-link {
     margin-right: 10px;  /* adjust this value as needed */
