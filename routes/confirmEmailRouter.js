@@ -8,7 +8,7 @@ const EditToken = require('./models/EditToken'); // Your model for storing token
 
 const ConfirmEmail = require('../models/ConfirmEmail')
 
-function generateEditPageToken(userId) {
+function generateEditPageToken = async(userId) {
     const token = crypto.randomBytes(20).toString('hex');
     const expiry = new Date(new Date().getTime() + 60 * 60 * 1000); // 1 hour from now
 
