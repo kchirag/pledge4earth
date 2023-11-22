@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     from: 'lead@lead4earth.org', // Replace with your email address
     to,
     subject,
-    text: textupdated,
+    text: text,
   };
 
   try{
@@ -51,9 +51,16 @@ router.post('/', async (req, res) => {
       await confirmEmail.save();
     }
     else if (emailType === 'claimPage') {    
-      // Handle claim page email logic here
-      // You might want to generate a different kind of token or link
-      // for the claim page process
+      const uniqueToken = crypto.randomBytes(32).toString('hex');
+      const claimLink = `https://lead4earth.org/confirm-email/${uniqueToken}`;
+      mailOptions.text = text.replace('confirmplaceholder', confirmLink);
+
+      // Save the confirmation email details
+      const confirmEmail = new ConfirmEmail();
+      confirmEmail.emailid = to;
+      confirmEmail.token = uniqueToken;
+      await confirmEmail.save();
+
       // ...
     }
     await transporter.sendMail(mailOptions);
