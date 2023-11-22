@@ -67,6 +67,7 @@ router.post('/', async (req, res) => {
 
     res.status(200).send({ message: 'Email sent successfully' });
   }catch (error) {
+    console.log(process.env.GMAIL_ClientID + ";" + process.env.GMAIL_clientSecret + ";" + process.env.GMAIL_REFRESHTOKEN);
     console.log(mailOptions);
     console.error(error);
     res.status(500).send({ message: 'Failed to send email' });
