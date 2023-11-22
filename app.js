@@ -130,7 +130,7 @@ app.use('/api/nearby-leaders', nearbyLeadersRouter);
 app.use('/api/sendEmail', emailRouter);
 app.use('/api/nearby-organizations', nearbyOrganizationRouter);
 app.get("/confirm-email/:token", confirmEmailRouter);
-app.get("/claimpage/:token", confirmEmailRouter);
+app.get("/claimPage/:token", confirmEmailRouter);
 app.use('/upload', uploadRoute);
 app.use('/sendInvite', inviteRouter);
 //app.use('/api/events', apiRoutes);
