@@ -23,6 +23,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 //const fetchFacebookEvents = require('./functions/fetchFacebookEvents');
 //const apiRoutes = require('./routes/eventsRoutes');
 const eventsRoutes = require('./routes/newEventsRoute');
+const axios = require('axios');
+
 
 // Import your routes
 // const yourRoutes = require('./routes/yourRoutes');
@@ -36,9 +38,47 @@ const httpApp = express();
 const redirectHttps = (req, res) => {
   res.redirect(301, `https://lead4earth.org${req.url}`);
 };
-//const redirectHttps = (req, res) => {
-//  res.redirect(301, `https://lead4earth.org${req.url}`);
-//};
+
+
+
+
+// LinkedIn OAuth Callback Route
+app.post('/api/linkedin/callback', async (req, res) => {
+    try {
+        const { code } = req.body;
+        const clientId = process.env.LINKEDIN_CLIENT_ID;
+        const clientSecret = process.env.LINKEDIN_CLIENT_SECRET;
+        const redirectUri = process.env.LINKEDIN_REDIRECT_URI;
+
+        // Exchange code for an access token
+        const tokenResponse = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
+            params: {
+                grant_type: 'authorization_code',
+                code: code,
+                redirect_uri: redirectUri,
+                client_id: clientId,
+                client_secret: clientSecret,
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        const { access_token } = tokenResponse.data;
+
+        // Optionally, fetch user data from LinkedIn using the access token
+        // const userProfile = await axios.get('https://api.linkedin.com/v2/me', {
+        //     headers: { 'Authorization': `Bearer ${access_token}` }
+        // });
+
+        // Respond with relevant data or user profile
+        res.json({ accessToken: access_token /*, userProfile: userProfile.data */ });
+    } catch (error) {
+        console.error('LinkedIn OAuth Callback Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 // Use the middleware function for the HTTP server
 
@@ -47,6 +87,7 @@ httpApp.use(redirectHttps);
 
 const path = require('path'); 
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+
 
 
 async function fetchAllEvents(location, keywords) {
@@ -89,6 +130,7 @@ app.use('/api/nearby-leaders', nearbyLeadersRouter);
 app.use('/api/sendEmail', emailRouter);
 app.use('/api/nearby-organizations', nearbyOrganizationRouter);
 app.get("/confirm-email/:token", confirmEmailRouter);
+app.get("/claimpage/:token", confirmEmailRouter);
 app.use('/upload', uploadRoute);
 app.use('/sendInvite', inviteRouter);
 //app.use('/api/events', apiRoutes);

@@ -135,7 +135,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
       const text = CONFIRM_EMAIL_MESSAGE(name);
 
       //console.log(text);
-      const response = await axiosInstance.post('/api/sendEmail', { to, "subject":CONFIRM_EMAIL_SUBJECT, text });
+      const response = await axiosInstance.post('/api/sendEmail', { to, "subject":CONFIRM_EMAIL_SUBJECT, text,'emailType':'confirmation' });
       console.log(response.data.message);
       return true;
     } catch (error) {

@@ -7,6 +7,8 @@ import YoutubeFeed from './YoutubeFeed'
 import './LeaderPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faLinkedin, faYoutube, faTiktok, faBlogger, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faEdit, faHandPointer } from '@fortawesome/free-solid-svg-icons';
+import {CLAIM_EMAIL_MESSAGE, CLAIM_EMAIL_SUBJECT} from '../constant'
 
 const LinkedInFeed = () => {
     // Fetch and display LinkedIn feed.
@@ -118,6 +120,7 @@ function LeaderPage() {
     const [currentProfilePic, setCurrentProfilePic] = useState(null);
     const [FeedComponent, setFeedComponent] = useState(null);
     const [videos, setVideos] = useState([]);
+    const isLoggedIn = localStorage.getItem('token') !== null;
 
     const fetchNearbyLeadersFromAPI = async (slug) => {
         const response = await axiosInstance.get(`/api/leaders/slug/${slug}`);
@@ -125,7 +128,7 @@ function LeaderPage() {
         console.log(data);
         return data;
     };
-
+    
 
 
     // Then in your JSX:
@@ -162,6 +165,25 @@ function LeaderPage() {
     fetchLeaderbyId();
   }, [slug]);
 
+  const renderClaimPage = () => {
+    const handleClaimClick = async () => {
+      const text = CLAIM_EMAIL_MESSAGE(leaderData.name);
+      const response = await axiosInstance.post('/api/sendEmail', { "to":leaderData.emailid, "subject":CLAIM_EMAIL_SUBJECT, text,"emailType":'claimPage' });
+      console.log(response.data.message);
+      return true;
+    };
+    
+    if (leaderData && !leaderData.isClaimed) {
+      return (
+        <div className="claim-page">
+          <FontAwesomeIcon icon={faHandPointer} />
+          <span>Claim this page</span>
+        </div>
+      );
+    }
+    return null;
+  };
+
 
     if (!leaderData) {
         return <div>Loading...</div>;  // Show a loading state while the data is being fetched
@@ -177,6 +199,13 @@ function LeaderPage() {
                         <img src={currentProfilePic} alt="Profile" className="profile-pic" />
                     </div>
                     <p>{leaderData.statement}</p>
+                    {renderClaimPage()}
+                    {isLoggedIn && (
+                        <button className="edit-button">
+                          <FontAwesomeIcon icon={faEdit} /> Edit
+                        </button>
+                    )}
+                    
                     <div className="thumbnails-slider">
                     {
                         leaderData.images && Object.keys(leaderData.images).length > 0 ? (

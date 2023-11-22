@@ -7,7 +7,7 @@ const ConfirmEmail = require('../models/ConfirmEmail')
 require('dotenv').config(); // Load environment variables from .env file
 
 router.post('/', async (req, res) => {
-  const { to, subject, text } = req.body;
+  const { to, subject, text, emailType } = req.body;
 
   // // Set up your email account credentials for generic
   // const transporter = nodemailer.createTransport({
@@ -30,11 +30,6 @@ router.post('/', async (req, res) => {
       refreshToken: process.env.GMAIL_REFRESHTOKEN
     }
   });
-
-  // Generate a unique token
-  const uniqueToken = crypto.randomBytes(32).toString('hex');
-  const confirmLink = `https://lead4earth.org/confirm-email/${uniqueToken}`;
-  const textupdated = text.replace('confirmplaceholder',confirmLink);
   const mailOptions = {
     from: 'lead@lead4earth.org', // Replace with your email address
     to,
@@ -42,12 +37,30 @@ router.post('/', async (req, res) => {
     text: textupdated,
   };
 
-  try {
+  try{
+    if (emailType === 'confirmation') {
+      // Generate a unique token for email confirmation
+      const uniqueToken = crypto.randomBytes(32).toString('hex');
+      const confirmLink = `https://lead4earth.org/confirm-email/${uniqueToken}`;
+      mailOptions.text = text.replace('confirmplaceholder', confirmLink);
+
+      // Save the confirmation email details
+      const confirmEmail = new ConfirmEmail();
+      confirmEmail.emailid = to;
+      confirmEmail.token = uniqueToken;
+      await confirmEmail.save();
+    }
+    else if (emailType === 'claimPage') {    
+      // Handle claim page email logic here
+      // You might want to generate a different kind of token or link
+      // for the claim page process
+      // ...
+    }
+  }catch {
+
+  }
+
     await transporter.sendMail(mailOptions);
-    const confirmEmail = new ConfirmEmail();
-    confirmEmail.emailid = to;
-    confirmEmail.token = uniqueToken;
-    await confirmEmail.save();
 
     res.status(200).send({ message: 'Email sent successfully' });
   } catch (error) {

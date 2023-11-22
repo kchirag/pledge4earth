@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
-import { useLocation } from 'react-router-dom';
+//import { useLocation } from 'react-router-dom';
 import './LeaderPage.css';
 const LeaderForm = (userLocation) => {
   const { leaderId } = useParams();
@@ -143,14 +143,14 @@ const LeaderForm = (userLocation) => {
     const { name, value } = e.target;
     let updatedLinks = { ...formData.links, [name]: value };
 
-    if (name=="youtube"){
+    if (name === "youtube"){
       console.log("in youtube change");
       const apiKey = process.env.REACT_APP_YOUTUBE_APIKEY;
       const response = await fetch(
             `https://youtube.googleapis.com/youtube/v3/search?q=${value}&key=${apiKey}`
           );
       const data = await response.json();
-      if (data.items[0] && data.items[0].id.kind == 'youtube#channel'){
+      if (data.items[0] && data.items[0].id.kind === 'youtube#channel'){
         const channelId =  data.items[0].id.channelId;
         updatedLinks['youtubeChannelID'] = channelId;
 
@@ -186,6 +186,11 @@ const LeaderForm = (userLocation) => {
 
     }
   };
+  const handleLinkedInLogin = () => {
+    // Redirect to LinkedIn for OAuth
+    const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=863lkr6dn3afkj&redirect_uri=YOUR_REDIRECT_URI&scope=r_liteprofile%20r_emailaddress%20w_member_social`;
+    window.location.href = linkedInAuthUrl;
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -199,6 +204,7 @@ const LeaderForm = (userLocation) => {
         LinkedIn:
         <input type="text" name="linkedin" value={formData.links.linkedin} onChange={handleLinkChange} />
       </label>
+      <button type="button" onClick={handleLinkedInLogin}>Connect with LinkedIn</button>
       <br />
       <label>
         twitter/X:
@@ -264,12 +270,12 @@ const LeaderForm = (userLocation) => {
       <br />
       <div>
         <input type="file" onChange={handleImageChange} />
-            {previewURL && <img src={previewURL} alt="Image Preview" />}
+            {previewURL && <img src={previewURL} alt="Preview" />}
             {imageFile && <button onClick={handleImageUpload}>Upload</button>}
             {/* Display the collected URLs */}
             {imageURLs.map((url, index) => (
               <div key={index} className="image-wrapper">
-                <img src={url} alt={`Image ${index}`} />
+                <img src={url} alt={`${index}`} />
                 <button onClick={() => handleDeleteImage(index)}>Delete</button>
               </div>
             ))}

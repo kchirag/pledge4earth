@@ -23,6 +23,8 @@ import LeaderForm from './components/LeaderForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import LinkedInCallback from './components/LinkedInCallback'; // Import the new component
+
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.css';
@@ -229,6 +231,8 @@ function App() {
           <Route path="/leader/:slug" element={<LeaderPage />} />
           <Route path="/leaderEdit/id/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
           <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
+          <Route path="/linkedin-callback" element={<LinkedInCallback />} />
+
           
           <Route path="/" element={
             <>

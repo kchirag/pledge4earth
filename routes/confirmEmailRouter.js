@@ -2,9 +2,26 @@
 const router = require('express').Router();
 const Leader = require('../models/Leader');
 const UserView = require('../models/UserView');
+const crypto = require('crypto');
+const EditToken = require('./models/EditToken'); // Your model for storing tokens
+
 
 const ConfirmEmail = require('../models/ConfirmEmail')
 
+function generateEditPageToken(userId) {
+    const token = crypto.randomBytes(20).toString('hex');
+    const expiry = new Date(new Date().getTime() + 60 * 60 * 1000); // 1 hour from now
+
+    // Store the token in the database with the user ID and expiry
+    const editToken = new EditToken({
+        userId,
+        token,
+        expiry
+    });
+    await editToken.save();
+
+    return token;
+}
 const confirmEmailRouter = async (req, res) => {
   // Extract the email confirmation token from the URL
   const { token } = req.params;
@@ -29,8 +46,18 @@ const confirmEmailRouter = async (req, res) => {
     // Replace `User` with your own database model or function
     const leader = await Leader.findOne({ email: emailConfirmation.emailid });
     if (leader){
-      leader.isEmailConfirmed = true;
-      await leader.save()
+      if (req.originalUrl.toLowerCase().includes('claimpage')) {
+        const userId = /* get user ID */;
+        const token = await generateEditPageToken(userId);
+        const editUrl = `https://lead4earth.org/LeaderEdit/id/${userId}?token=${token}`;
+
+        // Handle profile claim logic
+        // You might want to send a token for profile editing or directly enable profile editing
+        // e.g., sendProfileClaimToken(emailConfirmation.emailid);
+      } else {
+        leader.isEmailConfirmed = true;
+        await leader.save()
+      }
     }
     else{
       const user = await UserView.findOne({ emailid: emailConfirmation.emailid });
