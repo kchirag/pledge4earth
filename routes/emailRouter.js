@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
     auth: {
       type: 'OAuth2',
       user: 'lead@lead4earth.org',
-      clientId: process.env.GMAIl_ClientID,
+      clientId: process.env.GMAIL_ClientID,
       clientSecret: process.env.GMAIL_clientSecret,
       refreshToken: process.env.GMAIL_REFRESHTOKEN
     }
@@ -67,6 +67,7 @@ router.post('/', async (req, res) => {
 
     res.status(200).send({ message: 'Email sent successfully' });
   }catch (error) {
+    console.log(mailOptions);
     console.error(error);
     res.status(500).send({ message: 'Failed to send email' });
   }
