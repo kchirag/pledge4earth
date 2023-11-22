@@ -168,8 +168,9 @@ function LeaderPage() {
   const renderClaimPage = () => {
     const handleClaimClick = async () => {
         //console.log("Test");
+
         const text = CLAIM_EMAIL_MESSAGE(leaderData.name);
-        const response = await axiosInstance.post('/api/sendEmail', { "to":leaderData.emailid, "subject":CLAIM_EMAIL_SUBJECT, text,"emailType":'claimPage' });
+        const response = await axiosInstance.post('/api/sendEmail', { "to":leaderData.email, "subject":CLAIM_EMAIL_SUBJECT, text,"emailType":'claimPage' });
         console.log(response.data.message);
         return true;
     };
