@@ -52,8 +52,8 @@ router.post('/', async (req, res) => {
     }
     else if (emailType === 'claimPage') {    
       const uniqueToken = crypto.randomBytes(32).toString('hex');
-      const claimLink = `https://lead4earth.org/confirm-email/${uniqueToken}`;
-      mailOptions.text = text.replace('confirmplaceholder', confirmLink);
+      const claimLink = `https://lead4earth.org/claimPage/${uniqueToken}`;
+      mailOptions.text = text.replace('confirmplaceholder', claimLink);
 
       // Save the confirmation email details
       const confirmEmail = new ConfirmEmail();

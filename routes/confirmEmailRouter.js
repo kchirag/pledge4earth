@@ -55,6 +55,7 @@ const confirmEmailRouter = async (req, res) => {
         // Handle profile claim logic
         // You might want to send a token for profile editing or directly enable profile editing
         // e.g., sendProfileClaimToken(emailConfirmation.emailid);
+        
       } else {
         leader.isEmailConfirmed = true;
         await leader.save()
