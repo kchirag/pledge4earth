@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Leader = require('../models/Leader');
 const UserView = require('../models/UserView');
 const crypto = require('crypto');
-const EditToken = require('./models/EditToken'); // Your model for storing tokens
+const EditToken = require('../models/EditToken'); // Your model for storing tokens
 
 
 const ConfirmEmail = require('../models/ConfirmEmail')
@@ -22,6 +22,7 @@ const generateEditPageToken = async(userId) => {
 
     return token;
 }
+
 const confirmEmailRouter = async (req, res) => {
   // Extract the email confirmation token from the URL
   const { token } = req.params;
@@ -47,7 +48,7 @@ const confirmEmailRouter = async (req, res) => {
     const leader = await Leader.findOne({ email: emailConfirmation.emailid });
     if (leader){
       if (req.originalUrl.toLowerCase().includes('claimpage')) {
-        const userId = /* get user ID */;
+        const userId = leader._id;
         const token = await generateEditPageToken(userId);
         const editUrl = `https://lead4earth.org/LeaderEdit/id/${userId}?token=${token}`;
 
