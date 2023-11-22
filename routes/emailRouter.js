@@ -56,14 +56,10 @@ router.post('/', async (req, res) => {
       // for the claim page process
       // ...
     }
-  }catch {
-
-  }
-
     await transporter.sendMail(mailOptions);
 
     res.status(200).send({ message: 'Email sent successfully' });
-  } catch (error) {
+  }catch (error) {
     console.error(error);
     res.status(500).send({ message: 'Failed to send email' });
   }
