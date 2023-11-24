@@ -10,12 +10,9 @@ confirmplaceholder
 Best regards,
 Lead4Earth Team`;
 
-export const CONFIRM_EMAIL_SUBJECT = 'Confirm your email for publishing';
+export const CONFIRM_EMAIL_SUBJECT = 'Edit Profile Link';
 export const CLAIM_EMAIL_MESSAGE =(name) => `Dear ${name},
-
-Thank you for expressing your views:
-
-Please click the link below to edit your profile.
+Thank you for claiming the page. You can use the following link to edit your profile.
 confirmplaceholder
 
 This link expires in 24 hours.

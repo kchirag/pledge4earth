@@ -52,23 +52,22 @@ router.post('/', async (req, res) => {
     }
     else if (emailType === 'claimPage') {    
       const uniqueToken = crypto.randomBytes(32).toString('hex');
-      const claimLink = `https://lead4earth.org/claimPage/${uniqueToken}`;
-      mailOptions.text = text.replace('confirmplaceholder', claimLink);
+      const leader = await Leader.findOne({ email: emailConfirmation.emailid });
+      if (leader){
+        const claimLink = `https://lead4earth.org/LeaderEdit/id/${leader._id}?token=${uniqueToken}`;
 
-      // Save the confirmation email details
-      const confirmEmail = new ConfirmEmail();
-      confirmEmail.emailid = to;
-      confirmEmail.token = uniqueToken;
-      await confirmEmail.save();
-
-      // ...
+        mailOptions.text = text.replace('confirmplaceholder', claimLink);
+        leader.isClaimed = true;
+        // Save the confirmation email details
+        await leader.save();
+      }
     }
     await transporter.sendMail(mailOptions);
 
     res.status(200).send({ message: 'Email sent successfully' });
   }catch (error) {
-    console.log(process.env.GMAIL_ClientID + ";" + process.env.GMAIL_clientSecret + ";" + process.env.GMAIL_REFRESHTOKEN);
-    console.log(mailOptions);
+    //console.log(process.env.GMAIL_ClientID + ";" + process.env.GMAIL_clientSecret + ";" + process.env.GMAIL_REFRESHTOKEN);
+    //console.log(mailOptions);
     console.error(error);
     res.status(500).send({ message: 'Failed to send email' });
   }
