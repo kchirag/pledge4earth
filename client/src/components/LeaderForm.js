@@ -125,7 +125,7 @@ const LeaderForm = (userLocation) => {
       }
     };
 
-    //fetchLeaderbyId();
+    fetchLeaderbyId();
     console.log(leaderId);
   }, [leaderId]);
 
