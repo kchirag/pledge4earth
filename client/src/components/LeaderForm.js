@@ -7,13 +7,14 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
 //import { useLocation } from 'react-router-dom';
 import './LeaderPage.css';
+
+
 const LeaderForm = (userLocation) => {
   const { leaderId } = useParams();
   const [imageFile, setImageFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
   const [imageURLs, setImageURLs] = useState([]);
   const [currentAgenda, setCurrentAgenda] = useState('');
-
 
   const [formData, setFormData] = useState({
     _id: '',
@@ -47,10 +48,7 @@ const LeaderForm = (userLocation) => {
     // ... other fields
     location: ''
   });
-
-
-  
-  
+  console.log("initail call:" + leaderId)
   const handleImageChange = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -92,18 +90,17 @@ const LeaderForm = (userLocation) => {
   };
 
 
-
-  const fetchLeadersFromAPI = async (leaderId) => {
-      var apiurl = `/api/leaders/slug/${leaderId}`;
-
-      if (window.location.pathname.startsWith("/leaderEdit/id")) 
-        apiurl = `/api/leaders/id/${leaderId}`;
-
-      const response = await axiosInstance.get(apiurl);
-      const data = await response.data;
-      return data;
-  }
   useEffect(() => {
+    const fetchLeadersFromAPI = async (leaderId) => {
+        var apiurl = `/api/leaders/slug/${leaderId}`;
+
+        if (window.location.pathname.startsWith("/leaderEdit/id")) 
+          apiurl = `/api/leaders/id/${leaderId}`;
+
+        const response = await axiosInstance.get(apiurl);
+        const data = await response.data;
+        return data;
+    }
     const fetchLeaderbyId = async () => {
       try {
         //console.log('Trying to fetch user location...'); // Add this line
@@ -128,7 +125,8 @@ const LeaderForm = (userLocation) => {
       }
     };
 
-    fetchLeaderbyId();
+    //fetchLeaderbyId();
+    console.log(leaderId);
   }, [leaderId]);
 
   const handleInputChange = (e) => {
@@ -161,6 +159,7 @@ const LeaderForm = (userLocation) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     //setFormData({...formData, images : {...formData.images, ...imageURLs}});
     const dataToSend = {
       ...formData,
@@ -188,7 +187,7 @@ const LeaderForm = (userLocation) => {
   };
   const handleLinkedInLogin = () => {
     // Redirect to LinkedIn for OAuth
-    const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=863lkr6dn3afkj&redirect_uri=YOUR_REDIRECT_URI&scope=r_liteprofile%20r_emailaddress%20w_member_social`;
+    const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=863lkr6dn3afkj&redirect_uri=https://lead4earth.org&scope=email`;
     window.location.href = linkedInAuthUrl;
   };
 
@@ -204,7 +203,7 @@ const LeaderForm = (userLocation) => {
         LinkedIn:
         <input type="text" name="linkedin" value={formData.links.linkedin} onChange={handleLinkChange} />
       </label>
-      <button type="button" onClick={handleLinkedInLogin}>Connect with LinkedIn</button>
+      
       <br />
       <label>
         twitter/X:
@@ -301,7 +300,7 @@ const LeaderForm = (userLocation) => {
       </label>
       <br />
       <label>About 
-        <ReactQuill value={formData.aboutText} onChange={handleAboutChange} />
+        
       </label>
       <br />
       <label>

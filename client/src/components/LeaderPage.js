@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faLinkedin, faYoutube, faTiktok, faBlogger, faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faEdit, faHandPointer } from '@fortawesome/free-solid-svg-icons';
 import {CLAIM_EMAIL_MESSAGE, CLAIM_EMAIL_SUBJECT} from '../constant'
+import { useNavigate } from 'react-router-dom';
 
 const LinkedInFeed = () => {
     // Fetch and display LinkedIn feed.
@@ -165,9 +166,20 @@ function LeaderPage() {
     fetchLeaderbyId();
   }, [slug]);
 
+  const navigate = useNavigate();
+  const handleEditClick = () => {
+        navigate(`/leaderedit/${slug}`);
+  };
   const renderClaimPage = () => {
     const handleClaimClick = async () => {
-        //console.log("Test");
+        if (leaderData.email) {
+            const [localPart, domain] = leaderData.email.split('@');
+            const [domainname, extension] = domain.split('.');
+            const firstChar = localPart.charAt(0);
+            const lastChar = localPart.charAt(localPart.length - 1);
+            const alertMessage = `An link to edit your profile is sent to ${firstChar}***${lastChar}@${domainname.charAt(0)}***${domainname.charAt(domainname.length-1)}.${extension}`;
+            alert(alertMessage);
+        }
 
         const text = CLAIM_EMAIL_MESSAGE(leaderData.name);
         const response = await axiosInstance.post('/api/sendEmail', { "to":leaderData.email, "subject":CLAIM_EMAIL_SUBJECT, text,"emailType":'claimPage' });
@@ -203,7 +215,7 @@ function LeaderPage() {
                     <p>{leaderData.statement}</p>
                     {renderClaimPage()}
                     {isLoggedIn && (
-                        <button className="edit-button">
+                        <button className="edit-button" style={{ cursor: 'pointer' }} onClick={handleEditClick} >
                           <FontAwesomeIcon icon={faEdit} /> Edit
                         </button>
                     )}
