@@ -23,7 +23,7 @@ import LeaderForm from './components/LeaderForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import {PostUpload} from './components/PostUpload';
+import PostUpload from './components/PostUpload';
 import LinkedInCallback from './components/LinkedInCallback'; // Import the new component
 
 
