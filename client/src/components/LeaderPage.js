@@ -10,6 +10,7 @@ import { faTwitter, faLinkedin, faYoutube, faTiktok, faBlogger, faFacebook, faIn
 import { faEdit, faHandPointer } from '@fortawesome/free-solid-svg-icons';
 import {CLAIM_EMAIL_MESSAGE, CLAIM_EMAIL_SUBJECT} from '../constant'
 import { useNavigate } from 'react-router-dom';
+import { InstagramEmbed } from 'react-social-media-embed';
 
 const LinkedInFeed = () => {
     // Fetch and display LinkedIn feed.
@@ -135,6 +136,24 @@ function LeaderPage() {
     // Then in your JSX:
 
   useEffect(() => {
+      // Initialize the Facebook SDK
+    window.fbAsyncInit = function() {
+        window.FB.init({
+          appId: '613070123469614',
+          xfbml: true,
+          version: 'v18.0',
+        });
+        };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
     const fetchLeaderbyId = async () => {
       const script = document.createElement('script');
       try {
@@ -206,6 +225,9 @@ function LeaderPage() {
         
     }
     return (
+        <div>
+        <div id="fb-root"></div>
+          <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=613070123469614" nonce="d8Ebr9hC"></script>
         <div className="leader-page">
             <div className="profile-and-about">
                 <div className="profile-container">
@@ -255,8 +277,9 @@ function LeaderPage() {
                 </div>
                 <SocialFeeds links={leaderData.links} activeLink={leaderData.activeLink} />
             </div>
-
+                
         </div>
+    </div>
     );
 }
 

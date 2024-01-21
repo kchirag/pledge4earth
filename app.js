@@ -39,6 +39,8 @@ const redirectHttps = (req, res) => {
   res.redirect(301, `https://lead4earth.org${req.url}`);
 };
 
+const path = require('path'); 
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 
 
@@ -85,8 +87,6 @@ app.post('/api/linkedin/callback', async (req, res) => {
 httpApp.use(redirectHttps);
 
 
-const path = require('path'); 
-require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 
 

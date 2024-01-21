@@ -59,6 +59,7 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
     "react-slick": "^0.29.0",
+    "react-social-media-embed": "^2.3.8",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
