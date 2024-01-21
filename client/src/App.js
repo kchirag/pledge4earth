@@ -24,6 +24,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import PostUpload from './components/PostUpload';
+import PostsPage from './components/PostsPage';
 import LinkedInCallback from './components/LinkedInCallback'; // Import the new component
 
 
@@ -234,6 +235,7 @@ function App() {
           <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
           <Route path="/linkedin-callback" element={<LinkedInCallback />} />
           <Route path="/postupload" element={<PostUpload />} />
+          <Route path="/postspage" element={<PostsPage />} />
 
           
           <Route path="/" element={
