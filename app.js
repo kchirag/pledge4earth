@@ -123,6 +123,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/leaders', leaderRoutes);
+app.use('/api/', postRouter);
 app.use('/api/userViews', userViewsRouter);
 app.use('/api/views', viewsRouter);
 app.use('/api/nearby-users', nearbyUsersRouter);
