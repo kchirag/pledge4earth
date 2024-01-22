@@ -6,10 +6,12 @@ const postSchema = new mongoose.Schema({
         required: true,
         maxlength: 1000
     },
-    media: [{
-        type: String, // URL or path to the media file
-        validate: [arrayLimit, '{PATH} exceeds the limit of 5']
-    }],
+    media: {
+        type: [{
+            type: String, // URL or path to the media file
+        }],
+        validate: [arrayLimit, '{PATH} exceeds the limit of 5'] // Apply validator to the array itself
+    },
     // ... include other fields like user reference, timestamps, etc.
 });
 
