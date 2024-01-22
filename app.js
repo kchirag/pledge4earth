@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const ensureAuthenticated = require('./middleware/auth');
 const leaderRoutes = require('./routes/leaderRoutes');
+const postRouter = require('./routes/postRouter');
 const userViewsRouter = require('./routes/userViews');
 const viewsRouter = require('./routes/views');
 const nearbyUsersRouter = require('./routes/nearbyUsers');
