@@ -37,7 +37,7 @@ router.get('/post/:postId', ensureAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/posts/latest', ensureAuthenticated, async (req, res) => {
+router.get('/posts/latest', async (req, res) => {
     const limit = parseInt(req.query.limit) || 10; // default limit to 10 posts
     const skip = parseInt(req.query.skip) || 0; // default skip to 0
 
