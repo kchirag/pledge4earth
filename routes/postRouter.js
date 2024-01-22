@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // configure multer
+//const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
+const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
 
 
-router.post('/post', ensureAuthenticated, upload.array('media', 5), async (req, res) => {
+router.post('/post', ensureAuthenticated, uploadMultiple, async (req, res) => {
     const { text } = req.body;
-    const mediaUrls = req.files.map(file => file.path); // assuming local storage; modify if using cloud storage
+    //const mediaUrls = req.files.map(file => file.path); // assuming local storage; modify if using cloud storage
+    const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
 
     try {
         const post = new Post({ text, media: mediaUrls });
