@@ -12,6 +12,11 @@ const postSchema = new mongoose.Schema({
         }],
         validate: [arrayLimit, '{PATH} exceeds the limit of 5'] // Apply validator to the array itself.
     },
+    createdAt: {
+        type: Date,
+        required: true,
+        default:Date.now // Default date of creation
+    }
     // ... include other fields like user reference, timestamps, etc.
 });
 
