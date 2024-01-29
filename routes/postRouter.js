@@ -18,7 +18,7 @@ async function generateTextVariations(prompt, variations = 15) {
   for (let i = 0; i < variations; i++) {
     try {
       const response = await openai.completions.create({
-        model: "text-davinci-003", // Adjust according to your needs
+        model: "gpt-3.5-turbo", // Adjust according to your needs
         prompt: prompt,
         max_tokens: 15,
         temperature: 0,
