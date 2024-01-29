@@ -5,22 +5,21 @@ const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
 const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
-import OpenAI from 'openai';
+const openai = require('openai');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
-});
+openai.apiKey = process.env.OPENAI_API_KEY;
+
 
 async function generateTextVariations(prompt, variations = 15) {
   let responses = [];
   for (let i = 0; i < variations; i++) {
     try {
-      const response = await openai.createCompletion({
+      const response = await openai.completions.create({
         model: "text-davinci-003", // Adjust according to your needs
         prompt: prompt,
         max_tokens: 15,
       });
-      responses.push(response.data.choices[0].text.trim());
+      responses.push(response.choices[0].text.trim());
     } catch (error) {
       console.error("Error in generateTextVariations:", error.response || error);
       break;
