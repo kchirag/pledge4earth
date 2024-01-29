@@ -15,13 +15,13 @@ async function generateTextVariations(prompt, variations = 15) {
   for (let i = 0; i < variations; i++) {
     try {
       const response = await openai.createCompletion({
-        model: "text-davinci-003", // or "text-davinci-004" for GPT-4
+        model: "text-davinci-003", // Adjust according to your needs
         prompt: prompt,
-        max_tokens: 50, // Adjust as needed
+        max_tokens: 50,
       });
       responses.push(response.data.choices[0].text.trim());
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error in generateTextVariations:", error.response || error);
       break;
     }
   }
@@ -31,27 +31,18 @@ async function generateTextVariations(prompt, variations = 15) {
 router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req, res) => {
     const { text } = req.body;
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
-    console.log(mediaUrls);
-
     let language = req.params.language || 'English';
     if (!['Hindi', 'English'].includes(language)) {
-        language = "English"
+        language = "English";
     }
-    console.log(language);
 
     try {
-        const variations = await generateTextVariations(text).then(variations => {
-          variations.forEach((variation, index) => {
-            console.log(`Variation ${index + 1}: ${variation}`);
-          });
-        });
-
+        const variations = await generateTextVariations(text); // Await the result directly
         const post = new Post({ text, variations, language, media: mediaUrls });
         await post.save();
         res.status(201).json(post);
-
     } catch (error) {
-        console.error(error);
+        console.error("Error in POST /post:", error);
         res.status(500).json({ message: 'Error creating post' });
     }
 });
