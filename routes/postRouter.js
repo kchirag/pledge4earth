@@ -33,11 +33,6 @@ router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req,
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
     console.log(mediaUrls);
 
-    // Initialize OpenAI API client
-    const openai = new OpenAIApi({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
     let language = req.params.language || 'English';
     if (!['Hindi', 'English'].includes(language)) {
         language = "English"
