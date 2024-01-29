@@ -1,3 +1,5 @@
+import OpenAI from "openai";
+
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
@@ -5,7 +7,8 @@ const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
 const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
-const openai = require('openai');
+
+const openai = new OpenAI();
 
 openai.apiKey = process.env.OPENAI_API_KEY;
 
@@ -18,6 +21,7 @@ async function generateTextVariations(prompt, variations = 15) {
         model: "gpt-3.5-turbo-instruct", // Adjust according to your needs
         prompt: prompt,
         max_tokens: 15,
+        temperature: 0,
       });
       console.log(response);
       responses.push(response.choices[0].text.trim());
