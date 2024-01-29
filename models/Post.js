@@ -3,8 +3,18 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     text: {
         type: String,
-        required: true,
-        maxlength: 1000
+    },
+    variations: {
+        type: [{
+            type: String,
+            required: true,
+            maxlength: 1000
+        }]
+    },
+    language: {
+        type: String,
+        enum: ['Hindi', 'English'], // Allow only 'Hindi' and 'English' as valid values
+        default: 'English'
     },
     media: {
         type: [{
