@@ -14,11 +14,12 @@ async function generateTextVariations(prompt, variations = 15) {
   let responses = [];
   for (let i = 0; i < variations; i++) {
     try {
-      const response = await openai.Completion.create({
-        model: "gpt-3.5-turbo", // Adjust according to your needs
+      const response = await openai.completions.create({
+        model: "gpt-3.5-turbo-instruct", // Adjust according to your needs
         prompt: prompt,
         max_tokens: 15,
       });
+      console.log(response);
       responses.push(response.choices[0].text.trim());
     } catch (error) {
       console.error("Error in generateTextVariations:", error.response || error);
