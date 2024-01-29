@@ -26,14 +26,14 @@ async function generateTextVariations(openai, prompt, variations = 15) {
   return responses;
 }
 
-router.post('/post/:language', ensureAuthenticated, uploadMultiple, async (req, res) => {
+router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req, res) => {
     const { text } = req.body;
     //const mediaUrls = req.files.map(file => file.path); // assuming local storage; modify if using cloud storage
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
     const openai = new OpenAIApi(new Configuration({
       apiKey: process.env.OPENAI_API_KEY, // Ensure you have your API key set in your environment variables
     }));
-    var language = req.params.language;
+    const language = req.params.language || 'English';
     if (!['Hindi', 'English'].includes(language)) {
             language = "English"
     }
