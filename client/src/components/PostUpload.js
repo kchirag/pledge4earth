@@ -22,7 +22,7 @@ const PostUpload = () => {
         media.forEach(file => formData.append('media', file));
 
         try {
-            const response = await axios.post('/api/post', formData, {
+            const response = await axios.post('/api/post/English', formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
