@@ -5,7 +5,7 @@ const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
 const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
-const { Configuration, OpenAIApi } = require("openai");
+const { OpenAIApi } = require("openai");
 
 
 async function generateTextVariations(openai, prompt, variations = 15) {
@@ -28,31 +28,31 @@ async function generateTextVariations(openai, prompt, variations = 15) {
 
 router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req, res) => {
     const { text } = req.body;
-    //const mediaUrls = req.files.map(file => file.path); // assuming local storage; modify if using cloud storage
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
     console.log(mediaUrls);
-    console.log(process.env.OPENAI_API_KEY);
-    const openai = new OpenAIApi(new Configuration({
-      apiKey: process.env.OPENAI_API_KEY, // Ensure you have your API key set in your environment variables
-    }));
-    const language = req.params.language || 'English';
+
+    // Initialize OpenAI API client
+    const openai = new OpenAIApi({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
+    let language = req.params.language || 'English';
     if (!['Hindi', 'English'].includes(language)) {
-            language = "English"
+        language = "English"
     }
     console.log(language);
 
-
-    //const variations = [];
     try {
-        const variations = await generateTextVariations(text).then(variations => {
+        const variations = await generateTextVariations(text, openai).then(variations => {
           variations.forEach((variation, index) => {
             console.log(`Variation ${index + 1}: ${variation}`);
           });
         });
-        const post = new Post({ text, variations, language, media: mediaUrls });
 
+        const post = new Post({ text, variations, language, media: mediaUrls });
         await post.save();
         res.status(201).json(post);
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error creating post' });
