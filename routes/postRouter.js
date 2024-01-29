@@ -37,9 +37,10 @@ router.post('/post/:language', ensureAuthenticated, uploadMultiple, async (req, 
     if (!['Hindi', 'English'].includes(language)) {
             language = "English"
     }
+    console.log(language);
 
 
-    const variations = [];
+    //const variations = [];
     try {
         const variations = await generateTextVariations(text).then(variations => {
           variations.forEach((variation, index) => {
