@@ -30,6 +30,7 @@ router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req,
     const { text } = req.body;
     //const mediaUrls = req.files.map(file => file.path); // assuming local storage; modify if using cloud storage
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
+    console.log(mediaUrls);
     const openai = new OpenAIApi(new Configuration({
       apiKey: process.env.OPENAI_API_KEY, // Ensure you have your API key set in your environment variables
     }));

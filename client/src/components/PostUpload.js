@@ -4,6 +4,7 @@ import axios from 'axios';
 const PostUpload = () => {
     const [text, setText] = useState('');
     const [media, setMedia] = useState([]);
+    const [language, setLanguage] = useState('English'); // State for language
 
     const handleTextChange = (event) => {
         setText(event.target.value);
@@ -11,6 +12,10 @@ const PostUpload = () => {
 
     const handleMediaChange = (event) => {
         setMedia([...event.target.files]);
+    };
+
+    const handleLanguageChange = (event) => {
+        setLanguage(event.target.value);
     };
 
     const handleSubmit = async (event) => {
@@ -22,7 +27,7 @@ const PostUpload = () => {
         media.forEach(file => formData.append('media', file));
 
         try {
-            const response = await axios.post('/api/post/English', formData, {
+            const response = await axios.post(`/api/post/${language}`, formData, { // Use language in URL
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
@@ -45,6 +50,13 @@ const PostUpload = () => {
             <div>
                 <label htmlFor="media">Media (up to 5 files):</label>
                 <input type="file" id="media" multiple onChange={handleMediaChange} accept="image/*,video/*" />
+            </div>
+            <div>
+                <label htmlFor="language">Language:</label>
+                <select id="language" value={language} onChange={handleLanguageChange}>
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                </select>
             </div>
             <button type="submit">Upload Post</button>
         </form>
