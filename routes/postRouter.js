@@ -5,10 +5,12 @@ const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
 const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
-const { OpenAIApi } = require("openai");
+const openai = require('openai');
+
+openai.apiKey = process.env.OPENAI_API_KEY;
 
 
-async function generateTextVariations(openai, prompt, variations = 15) {
+async function generateTextVariations(prompt, variations = 15) {
   let responses = [];
   for (let i = 0; i < variations; i++) {
     try {
@@ -43,7 +45,7 @@ router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req,
     console.log(language);
 
     try {
-        const variations = await generateTextVariations(text, openai).then(variations => {
+        const variations = await generateTextVariations(text).then(variations => {
           variations.forEach((variation, index) => {
             console.log(`Variation ${index + 1}: ${variation}`);
           });
