@@ -5,11 +5,10 @@ const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
 const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
-const { OpenAIApi } = require('openai');
+const openai = require('openai');
 
-const openai = new OpenAIApi({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+openai.apiKey = process.env.OPENAI_API_KEY;
+
 
 async function generateTextVariations(prompt, variations = 15) {
   let responses = [];
