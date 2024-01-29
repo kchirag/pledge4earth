@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 
 const express = require('express');
 const router = express.Router();
@@ -7,10 +6,11 @@ const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
 const { uploadMultiple } = require('../middleware/uploadmedia'); // Adjust the path as per your project structure
+const OpenAI = require('openai');
 
-const openai = new OpenAI();
-
-openai.apiKey = process.env.OPENAI_API_KEY;
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 
 async function generateTextVariations(prompt, variations = 15) {
