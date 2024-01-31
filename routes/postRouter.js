@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const LogModel = require('../models/LogModel');
 const multer = require('multer');
 //const upload = multer({ dest: 'uploads/' }); // configure multer
 const ensureAuthenticated = require('../middleware/auth');
@@ -67,7 +68,7 @@ router.get('/post/:postId', ensureAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/posts/latest', async (req, res) => {
+router.get('/posts/latest/', async (req, res) => {
     const limit = parseInt(req.query.limit) || 10; // default limit to 10 posts
     const skip = parseInt(req.query.skip) || 0; // default skip to 0
 
@@ -76,6 +77,35 @@ router.get('/posts/latest', async (req, res) => {
             .sort({ createdAt: -1 }) // sorting by createdAt in descending order
             .skip(skip)
             .limit(limit);
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching posts' });
+    }
+});
+
+router.get('/posts/:language/:deviceid', async (req, res) => {
+    const { language, deviceid } = req.params;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = parseInt(req.query.skip) || 0;
+
+    try {
+        const posts = await Post.find({ language: language })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        // Assuming you have a model or a method to save the log
+        const logEntries = posts.map(post => ({
+            deviceid: deviceid,
+            language: language,
+            timestamp: new Date(), // current server time
+            postid: post._id // assuming each post has a unique _id
+        }));
+
+        // Save log entries to the database
+        await LogModel.create(logEntries);
+
         res.json(posts);
     } catch (error) {
         console.error(error);
