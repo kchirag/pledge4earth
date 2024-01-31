@@ -39,7 +39,7 @@ router.post('/post/:language/:category', ensureAuthenticated, uploadMultiple, as
     const { text } = req.body;
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
     let language = req.params.language || 'English';
-    let language = req.params.category || 'English';
+    let category = req.params.category || 'awareness';
     if (!['Hindi', 'English'].includes(language)) {
         language = "English";
     }
