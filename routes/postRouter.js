@@ -92,7 +92,7 @@ router.get('/posts/:language/:category/:deviceid', async (req, res) => {
     const skip = parseInt(req.query.skip) || 0;
 
     try {
-        const posts = await Post.find({ language: language })
+        const posts = await Post.find({ language: language, category: category })
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
