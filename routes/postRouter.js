@@ -14,15 +14,16 @@ const openai = new OpenAI({
 });
 
 
-async function generateTextVariations(prompt, variations = 15) {
+async function generateTextVariations(prompt, language, variations = 15) {
   let responses = [];
   for (let i = 0; i < variations; i++) {
     try {
+    let updatedprompt = "rewrite '" + prompt + "' in " + language; 
       const response = await openai.completions.create({
         model: "gpt-3.5-turbo-instruct", // Adjust according to your needs
         prompt: prompt,
         max_tokens: 15,
-        temperature: 0,
+        temperature: 0.7,
       });
       console.log(response);
       responses.push(response.choices[0].text.trim());
@@ -34,16 +35,17 @@ async function generateTextVariations(prompt, variations = 15) {
   return responses;
 }
 
-router.post('/post/:language?', ensureAuthenticated, uploadMultiple, async (req, res) => {
+router.post('/post/:language/:category', ensureAuthenticated, uploadMultiple, async (req, res) => {
     const { text } = req.body;
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
     let language = req.params.language || 'English';
+    let language = req.params.category || 'English';
     if (!['Hindi', 'English'].includes(language)) {
         language = "English";
     }
 
     try {
-        const variations = await generateTextVariations(text); // Await the result directly
+        const variations = await generateTextVariations(text,language,category); // Await the result directly
         const post = new Post({ text, variations, language, media: mediaUrls });
         await post.save();
         res.status(201).json(post);
@@ -84,8 +86,8 @@ router.get('/posts/latest/', async (req, res) => {
     }
 });
 
-router.get('/posts/:language/:deviceid', async (req, res) => {
-    const { language, deviceid } = req.params;
+router.get('/posts/:language/:category/:deviceid', async (req, res) => {
+    const { language, category, deviceid } = req.params;
     const limit = parseInt(req.query.limit) || 10;
     const skip = parseInt(req.query.skip) || 0;
 
