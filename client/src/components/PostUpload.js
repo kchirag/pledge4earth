@@ -5,6 +5,7 @@ const PostUpload = () => {
     const [text, setText] = useState('');
     const [media, setMedia] = useState([]);
     const [language, setLanguage] = useState('English'); // State for language
+    const [category, setCategory] = useState('awareness'); // State for language
 
     const handleTextChange = (event) => {
         setText(event.target.value);
@@ -18,6 +19,10 @@ const PostUpload = () => {
         setLanguage(event.target.value);
     };
 
+    const handleCategoryChange = (event) => {
+        setLanguage(event.target.value);
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const token = localStorage.getItem('token');
@@ -27,7 +32,7 @@ const PostUpload = () => {
         media.forEach(file => formData.append('media', file));
 
         try {
-            const response = await axios.post(`/api/post/${language}`, formData, { // Use language in URL
+            const response = await axios.post(`/api/post/${language}/${category}`, formData, { // Use language in URL
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
@@ -56,6 +61,12 @@ const PostUpload = () => {
                 <select id="language" value={language} onChange={handleLanguageChange}>
                     <option value="English">English</option>
                     <option value="Hindi">Hindi</option>
+                </select>
+                <select id="category" value={category} onChange={handleCategoryChange}>
+                    <option value="awareness">awareness</option>
+                    <option value="policies">policies</option>
+                    <option value="reputatuion">reputatuion</option>
+                    <option value="politics">politics</option>
                 </select>
             </div>
             <button type="submit">Upload Post</button>

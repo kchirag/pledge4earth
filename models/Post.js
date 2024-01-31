@@ -8,13 +8,18 @@ const postSchema = new mongoose.Schema({
         type: [{
             type: String,
             required: true,
-            maxlength: 1000
+            maxlength: 5000
         }]
     },
     language: {
         type: String,
         enum: ['Hindi', 'English'], // Allow only 'Hindi' and 'English' as valid values
         default: 'English'
+    },
+    language: {
+        type: String,
+        enum: ['awareness', 'policies','reputatuion', 'politics'], // Allow only 'Hindi' and 'English' as valid values
+        default: 'awareness'
     },
     media: {
         type: [{
