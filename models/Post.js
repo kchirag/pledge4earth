@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
         enum: ['Hindi', 'English'], // Allow only 'Hindi' and 'English' as valid values
         default: 'English'
     },
-    language: {
+    category: {
         type: String,
         enum: ['awareness', 'policies','reputatuion', 'politics'], // Allow only 'Hindi' and 'English' as valid values
         default: 'awareness'
