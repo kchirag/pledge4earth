@@ -16,6 +16,7 @@ const openai = new OpenAI({
 
 async function generateTextVariations(prompt, language, variations = 15) {
   let responses = [];
+  console.log("creating variations for " + prompt );
   for (let i = 0; i < variations; i++) {
     try {
     let updatedprompt = "rewrite '" + prompt + "' in " + language; 
