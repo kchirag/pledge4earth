@@ -20,6 +20,7 @@ async function generateTextVariations(prompt, language, variations = 15) {
   for (let i = 0; i < variations; i++) {
     try {
     let updatedprompt = "rewrite '" + prompt + "' in " + language; 
+    console.log(updatedprompt);
       const response = await openai.completions.create({
         model: "gpt-3.5-turbo-instruct", // Adjust according to your needs
         prompt: updatedprompt,
@@ -47,7 +48,7 @@ router.post('/post/:language/:category', ensureAuthenticated, uploadMultiple, as
 
     try {
         const variations = await generateTextVariations(text,language,category); // Await the result directly
-        const post = new Post({ text, variations, language, category, media: mediaUrls });
+        const post = new Post({ text, url, variations, language, category, media: mediaUrls });
         await post.save();
         res.status(201).json(post);
     } catch (error) {
