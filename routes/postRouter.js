@@ -21,7 +21,7 @@ async function generateTextVariations(prompt, language, variations = 15) {
     let updatedprompt = "rewrite '" + prompt + "' in " + language; 
       const response = await openai.completions.create({
         model: "gpt-3.5-turbo-instruct", // Adjust according to your needs
-        prompt: prompt,
+        prompt: updatedprompt,
         max_tokens: 15,
         temperature: 0.7,
       });
@@ -36,11 +36,11 @@ async function generateTextVariations(prompt, language, variations = 15) {
 }
 
 router.post('/post/:language/:category', ensureAuthenticated, uploadMultiple, async (req, res) => {
-    const { text } = req.body;
+    const { text, url } = req.body;
     const mediaUrls = req.files.map(file => `https://storage.googleapis.com/lead4earth/${file.filename}`);
     let language = req.params.language || 'English';
     let category = req.params.category || 'awareness';
-    if (!['Hindi', 'English'].includes(language)) {
+    if (!['Hindi', 'English','Bengali','Marathi'].includes(language)) {
         language = "English";
     }
 

@@ -4,6 +4,9 @@ const postSchema = new mongoose.Schema({
     text: {
         type: String,
     },
+    url:{
+        type: String,
+    }
     variations: {
         type: [{
             type: String,
@@ -13,7 +16,7 @@ const postSchema = new mongoose.Schema({
     },
     language: {
         type: String,
-        enum: ['Hindi', 'English'], // Allow only 'Hindi' and 'English' as valid values
+        enum: ['Hindi', 'English', 'Bengali','Marathi'], // Allow only 'Hindi' and 'English' as valid values
         default: 'English'
     },
     category: {
