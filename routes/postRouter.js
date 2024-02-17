@@ -47,7 +47,7 @@ router.post('/post/:language/:category', ensureAuthenticated, uploadMultiple, as
     }
 
     try {
-        const variations = await generateTextVariations(text,language,category); // Await the result directly
+        const variations = await generateTextVariations(text,language,5); // Await the result directly
         const post = new Post({ text, url, variations, language, category, media: mediaUrls });
         await post.save();
         res.status(201).json(post);
