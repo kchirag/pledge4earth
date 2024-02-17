@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     },
     url:{
         type: String,
-    }
+    },
     variations: {
         type: [{
             type: String,
