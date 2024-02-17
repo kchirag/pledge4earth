@@ -55,6 +55,7 @@ const PostUpload = () => {
 
         const formData = new FormData();
         formData.append('text', text);
+        if (isUrlValid) formData.append('url', url);
         media.forEach(file => formData.append('media', file));
 
         try {
