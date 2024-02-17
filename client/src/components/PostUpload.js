@@ -15,7 +15,7 @@ const PostUpload = () => {
     const handleURLChange = (event) => {
       const inputText = event.target.value;
       // Update your text state
-      setText(inputText);
+      setUrl(inputText);
       
       // Check if the input text is a valid URL
       const isUrlValid = isValidUrl(inputText);
@@ -75,9 +75,10 @@ const PostUpload = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="text">Text:</label>
-                <textarea id="url" value={url} onChange={handleURLChange} maxLength="1000" required />
+                <label htmlFor="text">URL:(if is for response)</label>
+                <input id="url" value={url} onChange={handleURLChange} maxLength="1000" required />
                 {!isUrlValid && <p style={{color: 'red'}}>Please enter a valid URL.</p>}
+                <label htmlFor="text">Text:</label>
                 <textarea id="text" value={text} onChange={handleTextChange} maxLength="1000" required />
             </div>
             <div>
