@@ -6,10 +6,36 @@ const PostUpload = () => {
     const [media, setMedia] = useState([]);
     const [language, setLanguage] = useState('English'); // State for language
     const [category, setCategory] = useState('awareness'); // State for language
+    const [isUrlValid, setIsUrlValid] = useState(true); // Assuming true by default or manage accordingly
+    const [url, setUrl] = useState('');
 
     const handleTextChange = (event) => {
         setText(event.target.value);
     };
+    const handleURLChange = (event) => {
+      const inputText = event.target.value;
+      // Update your text state
+      setText(inputText);
+      
+      // Check if the input text is a valid URL
+      const isUrlValid = isValidUrl(inputText);
+      
+      // Optionally, update the state to reflect the URL's validity
+      setIsUrlValid(isUrlValid);
+      
+      // You can also show feedback or disable a submit button based on the URL validity
+    }
+    const isValidUrl = (urlString) => {
+      if (urlString.trim() === '') return true;
+
+      const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name and extension
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+      return !!urlPattern.test(urlString);
+    }
 
     const handleMediaChange = (event) => {
         setMedia([...event.target.files]);
@@ -50,6 +76,8 @@ const PostUpload = () => {
         <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="text">Text:</label>
+                <textarea id="url" value={url} onChange={handleURLChange} maxLength="1000" required />
+                {!isUrlValid && <p style={{color: 'red'}}>Please enter a valid URL.</p>}
                 <textarea id="text" value={text} onChange={handleTextChange} maxLength="1000" required />
             </div>
             <div>
@@ -61,6 +89,8 @@ const PostUpload = () => {
                 <select id="language" value={language} onChange={handleLanguageChange}>
                     <option value="English">English</option>
                     <option value="Hindi">Hindi</option>
+                    <option value="Bengali">Bengali</option>
+                    <option value="Marathi">Marathi</option>
                 </select>
                 <select id="category" value={category} onChange={handleCategoryChange}>
                     <option value="awareness">awareness</option>
