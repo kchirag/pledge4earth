@@ -77,7 +77,7 @@ const PostUpload = () => {
         <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="text">URL:(if is for response)</label>
-                <input id="url" value={url} onChange={handleURLChange} maxLength="1000" required />
+                <input id="url" value={url} onChange={handleURLChange} maxLength="1000"  />
                 {!isUrlValid && <p style={{color: 'red'}}>Please enter a valid URL.</p>}
                 <label htmlFor="text">Text:</label>
                 <textarea id="text" value={text} onChange={handleTextChange} maxLength="1000" required />
