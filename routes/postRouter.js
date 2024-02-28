@@ -99,6 +99,16 @@ router.get('/posts/:language/:category/:deviceid', async (req, res) => {
             .skip(skip)
             .limit(limit);
 
+        for (post in posts){
+            const selectVariation = (post) => {
+                const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+                const variationCount = post.variations.length;
+                const selectedVariationIndex = currentTime % variationCount;
+                return post.variations[selectedVariationIndex];
+            };
+           if (selectVariation) post.text = selectVariation; 
+        }
+
         // Assuming you have a model or a method to save the log
         const logEntries = posts.map(post => ({
             deviceid: deviceid,
