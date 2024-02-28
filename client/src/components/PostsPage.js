@@ -20,7 +20,7 @@ const PostsPage = () => {
         // Assuming your API can filter posts by language and category
         const fetchPosts = async () => {
             try {
-                const url = '/api/posts/${language}/${category}/web';
+                const url = `/api/posts/${language}/${category}/web`;
                 const response = await axios.get(url);
                 setPosts(response.data);
             } catch (error) {
