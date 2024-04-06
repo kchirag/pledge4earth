@@ -164,6 +164,7 @@ if (process.env.SSLENABLED = 'true'){
     key: privateKey,
     cert: certificate,
     ca: ca,
+    passphrase: process.env.PASSPHRASE,
   };
   const httpsServer = https.createServer(credentials, app);
   httpsServer.listen(port, () => {
