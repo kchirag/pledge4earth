@@ -300,7 +300,7 @@ const LeaderForm = (userLocation) => {
       </label>
       <br />
       <label>About 
-        
+        <ReactQuill value={formData.aboutText} onChange={handleAboutChange} />
       </label>
       <br />
       <label>
