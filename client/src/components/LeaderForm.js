@@ -170,17 +170,34 @@ const LeaderForm = (userLocation) => {
     console.log("Token:" + token);
     console.log(formData.links);
     if (token){
-      axiosInstance.put(`/api/leaders/${dataToSend._id}`, dataToSend, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      const method = window.location.href.endsWith('new') ? 'post' : 'put';
+
+      if (method = 'put'){
+        axiosInstance.put(`/api/leaders/${dataToSend._id}`, dataToSend, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        }else{
+          axiosInstance.post(`/api/leaders/`, dataToSend, {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+        }
     }else{
 
     }
