@@ -44,6 +44,7 @@ const Auth = () => {
     return (
       <div>
         <h2>Welcome, {loggedInUsername}!</h2>
+        <h3>To add a leader <a href="./leaderedit/new">click here</a> </h3>
         {/* You can add a logout button or other user-related functionalities here */}
       </div>
     );

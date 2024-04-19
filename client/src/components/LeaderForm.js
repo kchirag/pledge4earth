@@ -15,7 +15,7 @@ const LeaderForm = (userLocation) => {
   const [previewURL, setPreviewURL] = useState(null);
   const [imageURLs, setImageURLs] = useState([]);
   const [currentAgenda, setCurrentAgenda] = useState('');
-
+  const [uLocation, setULocation] = useState(userLocation);
   const [formData, setFormData] = useState({
     _id: '',
     name: '',
@@ -91,19 +91,24 @@ const LeaderForm = (userLocation) => {
 
 
   useEffect(() => {
+
     const fetchLeadersFromAPI = async (leaderId) => {
         var apiurl = `/api/leaders/slug/${leaderId}`;
 
         if (window.location.pathname.startsWith("/leaderEdit/id")) 
           apiurl = `/api/leaders/id/${leaderId}`;
 
+        //const uLocation = await getUserLocation();
+        //setULocation(uLocation);
+        console.log(userLocation);
+        console.log(uLocation);
         const response = await axiosInstance.get(apiurl);
         const data = await response.data;
         return data;
     }
     const fetchLeaderbyId = async () => {
       try {
-        //console.log('Trying to fetch user location...'); // Add this line
+        console.log('Trying to fetch user location...'); // Add this line
         //const userLocation = await getUserLocation();
         //console.log('User location fetched. Fetching leaders...'); // Add this line
         const data = await fetchLeadersFromAPI(leaderId, 10000);
@@ -185,11 +190,13 @@ const LeaderForm = (userLocation) => {
             console.error(error);
           });
         }else{
-          
+
+          dataToSend._id = null;
           dataToSend.location =  {
             type: 'Point',
-            coordinates: [userLocation.longitude, userLocation.latitude],
-          },
+            coordinates: [uLocation.longitude, uLocation.latitude],
+          };
+
           axiosInstance.post(`/api/leaders/`, dataToSend, {
               headers: {
                 'Authorization': `Bearer ${token}`,

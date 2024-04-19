@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Menu from './components/Menu';
 import axios from 'axios';
+import { AppProvider, useAppContext } from './AppContext';
+
 
 import LeaderContainer from './components/LeaderContainer';
 import ViewsContainer from './components/ViewsContainer';
@@ -167,103 +169,105 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Router>
-        <div>
+    <AppProvider>
+      <div className="App">
+        <Router>
+          <div>
 
-        <header className="App-header">
-          <div style={{marginLeft: '1em'}}>
-            <div className="infoheader">
-                <img
-                  src="/logo192.png"
-                  alt="Lead4Earth"
-                  className="logo"
-                />
-              
-              <div className="site-info">
-                <span className="site-name">Lead for Earth</span>
-                <span className="tagline">Learn, Engage, Act and Direct</span>
-              </div>
-            </div>
-          </div>
-          <div className="menu-container">
-            <Menu />
-          </div>
-          <div className="right-content-container">
-            <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  <FontAwesomeIcon icon={faMapMarkerAlt} />
-                </span>
-              </div>
-              <Typeahead
-                className="custom-typeahead city-typeahead-input"
-                id="city-typeahead"
-                labelKey="name"
-                options={citySuggestions}
-                placeholder={userLocation?.city || ''}
-                onChange={(selected) => {
-                  if (selected.length > 0) {
-                    setUserLocation({
-                      latitude: selected[0].lat,
-                      longitude: selected[0].lng,
-                      city: selected[0].name,
-                    })
-                    //setLatLong({ lat: selected[0].lat, lng: selected[0].lng });
-
-                  }
-                }}
-                onInputChange={(text) => {
-                  if (text.length >= 3) {
-                    fetchCitySuggestions(text);
-                  }
-                }}
-
-              />
-            </div>
-          </div>
-        </header>
-        <Routes>
-    
-          <Route path="/About" element={<AboutContainer />} />
-          <Route path="/Faqs" element={<FaqsContainer />} />
-          <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
-          <Route path="/VolunteerForm" element={<VolunteerPage />} />
-          <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
-          <Route path="/leader/:slug" element={<LeaderPage />} />
-          <Route path="/leaderEdit/id/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
-          <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
-          <Route path="/linkedin-callback" element={<LinkedInCallback />} />
-          <Route path="/postupload" element={<PostUpload />} />
-          <Route path="/postspage" element={<PostsPage />} />
-
-          
-          <Route path="/" element={
-            <>
-              <ReasonSlider />
-              <div className="bottom-container">
-                <ErrorBoundary>
-                  <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
-                  <NewsContainer />
-                </ErrorBoundary>
-              </div>
-              {loading ? (
-                <p>Loading...</p>
-              ) : (
-
-                <div className="top-containers">
-                  <LeaderContainer userLocation={userLocation} />
-                  <ViewsContainer refreshKey={refreshKey} userLocation={userLocation} />
-                  <OrganizationContainer userLocation={userLocation} />
+          <header className="App-header">
+            <div style={{marginLeft: '1em'}}>
+              <div className="infoheader">
+                  <img
+                    src="/logo192.png"
+                    alt="Lead4Earth"
+                    className="logo"
+                  />
+                
+                <div className="site-info">
+                  <span className="site-name">Lead for Earth</span>
+                  <span className="tagline">Learn, Engage, Act and Direct</span>
                 </div>
-              )}
-            </>
-          } />
-        </Routes>
-        <Footer />
-        </div>
-      </Router>
-    </div>
+              </div>
+            </div>
+            <div className="menu-container">
+              <Menu />
+            </div>
+            <div className="right-content-container">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                  </span>
+                </div>
+                <Typeahead
+                  className="custom-typeahead city-typeahead-input"
+                  id="city-typeahead"
+                  labelKey="name"
+                  options={citySuggestions}
+                  placeholder={userLocation?.city || ''}
+                  onChange={(selected) => {
+                    if (selected.length > 0) {
+                      setUserLocation({
+                        latitude: selected[0].lat,
+                        longitude: selected[0].lng,
+                        city: selected[0].name,
+                      })
+                      //setLatLong({ lat: selected[0].lat, lng: selected[0].lng });
+
+                    }
+                  }}
+                  onInputChange={(text) => {
+                    if (text.length >= 3) {
+                      fetchCitySuggestions(text);
+                    }
+                  }}
+
+                />
+              </div>
+            </div>
+          </header>
+          <Routes>
+      
+            <Route path="/About" element={<AboutContainer />} />
+            <Route path="/Faqs" element={<FaqsContainer />} />
+            <Route path="/PrivacyPolicy" element={<PrivacyPolicyContainer />} />
+            <Route path="/VolunteerForm" element={<VolunteerPage />} />
+            <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
+            <Route path="/leader/:slug" element={<LeaderPage />} />
+            <Route path="/leaderEdit/id/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
+            <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
+            <Route path="/linkedin-callback" element={<LinkedInCallback />} />
+            <Route path="/postupload" element={<PostUpload />} />
+            <Route path="/postspage" element={<PostsPage />} />
+
+            
+            <Route path="/" element={
+              <>
+                <ReasonSlider />
+                <div className="bottom-container">
+                  <ErrorBoundary>
+                    <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
+                    <NewsContainer />
+                  </ErrorBoundary>
+                </div>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+
+                  <div className="top-containers">
+                    <LeaderContainer userLocation={userLocation} />
+                    <ViewsContainer refreshKey={refreshKey} userLocation={userLocation} />
+                    <OrganizationContainer userLocation={userLocation} />
+                  </div>
+                )}
+              </>
+            } />
+          </Routes>
+          <Footer />
+          </div>
+        </Router>
+      </div>
+    </AppProvider>
     )
 }
 
