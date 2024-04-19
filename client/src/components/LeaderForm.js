@@ -43,7 +43,7 @@ const LeaderForm = (userLocation) => {
     
     upvotes: 0,
     website : '',
-    email : '',
+    email : 'lead@lead4earth.org',
     url_slug:'',
     // ... other fields
     location: ''
