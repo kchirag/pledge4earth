@@ -9,13 +9,12 @@ import 'react-quill/dist/quill.snow.css'; // import styles
 import './LeaderPage.css';
 
 
-const LeaderForm = (userLocation) => {
+const LeaderForm = ({ userLocation, setUserLocation }) => {
   const { leaderId } = useParams();
   const [imageFile, setImageFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
   const [imageURLs, setImageURLs] = useState([]);
   const [currentAgenda, setCurrentAgenda] = useState('');
-  const [uLocation, setULocation] = useState(userLocation);
   const [formData, setFormData] = useState({
     _id: '',
     name: '',
@@ -49,6 +48,7 @@ const LeaderForm = (userLocation) => {
     location: ''
   });
   console.log("initail call:" + leaderId)
+  console.log("user Lat:" + userLocation?.latitude)
   const handleImageChange = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -194,7 +194,7 @@ const LeaderForm = (userLocation) => {
           dataToSend._id = null;
           dataToSend.location =  {
             type: 'Point',
-            coordinates: [uLocation.longitude, uLocation.latitude],
+            coordinates: [userLocation?.longitude, userLocation?.latitude],
           };
 
           axiosInstance.post(`/api/leaders/`, dataToSend, {

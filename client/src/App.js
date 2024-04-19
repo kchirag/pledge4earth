@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Menu from './components/Menu';
 import axios from 'axios';
-import { AppProvider, useAppContext } from './AppContext';
 
 
 import LeaderContainer from './components/LeaderContainer';
@@ -169,7 +168,6 @@ function App() {
   };
 
   return (
-    <AppProvider>
       <div className="App">
         <Router>
           <div>
@@ -234,8 +232,8 @@ function App() {
             <Route path="/VolunteerForm" element={<VolunteerPage />} />
             <Route path="/EmailConfirmation" element={<EmailConfirmationContainer />} />
             <Route path="/leader/:slug" element={<LeaderPage />} />
-            <Route path="/leaderEdit/id/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
-            <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} />} />
+            <Route path="/leaderEdit/id/:leaderId" element={<LeaderForm userLocation={userLocation} setUserLocation={setUserLocation} />} />
+            <Route path="/leaderEdit/:leaderId" element={<LeaderForm userLocation={userLocation} setUserLocation={setUserLocation} />} />
             <Route path="/linkedin-callback" element={<LinkedInCallback />} />
             <Route path="/postupload" element={<PostUpload />} />
             <Route path="/postspage" element={<PostsPage />} />
@@ -267,7 +265,6 @@ function App() {
           </div>
         </Router>
       </div>
-    </AppProvider>
     )
 }
 
