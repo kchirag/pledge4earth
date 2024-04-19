@@ -185,6 +185,11 @@ const LeaderForm = (userLocation) => {
             console.error(error);
           });
         }else{
+          const userLocation = await getUserLocation();
+          dataToSend.location =  {
+            type: 'Point',
+            coordinates: [userLocation.longitude, userLocation.latitude],
+          },
           axiosInstance.post(`/api/leaders/`, dataToSend, {
               headers: {
                 'Authorization': `Bearer ${token}`,
