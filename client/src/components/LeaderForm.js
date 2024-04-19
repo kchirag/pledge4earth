@@ -172,7 +172,7 @@ const LeaderForm = (userLocation) => {
     if (token){
       const method = window.location.href.endsWith('new') ? 'post' : 'put';
 
-      if (method = 'put'){
+      if (method === 'put'){
         axiosInstance.put(`/api/leaders/${dataToSend._id}`, dataToSend, {
             headers: {
               'Authorization': `Bearer ${token}`,
