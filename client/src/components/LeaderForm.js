@@ -100,8 +100,6 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
 
         //const uLocation = await getUserLocation();
         //setULocation(uLocation);
-        console.log(userLocation);
-        console.log(uLocation);
         const response = await axiosInstance.get(apiurl);
         const data = await response.data;
         return data;
