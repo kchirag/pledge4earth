@@ -4,14 +4,14 @@ const Leader = require('../models/Leader');
 
 
 router.post('/', async (req, res) => {
-  const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
   const leader = new Leader(req.body);
+  const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
+  if (token){
+    const decoded = = jwt.verify(token, 'pledge4earth');
+    leader.addedby = decoded.user;
+  }
 
   try {
-    if (token){
-      const decoded = jwt.verify(token, 'pledge4earth');
-      leader.addedby = decoded;
-    }
     const savedLeader = await leader.save();
     res.status(201).json(savedLeader);
   } catch (error) {
@@ -84,13 +84,11 @@ router.get('/', async (req, res) => {
 
 // This is a basic middleware for demonstration purposes. 
 // You should adjust this to your authentication strategy.
-// If token is valid, store the user payload in req.user = require('../middleware/auth');
+const ensureAuthenticated = require('../middleware/auth');
 
 //console.log(ensureAuthenticated);
 // update leader data
-router.put('/:leaderIdconst token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
-  if (token)
-            req.user = decoded.user;, async (req, res) => {
+router.put('/:leaderId', ensureAuthenticated, async (req, res) => {
     const { leaderId } = req.params;
     const updatedData = req.body;
 
