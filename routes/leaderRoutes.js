@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   const leader = new Leader(req.body);
   const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
   if (token){
-    const decoded = = jwt.verify(token, 'pledge4earth');
+    const decoded = jwt.verify(token, 'pledge4earth');
     leader.addedby = decoded.user;
   }
 
