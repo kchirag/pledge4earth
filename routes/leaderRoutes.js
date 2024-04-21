@@ -84,9 +84,7 @@ router.get('/', async (req, res) => {
 
 // This is a basic middleware for demonstration purposes. 
 // You should adjust this to your authentication strategy.
-conconst token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
-if (token)
-        // If token is valid, store the user payload in req.user = require('../middleware/auth');
+// If token is valid, store the user payload in req.user = require('../middleware/auth');
 
 //console.log(ensureAuthenticated);
 // update leader data
