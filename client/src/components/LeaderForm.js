@@ -170,8 +170,6 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
     };
 
     const token = localStorage.getItem('token');
-    console.log("Token:" + token);
-    console.log(formData.links);
     if (token){
       const method = window.location.href.endsWith('new') ? 'post' : 'put';
 

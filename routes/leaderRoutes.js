@@ -6,10 +6,11 @@ const Leader = require('../models/Leader');
 router.post('/', async (req, res) => {
   const leader = new Leader(req.body);
   const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
-  if (token){
-    const decoded = jwt.verify(token, 'pledge4earth');
-    leader.addedby = decoded.user;
-  }
+  console.log(token);
+  // if (token){
+  //   const decoded = jwt.verify(token, 'pledge4earth');
+  //   leader.addedby = decoded.user;
+  // }
 
   try {
     const savedLeader = await leader.save();
