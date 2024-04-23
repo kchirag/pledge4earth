@@ -5,6 +5,11 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // import styles
+import { Typeahead } from 'react-bootstrap-typeahead';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 //import { useLocation } from 'react-router-dom';
 import './LeaderPage.css';
 
@@ -15,6 +20,8 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
   const [previewURL, setPreviewURL] = useState(null);
   const [imageURLs, setImageURLs] = useState([]);
   const [currentAgenda, setCurrentAgenda] = useState('');
+  const [citySuggestions, setCitySuggestions] = useState([]);
+
   const [formData, setFormData] = useState({
     _id: '',
     name: '',
@@ -42,7 +49,7 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
     
     upvotes: 0,
     website : '',
-    email : 'lead@lead4earth.org',
+    email : '',
     url_slug:'',
     // ... other fields
     location: ''
@@ -59,12 +66,32 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
     }
   };
 
+  const fetchCitySuggestions = async (query) => {
+    const apiKey = process.env.REACT_APP_GEOCODE_API_KEY;
+    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${apiKey}&limit=5`;
+    //const apiUrl = `https://ipapi.co/json/`
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      const suggestions = data.results.map((result) => ({
+        name: result.formatted,
+        lat: result.geometry.lat,
+        lng: result.geometry.lng,
+      }));
+      setCitySuggestions(suggestions);
+    } catch (error) {
+      console.error('Error fetching city suggestions:', error);
+    }
+  };
+
   const handleDeleteImage = (indexToDelete) => {
     const updatedImageURLs = imageURLs.filter((_, index) => index !== indexToDelete);
     setImageURLs(updatedImageURLs);
   };
 
-  const handleImageUpload = async () => {
+  const handleImageUpload = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (!imageFile) return;
 
     const formData1 = new FormData();
@@ -81,6 +108,7 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
             setImageURLs(prevURLs => Array.isArray(prevURLs) ? [...prevURLs, response.data.image_url] : [response.data.image_url]);
             setImageFile(null);
             setPreviewURL(null);
+
         } else {
             // Handle error
         }
@@ -159,7 +187,7 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
     }
     setFormData({ ...formData, links: updatedLinks });
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -181,6 +209,7 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
           })
           .then((response) => {
             console.log(response.data);
+            navigate("/leader/" + response.data.url_slug);
           })
           .catch((error) => {
             console.error(error);
@@ -188,6 +217,9 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
         }else{
 
           dataToSend._id = null;
+          dataToSend.isValidated = true;
+          dataToSend.isEmailConfirmed = true;
+          
           dataToSend.location =  {
             type: 'Point',
             coordinates: [userLocation?.longitude, userLocation?.latitude],
@@ -199,6 +231,7 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
               },
             })
             .then((response) => {
+              navigate(response.url_slug);
               console.log(response.data);
             })
             .catch((error) => {
@@ -324,6 +357,10 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
           </button>
       </label>
       <br />
+      <label>
+        Email Address:
+        <input type="text" name="email" value={formData.email} onChange={handleLinkChange} />
+      </label>
       <label>About 
         <ReactQuill value={formData.aboutText} onChange={handleAboutChange} />
       </label>
@@ -340,7 +377,39 @@ const LeaderForm = ({ userLocation, setUserLocation }) => {
       <br />
       <label>
         Your Location (City/State/Country):
-        <textarea name="cityName" value={formData.cityName} onChange={handleInputChange} />
+
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                  </span>
+                </div>
+                <Typeahead
+                  className="custom-typeahead city-typeahead-input"
+                  id="city-typeahead"
+                  labelKey="name"
+                  options={citySuggestions}
+                  placeholder={formData.cityName || userLocation?.city || ''}
+                  onChange={(selected) => {
+                    if (selected.length > 0) {
+                      setUserLocation({
+                        latitude: selected[0].lat,
+                        longitude: selected[0].lng,
+                        city: selected[0].name,
+                      })
+                      setFormData({ ...formData, ["cityName"]: selected[0].name });
+
+                    }
+                  }}
+                  onInputChange={(text) => {
+                    if (text.length >= 3) {
+                      fetchCitySuggestions(text);
+                    }
+                  }}
+
+                />
+              </div>
+
       </label>
       <br />
       <label>
