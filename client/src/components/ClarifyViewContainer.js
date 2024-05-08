@@ -39,17 +39,17 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
       {
         value: 1,
         label: "On High Priority",
-        tooltip: "There is conclusive evidence to demonstrate that the climate is changing and human-caused CO2 emissions are contributing to this issue. Immediate action should be taken at every level of government to decrease GHG emissions to X level by X year. (Electrification ordinances, carbon fee, etc)."
+        tooltip: "Human activity driving climate change. Governments must act now to cut emissions. Degrowth is an option"
       },
       {
         value: 2,
         label: "Necessary but not urgent",
-        tooltip: "Human activities are causing climate change, and we should take action to decrease emissions. However, it should be spread in future.."
+        tooltip: "We should take action to decrease emissions gradually, through community and government actions"
       },
       {
         value: 3,
         label: "Unsure",
-        tooltip: "We can take measures to improve our environment (bike, recycle, compost, etc), but government and legislative intervention is not necessary"
+        tooltip: "Government and legislative intervention is not necessary"
       },
       {
         value: 4,
@@ -182,7 +182,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     <div className="clarify-view-container">
       <h6>Share your opinion</h6>
       <form onSubmit={handleSubmit}>
-        <div className="questions"><h5>Want your community leader to act on environmental issues?</h5>
+        <div className="questions"><h5>Does Environment and Sustainability matter to you?</h5>
         {options.map((view, index) => (
           <div  key={index}>
             <input

@@ -6,8 +6,8 @@ const NewsContainer = () => {
       
       {/* Static data to be changed later */}
       
-      <iframe width="600" height="400" src="https://www.youtube.com/embed/rGCHCZz8-is?si=G6yZeGZGtFXT52ML" title="Lead4Earth Vision and Motivation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      <h6>Narrated by Hari Kathrani</h6>
+      <iframe width="600" height="400" src="https://www.youtube.com/watch?v=A6PlwoBcV7g" title="Lead4Earth Vision and Motivation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <h6>Narrated by Glory Rose Roy</h6>
     </div>
   );
 
