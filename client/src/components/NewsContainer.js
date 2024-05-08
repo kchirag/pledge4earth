@@ -7,7 +7,7 @@ const NewsContainer = () => {
       {/* Static data to be changed later */}
       
       <iframe width="600" height="400" src="https://www.youtube.com/embed/A6PlwoBcV7g?si=mtF9MIdE9L1mu-tz" title="Lead4Earth Vision and Motivation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      <h6>Narrated by <a Glory Rose Roy</h6>
+      <h6>Narrated by <a href="https://www.linkedin.com/in/glory-rose-6533aa306/">Glory Rose Roy</a></h6>
     </div>
   );
 
