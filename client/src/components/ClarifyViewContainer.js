@@ -38,23 +38,23 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   const options = [
       {
         value: 1,
-        label: "On High Priority",
-        tooltip: "Human activity driving climate change. Governments must act now to cut emissions. Degrowth is an option"
+        label: "Research",
+        tooltip: "Research for their environmental policies independently"
       },
       {
         value: 2,
-        label: "Necessary but not urgent",
-        tooltip: "We should take action to decrease emissions gradually, through community and government actions"
+        label: "Matter If known",
+        tooltip: "Look to find his environmental views on their campaign manifesto?"
       },
       {
         value: 3,
-        label: "Unsure",
-        tooltip: "Government and legislative intervention is not necessary"
+        label: "Dont Matter",
+        tooltip: "Never Looked for it"
       },
       {
         value: 4,
-        label: "Disagree",
-        tooltip: "Human activities do not worsen climate change, and no intervention is needed"
+        label: "His Party alignment matters",
+        tooltip: "Party comes before environment!"
       },
     ];
   function createSlug(name, cityName) {
@@ -182,7 +182,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     <div className="clarify-view-container">
       <h6>Share your opinion</h6>
       <form onSubmit={handleSubmit}>
-        <div className="questions"><h5>Does Environment and Sustainability matter to you?</h5>
+        <div className="questions"><h5>Curious about leaders' eco-views?</h5>
         {options.map((view, index) => (
           <div  key={index}>
             <input

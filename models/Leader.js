@@ -41,7 +41,7 @@ const LeaderSchema = new mongoose.Schema({
   },
   aboutText: {
         type: String,
-        default: 'Information about this leader is not available.'  // default about text
+        default: ''  // default about text
   },
   cityName:{
         type: String,
