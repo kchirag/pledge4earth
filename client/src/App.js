@@ -90,6 +90,7 @@ function App() {
 
   //this is to get location details if user declines to share his location
   const getLocationFromIP = async () => {
+
     const IPINFO_API_KEY = process.env.REACT_APP_IPINFO_API_KEY; 
     try {
       const response = await axios.get(`https://ipapi.co/json/`);
@@ -107,7 +108,7 @@ function App() {
         city: data.city,
       };
     } catch (error) {
-      console.error('Error getting location from IP:', error);
+     // console.error('Error getting location from IP:', error);
       return {
         latitude: 37.7,
         longitude: -122,
@@ -245,7 +246,7 @@ function App() {
                 <div className="bottom-container">
                   <ErrorBoundary>
                     <ClarifyViewContainer onNewUserView={handleNewUserView} userLocation={userLocation} />
-                    <NewsContainer />
+                    <ViewsContainer refreshKey={refreshKey} userLocation={userLocation} />
                   </ErrorBoundary>
                 </div>
                 {loading ? (
@@ -253,10 +254,10 @@ function App() {
                 ) : (
 
                   <div className="top-containers">
-                    <LeaderContainer userLocation={userLocation} />
-                    <ViewsContainer refreshKey={refreshKey} userLocation={userLocation} />
-                    <OrganizationContainer userLocation={userLocation} />
+                    <LeaderContainer userLocation={userLocation} /> 
+                    <NewsContainer />
                   </div>
+                  
                 )}
               </>
             } />

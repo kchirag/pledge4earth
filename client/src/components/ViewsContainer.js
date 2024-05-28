@@ -16,6 +16,7 @@ function ViewsContainer({ userLocation }, { refreshKey }) {
 
   const [nearbyUsersData, setNearbyUsersData] = useState({ count: 0, users: [] });
   const [points, setPoints] = useState({points:[]});
+  const [shouldShowMap, setShouldShowMap] = useState(false);
 
 
   const [viewport, setViewport] = useState({
@@ -59,16 +60,29 @@ function ViewsContainer({ userLocation }, { refreshKey }) {
       }
     };
 
+    if (userLocation && userLocation.latitude && userLocation.longitude) {
+      // Set a timeout to delay the rendering of the MapUpdater
+      const timer = setTimeout(() => {
+        setShouldShowMap(true);
+      }, 2000);  // Delay of 2000 milliseconds (2 seconds)
+      fetchUsers();
+      return () => clearTimeout(timer); // Clear the timeout if the component unmounts
+    }
     fetchUsers();
+
+
   }, [userLocation, refreshKey]);
   
   const handleViewportChange = (newViewport) => {
     setViewport(newViewport);
+
   };
 
 return (
   <div className="ViewsContainer">
     <div style={{ width: '100%', height: '300px', position: 'relative', marginBottom:'20px'}}>
+      {shouldShowMap && (
+        <>
       <MapContainer
         style={{ width: '100%', height: '100%' }}
         center={viewport.center}
@@ -76,6 +90,7 @@ return (
         onViewportChange={handleViewportChange}
         
       >
+
       <MapUpdater center={nearbyUsersData.users.length > 0 ? [nearbyUsersData.users[0].location.coordinates[1], nearbyUsersData.users[0].location.coordinates[0]] : [userLocation.latitude, userLocation.longitude]} /> {/* Add the MapUpdater component */}
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -87,8 +102,12 @@ return (
           </Marker>
         ))}
         <HeatmapLayer points={points} />
+
+
       </MapContainer>
-      <p>{nearbyUsersData.count} voices here are looking up for their <br/>leaders to acknowledge their views</p>
+      <p>{nearbyUsersData.count} people interested in knowing their <br/><b>leaders eco-views</b></p>
+      </>
+      )}
       
     </div>
   </div>

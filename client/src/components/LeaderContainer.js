@@ -1,36 +1,30 @@
-// LeaderContainer.js
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosInstance';
+import DOMPurify from 'dompurify';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './LeaderContainer.css';
 
-function LeaderContainer({userLocation}) {
+function LeaderContainer({ userLocation }) {
+  //const defaultLocation = { latitude: 37.7749, longitude: -122.4194 }; // Default to San Francisco, CA
+
   const [leaders, setLeaders] = useState([]);
+  const [showFullText, setShowFullText] = useState({});
 
   const fetchNearbyLeadersFromAPI = async (latitude, longitude, distance) => {
-    const response = await axiosInstance.get(`/api/nearby-leaders?latitude=${latitude}&longitude=${longitude}&distance=${distance}`);
-    const data = await response.data;
-    return data;
+    try {
+      const response = await axiosInstance.get(`/api/nearby-leaders?latitude=${latitude}&longitude=${longitude}&distance=${distance}`);
+      const data = await response.data;
+      setLeaders(data.users);
+    } catch (error) {
+      console.error('Error fetching leaders:', error);
+    }
   };
 
   useEffect(() => {
-    const fetchLeaders = async () => {
-      try {
-        //console.log('Trying to fetch user location...'); // Add this line
-        //const userLocation = await getUserLocation();
-        //console.log('User location fetched. Fetching leaders...'); // Add this line
-        const data = await fetchNearbyLeadersFromAPI(userLocation.latitude, userLocation.longitude, 10000);
-        console.log(data.users);
-        setLeaders(data.users);
-      } catch (error) {
-        console.error('Error fetching leaders:', error);
-      }
-    };
-
-    fetchLeaders();
+    fetchNearbyLeadersFromAPI(userLocation.latitude, userLocation.longitude, 10000);
   }, [userLocation]);
 
 
@@ -41,32 +35,44 @@ function LeaderContainer({userLocation}) {
     speed: 200,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay:true,
+    autoplay: true,
   };
 
   return (
-    
-    <div className="LeaderContainer">
-      <Slider {...settings}>
-        {leaders.map((leader) => (
-          <div key={leader._id} className="leader-slide">
-            <img src={leader.image} alt={leader.name} className="leader-image" />
-            <div className="leader-text">
-              <h3>{leader.name}</h3>
-              <p>{leader.statement}</p>
-              <p>{leader.distance.toFixed(1)} miles away</p>
-              <a href={`/leader/${leader.url_slug}`} target="_blank" rel="noopener noreferrer">more info</a>
+      <div className="LeaderContainer">
+        <Slider {...settings}>
+          {leaders.map((leader) => (
+            <div key={leader._id} className="leader-slide">
+              <div className="leader-content">
+                <div className="leader-image-text">
+                  <div className="image-overlay-container">
+                    <img src={leader.image} alt={leader.name} className="leader-image" />
+                    <div className="overlay-text">
+                      <h3>{leader.name}</h3>
+                      <p>{leader.statement}</p>
+                      <p>{leader.distance.toFixed(1)} miles away</p>
+                      <a href={`/leader/${leader.url_slug}`} target="_blank" rel="noopener noreferrer">more info</a>
+                    </div>
+                  </div>
+                </div>
+                <div className="leader-details">
+                  <h4>Location: {leader.cityName}</h4>
+                  {leader.aboutText ? (
+                    <>
+                      <h5 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(showFullText[leader._id] ? leader.aboutText : `${leader.aboutText.substring(0, 300)}...`) }}></h5>
+                      {leader.aboutText.length > 300 && (
+                        <a href={`/leader/${leader.url_slug}`} target="_blank" rel="noopener noreferrer">more info</a>
+                      )}
+                    </>
+                  ) : (
+                    <h5>No additional information available.</h5>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="leaderdetails">
-              <h4>Location: {leader.cityName}</h3>
-              <h5>About:{leader.aboutText}</h5>
-            </div>
-
-          </div>
-        ))}
-      </Slider>
-    </div>
-    
+          ))}
+        </Slider>
+      </div>
   );
 }
 

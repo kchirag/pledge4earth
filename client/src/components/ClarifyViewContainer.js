@@ -38,25 +38,26 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
   const options = [
       {
         value: 1,
-        label: "Research",
+        label: "Very",
         tooltip: "Research for their environmental policies independently"
       },
       {
         value: 2,
-        label: "Matter If known",
+        label: "Somewhat",
         tooltip: "Look to find his environmental views on their campaign manifesto?"
       },
       {
         value: 3,
-        label: "Dont Matter",
+        label: "Unsure",
         tooltip: "Never Looked for it"
       },
       {
         value: 4,
-        label: "His Party alignment matters",
-        tooltip: "Party comes before environment!"
+        label: "Don't Matter",
+        tooltip: "Dont believe in environmental science!"
       },
     ];
+  
   function createSlug(name, cityName) {
     const sanitizeString = (str) => {
         return str
@@ -182,7 +183,7 @@ function ClarifyViewContainer({ onNewUserView, userLocation }) {
     <div className="clarify-view-container">
       <h6>Share your opinion</h6>
       <form onSubmit={handleSubmit}>
-        <div className="questions"><h5>Curious about leaders' eco-views?</h5>
+        <div className="questions"><h5>Does your leaders' eco-views matter?</h5>
         {options.map((view, index) => (
           <div  key={index}>
             <input

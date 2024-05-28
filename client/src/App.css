@@ -44,13 +44,21 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   text-align: left;
+  width: 100%;
 }
 
 /* Add some styles for the individual containers */
-.LeaderContainer,.ViewsContainer,
-.NewsContainer {
+.LeaderContainer{
+  width: 60%;
+  height:450px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.ViewsContainer,.NewsContainer {
   width: 30%;
   background-color: #f0f0f0;
   padding: 20px;
